@@ -7,13 +7,28 @@ const Nav = () => {
     <nav className="NavPage">
       <h1>Menu </h1>
       <Link className="Nav__Link" to="/">
-        Home |
+      |   Home 
       </Link>
-      <Link className="Nav__Link" to="/articlelist">
-        Article List |
+      <Link className="Nav__Link" to="/courses">
+      |  Courses 
       </Link>
-      <Link className="Nav__Link" to="/topiclist">
-        |Topic List
+      <Link className="Nav__Link" to="/topics">
+      |  Topics
+      </Link>
+      <Link className="Nav__Link" to="/topics">
+      |  Users
+      </Link>
+      <Link className="Nav__Link" to="/topics">
+      |  Lessons 
+      </Link>
+      <Link className="Nav__Link" to="/topics">
+      |  Quizzes
+      </Link>
+      <Link className="Nav__Link" to="/topics">
+      |  Settings
+      </Link>
+      <Link className="Nav__Link" to="/topics">
+      |  Contact Us
       </Link>
     </nav>
   );

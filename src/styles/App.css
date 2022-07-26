@@ -1,38 +1,86 @@
+
+/* Desktop only styles  */
+@media only screen and (min-width: 768px) {
+  body {
+    background-color: pink;
+  }
+  .App {
+    display: grid;
+    grid-template-rows: min-content auto;
+    grid-template-areas:
+      "header"
+      "navpage"
+      "searchpage"
+      "homepage"
+      "footerpage";
+  }
+  .Header {
+    grid-area: header;
+  }
+  .NavPage {
+    grid-area: navpage;
+  }
+  .SearchPage {
+    grid-area: searchpage;
+  }
+  .HomePage {
+    grid-area: homepage;
+  }
+  .FooterPage {
+    grid-area: footerpage;
+  }
+}
+
+/* Mobiles only styles  */
+
 .App {
   text-align: center;
+  padding: 1em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.List {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-around;
+  padding: 0;
+  list-style-type: none;
+}
+.List__card {
+  border: 1px solid black;
+  margin: 1em;
+
+  padding: 1em;
+}
+.List__h1 {
+  font-size: 2em;
 }
 
-.App-link {
-  color: #61dafb;
+.h1 {
+  font-size: 1em;
+  border-block: black;
+}
+.CourseListPage {
+  border: 1px solid red;
+}
+.SearchPage {
+  border: 1px solid blue;
+  padding: 1em;
+}
+.Header {
+  border: 1px solid blue;
+  padding: 1em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.NavPage {
+  border: 1px solid blue;
+  padding: 1em;
+}
+.FooterPage {
+  border: 1px solid blue;
+  padding: 1em;
+}
+.HomePage {
+  border: 1px solid blue;
+  padding: 1em;
 }

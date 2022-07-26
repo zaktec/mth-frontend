@@ -23,31 +23,33 @@ export const getCourses = () =>{
     //params: { article_topic: topic_name, sort_by },
   })
   .then (({ data }) => {
-    console.log(data)
+    //console.log(data)
     return data.courses;
   })}
 
-
- // export const getTopics = () => {
-//   return newsApi.get("/topics").then((res) => {
-//       //console.log(res)
-//     return res.data.topics;
-//   });
-// }; 
-
-
+  export const getSingleCourse = (course_id) => {
+    return mthApi.get(`/courses/${course_id}`,{
+    })
+    .then (({ data }) => {
+      console.log(data)
+      return data.course;
+    })}
 
 
+  export const getTopics = () => {
+  return mthApi.get("/topics").then((res) => {
+       console.log(res)
+     return res.data.topics;
+   });
+ }; 
 
-// }
 
-
-// export const getSingleArticle = (article_id) => {
-//   return newsApi.get(`/articles/${article_id}`).then((res) => {
-//       //console.log(res)
-//     return res.data.article;
-//   });
-// };
+ export const getSingleTopic = (topic_id) => {
+   return mthApi.get(`/topics/${topic_id}`).then((res) => {
+       //console.log(res)
+     return res.data.topic;
+   });
+ };
 
 // export const patchArticleVote = (article_id) => {
 //   return newsApi.patch(`/articles/${article_id}`, {inc_votes : 1 })

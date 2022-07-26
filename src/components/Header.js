@@ -1,5 +1,5 @@
 const Header = () => {
-    return <h1> MTH Dashboard</h1>
+    return <h1 className="Header"> MTH Dashboard -Header</h1>
 };
 
 export default Header;

@@ -7,8 +7,8 @@ const Endpoint = () => {
 
   useEffect(() => {
     getEndpoint().then((res) => {
-      console.log(res)
-      setMsg(res.data)
+      console.log(res.json())
+      setMsg(res.json())
     });
   }, []);
 
