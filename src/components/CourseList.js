@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getCourses } from "../utils/api";
+import { getCourses, getCoursesApi } from "../utils/api";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 
@@ -10,7 +10,7 @@ function CourseList() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    getCourses().then((res) => {
+    getCoursesApi().then((res) => {
       console.log(res);
       setCoursesList(res);
       setIsLoading(false);
@@ -21,8 +21,15 @@ function CourseList() {
 
   return (
     <main className="CourseListPage">
+ 
+      
       <Search setSearchTerm={setSearchTerm} />
+
+     
+
       <h1 className="List__h1"> CourseList </h1>
+
+      <button>Add Topic</button>
 
       <ul className="List">
         {coursesList.map((course) => {

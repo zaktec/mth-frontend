@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import SingleCourse from "./components/SingleCourse";
+import SingleTopic from "./components/SingleTopic";
 
 import Endpoint from "./components/Endpoint";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/endpoint" element={<Endpoint />}></Route>
           <Route path="/courses" element={<CourseList />}></Route>
           <Route path="/topics" element={<TopicList />}></Route>
+          <Route path="/topics/:topic_id" element={<SingleTopic />}></Route>
           <Route path="/courses/:course_id" element={<SingleCourse />}></Route>
         </Routes>
         <Footer year={new Date().getFullYear()} />

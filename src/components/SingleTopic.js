@@ -1,14 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleTopic } from "../utils/api";
+import {  getSingleTopicApi } from "../utils/api";
+import EditCourse from "./EditCourse";
+import DeleteCourse from "./DeleteCourse";
 
-function singletopic() {
+
+function SingleTopic() {
 const { topic_id } = useParams();
   const [topic, settopic] = useState({});
+  const [topicName, setTopicName] = useState([]);
 
   useEffect(() => {
-    getSingleTopic(topic_id).then((res) => {
+    getSingleTopicApi(topic_id).then((res) => {
       console.log(res);
       settopic(res);
     });
@@ -19,7 +23,7 @@ const { topic_id } = useParams();
       <ul className="List">
         <li className="List__card">
           <p>
-            <b>T Name: </b> {topic.topic_name}
+            <b>Topic Name: </b> {topic.topic_name}
           </p>
           <p>
             <b>topic Description: </b>
@@ -42,10 +46,19 @@ const { topic_id } = useParams();
             src={topic.topic_image}
             alt={topic.topic_name}
           />
+
+<EditCourse 
+          course_id={topic.topic_id} 
+          setCourseName= {setTopicName}/>
+
+<DeleteCourse 
+          course_id={topic.topic_id} 
+          setCourseName= {setTopicName}/>
+        
         </li>
       </ul>
     </main>
   );
 }
 
-export default singletopic
+export default SingleTopic

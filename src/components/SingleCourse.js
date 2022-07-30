@@ -1,15 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleCourse } from "../utils/api";
+import {  getSingleCourseApi } from "../utils/api";
+import EditCourse from "./EditCourse";
+import DeleteCourse from "./DeleteCourse";
+
+
 
 function SingleCourse() {
   const { course_id } = useParams();
   const [course, setCourse] = useState({});
+  const [courseName, setCourseName] = useState([]);
 
   useEffect(() => {
-    getSingleCourse(course_id).then((res) => {
-      console.log(res);
+    getSingleCourseApi(course_id).then((res) => {
+      //console.log(res);
       setCourse(res);
     });
   }, [course_id]);
@@ -39,10 +44,18 @@ function SingleCourse() {
             {course.course_level}
           </p>
           <img
-            clasName="ListImage"
+            className="ListImage"
             src={course.course_image}
             alt={course.course_name}
           />
+          <EditCourse 
+          course_id={course.course_id} 
+          setCourseName= {setCourseName}/>
+
+<DeleteCourse 
+          course_id={course.course_id} 
+          setCourseName= {setCourseName}/>
+         
         </li>
       </ul>
     </main>

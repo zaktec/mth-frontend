@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import { getTopics } from "../utils/api";
+import { getTopics, getTopicsApi } from "../utils/api";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 
@@ -11,7 +11,7 @@ function TopicList() {
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        getTopics().then((res) => {
+        getTopicsApi().then((res) => {
           console.log(res);
           setTopicList(res);
           setIsLoading(false);
