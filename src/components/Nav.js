@@ -15,14 +15,20 @@ const Nav = () => {
       <Link className="Nav__Link" to="/topics">
       |  Topics
       </Link>
-      <Link className="Nav__Link" to="/topics">
-      |  Users
+      <Link className="Nav__Link" to="/students">
+      |  Students
+      </Link>
+      <Link className="Nav__Link" to="/students">
+      |  Tutors
       </Link>
       <Link className="Nav__Link" to="/topics">
       |  Lessons 
       </Link>
       <Link className="Nav__Link" to="/topics">
       |  Quizzes
+      </Link>
+      <Link className="Nav__Link" to="/topics">
+      |  Questions
       </Link>
       <Link className="Nav__Link" to="/topics">
       |  Settings

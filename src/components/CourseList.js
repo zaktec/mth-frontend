@@ -1,13 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getCourses, getCoursesApi } from "../utils/api";
+import { getCoursesApi } from "../utils/api";
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import PostCourse from "./PostCourse";
 
 function CourseList() {
   const [coursesList, setCoursesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [course, setCourse] = useState({});
 
   useEffect(() => {
     getCoursesApi().then((res) => {
@@ -28,8 +30,12 @@ function CourseList() {
      
 
       <h1 className="List__h1"> CourseList </h1>
+      
+      <PostCourse
+            course_id={course.course_id}
+            setCourseName={setCourse}
+          />
 
-      <button>Add Topic</button>
 
       <ul className="List">
         {coursesList.map((course) => {
@@ -37,12 +43,13 @@ function CourseList() {
             <Link key={course.course_id} to={`/courses/${course.course_id}`}>
               <li className="List__card">
                 <p><b>Course Name: </b> {course.course_name}</p>
-                <p><b>Course Description: </b>{course.course_desc}</p>
-                <p><b>Course ID: </b>{course.course_id}</p>
                 <p><b>Course Code: </b>{course.course_code}</p>
-                <p><b>Course Level:</b>{course.course_level}</p>
-                <img clasName="ListImage" src={course.course_image}
-                  alt={course.course_name}/>
+                <button> Click for more detail</button>
+                {/* <p><b>Course Description: </b>{course.course_desc}</p>
+                <p><b>Course ID: </b>{course.course_id}</p>
+                <p><b>Course Level:</b>{course.course_level}</p> 
+                <img className="ListImage" src={course.course_image}
+                  alt={course.course_name}/> */}
               </li>
             </Link>
           );

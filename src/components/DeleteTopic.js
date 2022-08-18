@@ -3,18 +3,17 @@ import {  deleteTopicApi, getTopicsApi } from "../utils/api";
 
 function DeleteTopic(props) {
   const deleteTopicButton = () => {
-    console.log(props.comment_id);
-    deleteTopicApi(props.topics_id).then(() => {
-      getTopicsApi(props.topic_id).then((comments) => {
-        props.setComments(comments);
+    console.log(props.topic_id);
+    deleteTopicApi(props.topic_id).then(() => {
+      getTopicsApi(props.topic_id).then((topics) => {
+        props.setTopic(topics);
       });
     });
   };
 
   return (
     <div>
-      return{" "}
-      <button onClick={() => deleteTopicButton()}>Delete Topic</button>;
+      <button onClick={() => deleteTopicButton()}>Delete Topic</button>
     </div>
   );
 }

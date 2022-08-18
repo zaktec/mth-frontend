@@ -1,11 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {  getSingleCourseApi } from "../utils/api";
+import { getSingleCourseApi } from "../utils/api";
 import EditCourse from "./EditCourse";
 import DeleteCourse from "./DeleteCourse";
-
-
 
 function SingleCourse() {
   const { course_id } = useParams();
@@ -20,10 +18,10 @@ function SingleCourse() {
   }, [course_id]);
 
   return (
-    <main>
+    <main className="SingleCoursePage">
       <h1>Single Course Page</h1>
-      <ul className="List">
-        <li className="List__card">
+      <ul className="CourseList">
+        <li className="CourseList__card">
           <p>
             <b>Course Name: </b> {course.course_name}
           </p>
@@ -48,14 +46,16 @@ function SingleCourse() {
             src={course.course_image}
             alt={course.course_name}
           />
-          <EditCourse 
-          course_id={course.course_id} 
-          setCourseName= {setCourseName}/>
 
-<DeleteCourse 
-          course_id={course.course_id} 
-          setCourseName= {setCourseName}/>
-         
+          <DeleteCourse
+            course_id={course.course_id}
+            setCourseName={setCourse}
+          />
+
+          <EditCourse
+            course_id={course.course_id}
+            setCourseName={setCourseName}
+          />
         </li>
       </ul>
     </main>

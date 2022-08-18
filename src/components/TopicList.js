@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import { getTopics, getTopicsApi } from "../utils/api";
+import { getTopicsApi } from "../utils/api";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 
@@ -31,12 +31,12 @@ function TopicList() {
                 <Link key={topic.topic_id} to={`/topics/${topic.topic_id}`}>
                   <li className="List__card">
                     <p><b>Topic Name: </b> {topic.topic_name}</p>
-                    <p><b>Topic Description: </b>{topic.topic_desc}</p>
-                    <p><b>Topic ID: </b>{topic.topic_id}</p>
                     <p><b>Topic Code: </b>{topic.topic_code}</p>
-                    <p><b>Topic Level:</b>{topic.topic_level}</p>
-                    <img clasName="ListImage" src={topic.topic_image}
-                      alt={topic.topic_name}/>
+                    <button> Click for more detail</button>
+                   {/*  <p><b>Topic Description: </b>{topic.topic_desc}</p>
+                    <p><b>Topic ID: </b>{topic.topic_id}</p>
+                    <p><b>Topic Index:</b>{topic.topic_index}</p>
+                    <p><b>Topic Course Id:</b>{topic.topic_course_id}</p> */}
                   </li>
                 </Link>
               );

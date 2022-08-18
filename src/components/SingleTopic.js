@@ -1,20 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {  getSingleTopicApi } from "../utils/api";
-import EditCourse from "./EditCourse";
-import DeleteCourse from "./DeleteCourse";
-
+import { getSingleTopicApi } from "../utils/api";
+import EditTopic from "./EditTopic";
+import DeleteTopic from "./DeleteTopic";
 
 function SingleTopic() {
-const { topic_id } = useParams();
-  const [topic, settopic] = useState({});
+  const { topic_id } = useParams();
+  const [topic, setTopic] = useState({});
   const [topicName, setTopicName] = useState([]);
 
   useEffect(() => {
     getSingleTopicApi(topic_id).then((res) => {
       console.log(res);
-      settopic(res);
+      setTopic(res);
     });
   }, [topic_id]);
   return (
@@ -26,39 +25,34 @@ const { topic_id } = useParams();
             <b>Topic Name: </b> {topic.topic_name}
           </p>
           <p>
-            <b>topic Description: </b>
+            <b>Topic Description: </b>
             {topic.topic_desc}
           </p>
           <p>
-            <b>topic ID: </b>
+            <b>Topic ID: </b>
             {topic.topic_id}
           </p>
           <p>
-            <b>topic Code: </b>
+            <b>Topic Code: </b>
             {topic.topic_code}
           </p>
           <p>
-            <b>topic Level:</b>
-            {topic.topic_level}
+            <b>Topic Index:</b>
+            {topic.topic_index}
           </p>
-          <img
-            clasName="ListImage"
-            src={topic.topic_image}
-            alt={topic.topic_name}
+          <p>
+            <b>Topic Course ID:</b>
+            {topic.topic_course_id}
+          </p>
+
+          <DeleteTopic topic_id={topic.topic_id} setTopic={setTopic} 
           />
 
-<EditCourse 
-          course_id={topic.topic_id} 
-          setCourseName= {setTopicName}/>
-
-<DeleteCourse 
-          course_id={topic.topic_id} 
-          setCourseName= {setTopicName}/>
-        
+          <EditTopic topic_id={topic.topic_id} setTopicName={setTopicName} />
         </li>
       </ul>
     </main>
   );
 }
 
-export default SingleTopic
+export default SingleTopic;

@@ -68,28 +68,39 @@ export const patchCourseApi = (course_id) => {
 
 export const deleteTopicApi = (topic_id) => {
   return mthApi.delete(`/topics/${topic_id}`).then(({ data }) => {
-    return data.topics;
+    console.log(data);
+    return data.topic;
   });
 };
 
 export const deleteCourseApi = (course_id) => {
   return mthApi.delete(`/courses/${course_id}`).then(({ data }) => {
-    return data.topics;
+    return data.course;
   });
 };
 
-// export const postCommentApi = (article_id, resBody) => {
-//   return newsApi.post
-//   (`/articles/${article_id}/comments`, resBody)
-//   .then(({data}) => {
-//     return data.comments;
-//   });
+export const postCourseApi = (course_id, resBody) => {
+  return mthApi.post
+  (`/courses/${course_id}`, resBody)
+  .then(({data}) => {
+    return data.course;
+  });
+};
 
-// export const getCommentApi = (article_id) => {
-//   return newsApi.get(`/articles/${article_id}/comments`).then(({data}) => {
-//       //console.log(data)
-//     return data.comments;
-//   });
-// };
+//  student Api 
 
-// //"DELETE /api/comments/:comment_id"
+
+export const getStudents = () => {
+  return mthApi.get
+  (`/students`)
+  .then(({data}) => {
+    return data.students;
+  });
+};
+
+export const getSingleStudentApi = (student_id) => {
+  return mthApi.get(`/students/${student_id}`).then((res) => {
+    //console.log(res)
+    return res.data.student;
+  });
+};

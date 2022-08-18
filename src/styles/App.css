@@ -38,7 +38,14 @@
   padding: 1em;
 }
 
-.List {
+.h1 {
+  font-size: 1em;
+  border-block: black;
+}
+
+/* Courses styles   */
+
+.CourseList {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -46,7 +53,7 @@
   padding: 0;
   list-style-type: none;
 }
-.List__card {
+.CourseList__card {
   border: 1px solid black;
   margin: 1em;
 
@@ -56,10 +63,15 @@
   font-size: 2em;
 }
 
-.h1 {
-  font-size: 1em;
-  border-block: black;
+
+
+
+/* component box  */
+
+.SingleCoursePage {
+  border: 1px solid red;
 }
+
 .CourseListPage {
   border: 1px solid red;
 }
@@ -82,5 +94,28 @@
 }
 .HomePage {
   border: 1px solid blue;
+  padding: 1em;
+}
+.StudentPage {
+  border: 1px solid blue;
+  padding: 1em;
+}
+
+
+
+/* Student Page   */
+
+.Students__list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  list-style-type: none;
+}
+.Student__card {
+  border: 1px solid black;
+  margin: 1em;
+
   padding: 1em;
 }
