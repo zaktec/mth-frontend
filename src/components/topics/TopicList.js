@@ -1,8 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from "react";
-import { getTopicsApi } from "../utils/api";
+import { getTopicsApi } from '../../utils/api';
 import { Link } from "react-router-dom";
-import Search from "./Search";
+import Search from "../Search";
 
 
 function TopicList() {

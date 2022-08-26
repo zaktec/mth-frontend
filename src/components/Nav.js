@@ -15,7 +15,7 @@ const Nav = () => {
       <Link className="Nav__Link" to="/topics">
       |  Topics
       </Link>
-      <Link className="Nav__Link" to="/students">
+      <Link className="Nav__Link" to="/studentlist">
       |  Students
       </Link>
       <Link className="Nav__Link" to="/students">

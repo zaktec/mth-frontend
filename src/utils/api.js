@@ -29,6 +29,20 @@ export const getCoursesApi = () => {
     });
 };
 
+
+export const getStudentsApi = () => {
+  return mthApi
+    .get(`/students`, {
+      //params: { article_topic: topic_name, sort_by },
+    })
+    .then(({ data }) => {
+      //console.log(data)
+      return data.students;
+    });
+};
+
+
+
 export const getSingleCourseApi = (course_id) => {
   return mthApi.get(`/courses/${course_id}`, {}).then(({ data }) => {
     //console.log(data)
@@ -104,3 +118,18 @@ export const getSingleStudentApi = (student_id) => {
     return res.data.student;
   });
 };
+
+export const patchStudentApi = (student_id, resBody) => {
+  console.log(resBody)
+  return mthApi.patch(`/students/${student_id}`, resBody)
+  
+  .then((res) => {
+      console.log(res.data);
+      return res.data.updatedCourses;
+    });
+};
+
+
+
+
+

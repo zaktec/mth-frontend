@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleCourseApi } from "../utils/api";
+import { getSingleCourseApi } from "../../utils/api";
 import EditCourse from "./EditCourse";
 import DeleteCourse from "./DeleteCourse";
 

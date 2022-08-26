@@ -1,22 +1,37 @@
 import React from "react";
+import "../../styles/App.css";
 import { useEffect, useState } from "react";
-import { getStudents } from "../utils/api";
+import { getStudents } from '../../utils/api';
 import { Link } from "react-router-dom";
+import PostStudent from "./PostStudent";
 
-const StudentList = () => {
-  const [students, setStudents] = useState([]);
+const StudentList = (props) => {
+  console.log(props)
+ const { SortBy } = props
+  const [isLoading, setIsLoading] = useState(true);
+  const [studentList, setStudentList] = useState([]);
 
   useEffect(() => {
-    getStudents().then((studentsFromApi) => {
-      setStudents(studentsFromApi);
+    getStudents(SortBy).then((studentsFromApi) => {
+      setStudentList(studentsFromApi);
+      setIsLoading(false);
+      
     });
-  }, []);
-console.log(students)
+  }, [SortBy]);
+
+if (isLoading) return <p>Loading....</p>;
+
   return (
     <main className="StudentPage">
       <h2>Students</h2>
       <ul className="Students__list">
-        {students.map((student) => {
+
+      <PostStudent
+            student_id={studentList.student_id}
+            setStudents={setStudentList}
+          />
+
+        {studentList.map((student) => {
           return (
             <Link key={student.student_id} to={`/students/${student.student_id}`}>
             <li key={student.student_id} className="Student__card">

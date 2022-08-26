@@ -1,5 +1,5 @@
 import React from "react";
-import {  deleteTopicApi, getTopicsApi } from "../utils/api";
+import {  deleteTopicApi, getTopicsApi } from '../../utils/api';
 
 function DeleteTopic(props) {
   const deleteTopicButton = () => {

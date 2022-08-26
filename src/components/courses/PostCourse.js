@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postCourseApi } from '../utils/api'
+import { postCourseApi } from '../../utils/api'
 
 function PostCourse(props) {
     const { course_id, setCourseName } = props;

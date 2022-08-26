@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleTopicApi } from "../utils/api";
+import { getSingleTopicApi } from "../../utils/api";
 import EditTopic from "./EditTopic";
 import DeleteTopic from "./DeleteTopic";
 
