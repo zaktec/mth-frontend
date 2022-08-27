@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "../../styles/App.css";
-import StudentList from "./StudentList";
+import TopicList from "./TopicList";
 
-const SortStudents = () => {
-  const [sortBy, setSortBy] = useState("student_id");
+const SortTopics = () => {
+  const [sortBy, setSortBy] = useState("topic_id");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,27 +17,26 @@ const SortStudents = () => {
   return (
     <main className="SortStudentPage">
       <div>
-        <h1> Sort Student List </h1>
-        <p> Choose a column to sort the article list </p>
+        <h1> Sort Topic List </h1>
+        <p> Choose a column to sort the topic list </p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="categories">Choose a category</label>
           <select name="categories" id="categories" onChange={handleChange}>
             <option value="All">All</option>
-            <option value="student_firstname">FirstName</option>
-            <option value="student_lastname">LastName</option>
-            <option value="student_active">Active</option>
-            <option value="student_grade">Grade</option>
-            <option value="student_targetgrade">Target Grade</option>
-            <option value="student_progressbar">Progress Bar</option>
+            <option value="topic_index">TopicIndex</option>
+            <option value="topic_code">TopicCode</option>
+            <option value="topic_name">TopicName</option>
+            <option value="topic_course_id">TopicCourseID</option>
           </select>
           <br></br>
           <input type="submit" value="Submit" />
         </form>
         <p>Click the "Submit" button .</p>
       </div>
-      <StudentList sortBy={sortBy} />
+      
+      <TopicList sortBy={sortBy} />
     </main>
   );
 };
 
-export default SortStudents;
+export default SortTopics;

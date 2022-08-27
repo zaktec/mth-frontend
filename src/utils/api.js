@@ -18,10 +18,12 @@ export const getEndpointApi = () => {
   });
 };
 
-export const getCoursesApi = () => {
+////  Courses Api
+
+export const getCoursesApi = (sortBy) => {
   return mthApi
     .get(`/courses`, {
-      //params: { article_topic: topic_name, sort_by },
+      params: { sortBy },
     })
     .then(({ data }) => {
       //console.log(data)
@@ -29,38 +31,10 @@ export const getCoursesApi = () => {
     });
 };
 
-
-export const getStudentsApi = () => {
-  return mthApi
-    .get(`/students`, {
-      //params: { article_topic: topic_name, sort_by },
-    })
-    .then(({ data }) => {
-      //console.log(data)
-      return data.students;
-    });
-};
-
-
-
 export const getSingleCourseApi = (course_id) => {
   return mthApi.get(`/courses/${course_id}`, {}).then(({ data }) => {
     //console.log(data)
     return data.course;
-  });
-};
-
-export const getTopicsApi = () => {
-  return mthApi.get("/topics").then((res) => {
-    // console.log(res)
-    return res.data.topics;
-  });
-};
-
-export const getSingleTopicApi = (topic_id) => {
-  return mthApi.get(`/topics/${topic_id}`).then((res) => {
-    //console.log(res)
-    return res.data.topic;
   });
 };
 
@@ -80,13 +54,6 @@ export const patchCourseApi = (course_id) => {
     });
 };
 
-export const deleteTopicApi = (topic_id) => {
-  return mthApi.delete(`/topics/${topic_id}`).then(({ data }) => {
-    console.log(data);
-    return data.topic;
-  });
-};
-
 export const deleteCourseApi = (course_id) => {
   return mthApi.delete(`/courses/${course_id}`).then(({ data }) => {
     return data.course;
@@ -101,15 +68,45 @@ export const postCourseApi = (course_id, resBody) => {
   });
 };
 
+////  Topic Api
+
+
+export const getTopicsApi = (sortBy) => {
+  return mthApi.get(`/topics`, {
+    params: { sortBy }, 
+  })
+    .then(({ data}) => {
+    // console.log(res)
+    return data.topics;
+  });
+};
+
+export const getSingleTopicApi = (topic_id) => {
+  return mthApi.get(`/topics/${topic_id}`).then((res) => {
+    //console.log(res)
+    return res.data.topic;
+  });
+};
+
+
+export const deleteTopicApi = (topic_id) => {
+  return mthApi.delete(`/topics/${topic_id}`).then(({ data }) => {
+    console.log(data);
+    return data.topic;
+  });
+};
+
 //  student Api 
 
-
-export const getStudents = () => {
-  return mthApi.get
-  (`/students`)
-  .then(({data}) => {
-    return data.students;
-  });
+export const getStudentsApi = (sortBy) => {
+  return mthApi
+    .get(`/students`, {
+      params: { sortBy },
+    })
+    .then(({ data }) => {
+      //console.log(data)
+      return data.students;
+    });
 };
 
 export const getSingleStudentApi = (student_id) => {

@@ -5,19 +5,20 @@ import { Link } from "react-router-dom";
 import PostCourse from "./PostCourse";
 import Search from "../Search";
 
-function CourseList() {
+function CourseList(props) {
   const [coursesList, setCoursesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [course, setCourse] = useState({});
+  const { SortBy } =props
 
   useEffect(() => {
-    getCoursesApi().then((coursesFromApi) => {
+    getCoursesApi(SortBy).then((coursesFromApi) => {
       console.log(coursesFromApi);
       setCoursesList(coursesFromApi);
       setIsLoading(false);
     });
-  }, []);
+  }, [SortBy]);
 
   if (isLoading) return <p>Loading....</p>;
 

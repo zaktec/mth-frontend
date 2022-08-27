@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/App.css";
+import "../../styles/App.css";
 
 const Nav = () => {
   return (
@@ -9,10 +9,10 @@ const Nav = () => {
       <Link className="Nav__Link" to="/">
       |   Home 
       </Link>
-      <Link className="Nav__Link" to="/courses">
+      <Link className="Nav__Link" to="/courselist">
       |  Courses 
       </Link>
-      <Link className="Nav__Link" to="/topics">
+      <Link className="Nav__Link" to="/topiclist">
       |  Topics
       </Link>
       <Link className="Nav__Link" to="/studentlist">

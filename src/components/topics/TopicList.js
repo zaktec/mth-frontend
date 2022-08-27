@@ -5,15 +5,19 @@ import { Link } from "react-router-dom";
 import Search from "../Search";
 
 
-function TopicList() {
+function TopicList(props) {
     const [topicsList, setTopicList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
+    const { SortBy } = props
+
+console.log(props)
+
 
     useEffect(() => {
-        getTopicsApi().then((res) => {
-          console.log(res);
-          setTopicList(res);
+        getTopicsApi(SortBy).then((topicsFromApi) => {
+          console.log(topicsFromApi);
+          setTopicList(topicsFromApi);
           setIsLoading(false);
         });
       }, []);

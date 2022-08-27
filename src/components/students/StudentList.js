@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/App.css";
 import { useEffect, useState } from "react";
-import { getStudents } from '../../utils/api';
+import { getStudentsApi } from '../../utils/api';
 import { Link } from "react-router-dom";
 import PostStudent from "./PostStudent";
 
@@ -12,12 +12,15 @@ const StudentList = (props) => {
   const [studentList, setStudentList] = useState([]);
 
   useEffect(() => {
-    getStudents(SortBy).then((studentsFromApi) => {
+    getStudentsApi(SortBy).then((studentsFromApi) => {
       setStudentList(studentsFromApi);
       setIsLoading(false);
       
+      
     });
   }, [SortBy]);
+  console.log("Studnetlist>>",studentList)
+  console.log(studentList.student_id)
 
 if (isLoading) return <p>Loading....</p>;
 
@@ -27,7 +30,7 @@ if (isLoading) return <p>Loading....</p>;
       <ul className="Students__list">
 
       <PostStudent
-            student_id={studentList.student_id}
+        
             setStudents={setStudentList}
           />
 
