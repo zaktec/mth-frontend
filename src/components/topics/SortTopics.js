@@ -3,7 +3,7 @@ import "../../styles/App.css";
 import TopicList from "./TopicList";
 
 const SortTopics = () => {
-  const [sortBy, setSortBy] = useState("topic_id");
+  const [sortBy, setSortBy] = useState("topic_name");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,7 +13,7 @@ const SortTopics = () => {
     console.log(event.target.value);
     setSortBy(event.target.value);
   };
-
+ console.log(sortBy)
   return (
     <main className="SortStudentPage">
       <div>

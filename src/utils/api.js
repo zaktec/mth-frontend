@@ -21,12 +21,13 @@ export const getEndpointApi = () => {
 ////  Courses Api
 
 export const getCoursesApi = (sortBy) => {
+  console.log(sortBy)
   return mthApi
     .get(`/courses`, {
-      params: { sortBy },
+      params: { sort_by: sortBy },
     })
     .then(({ data }) => {
-      //console.log(data)
+      console.log(data)
       return data.courses;
     });
 };
@@ -72,11 +73,15 @@ export const postCourseApi = (course_id, resBody) => {
 
 
 export const getTopicsApi = (sortBy) => {
-  return mthApi.get(`/topics`, {
-    params: { sortBy }, 
-  })
-    .then(({ data}) => {
-    // console.log(res)
+  console.log("sort", sortBy)
+  let path = `topics`
+  if(sortBy) path += `/?sort_by=${sortBy}`;
+  // return mthApi.get(`/topics`, {
+  //   params: { sort_by:sortBy }, 
+  // })
+  //console.log(path)
+   return mthApi.get(path).then(({ data}) => {
+     console.log(data.topics)
     return data.topics;
   });
 };

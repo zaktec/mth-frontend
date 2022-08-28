@@ -2,31 +2,31 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import { getTopicsApi } from '../../utils/api';
 import { Link } from "react-router-dom";
-import Search from "../Search";
+//import Search from "../Search";
 
 
 function TopicList(props) {
     const [topicsList, setTopicList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
-    const { SortBy } = props
+    // const [searchTerm, setSearchTerm] = useState("");
+    //const { SortBy } = props.sortBy
 
-console.log(props)
+//console.log(">>>",SortBy)
 
 
     useEffect(() => {
-        getTopicsApi(SortBy).then((topicsFromApi) => {
+        getTopicsApi(props.sortBy).then((topicsFromApi) => {
           console.log(topicsFromApi);
           setTopicList(topicsFromApi);
           setIsLoading(false);
         });
-      }, []);
+      }, [props.sortBy]);
     
       if (isLoading) return <p>Loading....</p>;
 
     return (
         <main className="TopicListPage">
-          <Search setSearchTerm={setSearchTerm} />
+          {/* <Search setSearchTerm={setSearchTerm} /> */}
           <h1 className="List__h1"> TopicList </h1>
     
           <ul className="List">
