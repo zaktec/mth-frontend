@@ -7,20 +7,21 @@ import PostStudent from "./PostStudent";
 
 const StudentList = (props) => {
   console.log(props)
- const { SortBy } = props
   const [isLoading, setIsLoading] = useState(true);
   const [studentList, setStudentList] = useState([]);
 
+  
   useEffect(() => {
-    getStudentsApi(SortBy).then((studentsFromApi) => {
+    getStudentsApi(props.sortBy).then((studentsFromApi) => {
       setStudentList(studentsFromApi);
+      console.log(studentsFromApi)
       setIsLoading(false);
       
       
     });
-  }, [SortBy]);
-  console.log("Studnetlist>>",studentList)
-  console.log(studentList.student_id)
+  }, [props.sortBy]);
+  // console.log("Studnetlist>>",studentList)
+  // console.log(studentList.student_id)
 
 if (isLoading) return <p>Loading....</p>;
 
@@ -29,16 +30,22 @@ if (isLoading) return <p>Loading....</p>;
       <h2>Students</h2>
       <ul className="Students__list">
 
-      <PostStudent
+      {/* <PostStudent
         
             setStudents={setStudentList}
-          />
+          /> */}
 
         {studentList.map((student) => {
           return (
             <Link key={student.student_id} to={`/students/${student.student_id}`}>
             <li key={student.student_id} className="Student__card">
-              <h4> {student.student_firstname} {student.student_lastname}</h4>
+            <p><b>Student ID :</b> {student.student_id}</p>
+            <p>
+            <b>Student Firstname :</b> {student.student_firstname}
+          </p>
+          <p>
+            <b>Student Lastname :</b> {student.student_lastname}
+          </p>
              
               {/* <img
                 className="Student__avatar-img"

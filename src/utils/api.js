@@ -104,12 +104,13 @@ export const deleteTopicApi = (topic_id) => {
 //  student Api 
 
 export const getStudentsApi = (sortBy) => {
+  console.log("sort", sortBy)
   return mthApi
     .get(`/students`, {
-      params: { sortBy },
+      params: { sort_by: sortBy },
     })
     .then(({ data }) => {
-      //console.log(data)
+      console.log(data)
       return data.students;
     });
 };
@@ -132,6 +133,37 @@ export const patchStudentApi = (student_id, resBody) => {
 };
 
 
+// Tutor Api 
+
+export const getTutorApi = (sortBy) => {
+  console.log(sortBy)
+  return mthApi
+    .get(`/tutors`, {
+      params: { sort_by: sortBy },
+    })
+    .then(({ data }) => {
+      console.log(data)
+      return data.tutors;
+    });
+};
+export const getSingleTutorApi = (tutor_id) => {
+  return mthApi.get(`/tutors/${tutor_id}`).then((res) => {
+    console.log(res)
+    return res.data.tutor;
+  });
+};
 
 
+// Lesson Api 
 
+export const getLessonApi = (sortBy) => {
+ 
+  return mthApi
+    .get(`/tutors`, {
+      params: { sort_by: sortBy },
+    })
+    .then(({ data }) => {
+      console.log(data)
+      return data.lessons;
+    });
+};

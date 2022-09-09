@@ -22,7 +22,7 @@ const SortCourses = () => {
         <form onSubmit={handleSubmit}>
           <label htmlFor="categories">Choose a category</label>
           <select name="categories" id="categories" onChange={handleChange}>
-            <option value="All">All</option>
+            <option value="course_id">All</option>
             <option value="course_name">CourseName</option>
             <option value="course_code">CourseCode</option>
             <option value="course_level">CourseLevel</option>

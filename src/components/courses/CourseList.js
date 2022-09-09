@@ -3,31 +3,31 @@ import { useEffect, useState } from "react";
 import { getCoursesApi } from '../../utils/api'
 import { Link } from "react-router-dom";
 import PostCourse from "./PostCourse";
-import Search from "../Search";
+// import Search from "../Search";
 
 function CourseList(props) {
   const [coursesList, setCoursesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const [course, setCourse] = useState({});
-  const { SortBy } =props
+  // const { SortBy } =props
 
   useEffect(() => {
-    getCoursesApi(SortBy).then((coursesFromApi) => {
+    getCoursesApi(props.sortBy).then((coursesFromApi) => {
       console.log(coursesFromApi);
       setCoursesList(coursesFromApi);
       setIsLoading(false);
     });
-  }, [SortBy]);
+  }, [props.sortBy]);
 
   if (isLoading) return <p>Loading....</p>;
 
   return (
     <main className="CourseListPage">
-  <Search setSearchTerm={setSearchTerm} />
+  {/* <Search setSearchTerm={setSearchTerm} /> */}
      
 
-      <h1 className="List__h1"> CourseList </h1>
+      <h1 className="CourseList__h1"> CourseList </h1>
       
       <PostCourse
             course_id={course.course_id}
@@ -35,11 +35,11 @@ function CourseList(props) {
           />
 
 
-      <ul className="List">
+      <ul className="Courses__List">
         {coursesList.map((course) => {
           return (
             <Link key={course.course_id} to={`/courses/${course.course_id}`}>
-              <li className="List__card">
+              <li className="CourseList__card">
                 <p><b>Course Name: </b> {course.course_name}</p>
                 <p><b>Course Code: </b>{course.course_code}</p>
                 <button> Click for more detail</button>

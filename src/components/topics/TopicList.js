@@ -29,11 +29,11 @@ function TopicList(props) {
           {/* <Search setSearchTerm={setSearchTerm} /> */}
           <h1 className="List__h1"> TopicList </h1>
     
-          <ul className="List">
+          <ul className="Topic__List">
             {topicsList.map((topic) => {
               return (
                 <Link key={topic.topic_id} to={`/topics/${topic.topic_id}`}>
-                  <li className="List__card">
+                  <li className="TopicList__card">
                     <p><b>Topic Name: </b> {topic.topic_name}</p>
                     <p><b>Topic Code: </b>{topic.topic_code}</p>
                     <button> Click for more detail</button>

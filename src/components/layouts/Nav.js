@@ -18,10 +18,10 @@ const Nav = () => {
       <Link className="Nav__Link" to="/studentlist">
       |  Students
       </Link>
-      <Link className="Nav__Link" to="/students">
+      <Link className="Nav__Link" to="/tutorlist">
       |  Tutors
       </Link>
-      <Link className="Nav__Link" to="/topics">
+      <Link className="Nav__Link" to="/lessonlist">
       |  Lessons 
       </Link>
       <Link className="Nav__Link" to="/topics">

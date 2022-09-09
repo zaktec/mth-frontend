@@ -43,25 +43,6 @@
   border-block: black;
 }
 
-/* Courses styles   */
-
-.CourseList {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 0;
-  list-style-type: none;
-}
-.CourseList__card {
-  border: 1px solid black;
-  margin: 1em;
-
-  padding: 1em;
-}
-.List__h1 {
-  font-size: 2em;
-}
 
 
 
@@ -72,9 +53,7 @@
   border: 1px solid red;
 }
 
-.CourseListPage {
-  border: 1px solid red;
-}
+
 .SearchPage {
   border: 1px solid blue;
   padding: 1em;
@@ -96,14 +75,40 @@
   border: 1px solid blue;
   padding: 1em;
 }
-.StudentPage {
-  border: 1px solid blue;
+
+
+/* CourseList.js  styles   */
+
+.CourseListPage {
+  border: 1px solid red;
+}
+
+.Courses__List {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  list-style-type: none;
+}
+.CourseList__card {
+  border: 1px solid black;
+  margin: 1em;
+
   padding: 1em;
+}
+.CourseList__h1 {
+  font-size: 2em;
 }
 
 
 
-/* Student Page   */
+/* StudentList.js Page   */
+
+.StudentPage {
+  border: 1px solid blue;
+  padding: 1em;
+}
 
 .Students__list {
   display: flex;
@@ -116,6 +121,47 @@
 .Student__card {
   border: 1px solid black;
   margin: 1em;
-
   padding: 1em;
+}
+
+
+/* TopicList.js Page   */
+
+.TopicListPage {
+  border: 1px solid blue;
+  padding: 1em;
+}
+
+.Topic__List {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  list-style-type: none;
+}
+.TopicList__card {
+  border: 1px solid black;
+  margin: 1em;
+  padding: 1em;
+}
+
+
+/* SortStudent.js    */
+
+.SortStudentPage {
+  border: 1px solid red;
+}
+
+/* SortTopics.js   */
+
+.SortStudentPage {
+  border: 1px solid red;
+}
+
+/* SortCourse.js   */
+
+.SortCoursePage {
+  border: 1px solid black;
+  
 }
