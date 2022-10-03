@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "../../styles/App.css";
-import LessonList from "./LessonList";
+import QuizList from "./QuizList";
 
-const SortLessons = () => {
-  const [sortBy, setSortBy] = useState("lesson_id");
+const SortQuizzes = () => {
+  const [sortBy, setSortBy] = useState("quiz_id");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -15,27 +15,26 @@ const SortLessons = () => {
   };
 
   return (
-    <main className="SortLessonPage">
+    <main className="SortQuizPage">
       <div>
-        <h1> Sort Lesson List </h1>
-        <p> Choose a column to sort the Tutor list </p>
+        <h1> Sort Quizzes List </h1>
+        <p> Choose a column to sort the quiz list </p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="categories">Choose a category</label>
           <select name="categories" id="categories" onChange={handleChange}>
-            <option value="lesson_id">All</option>
-            <option value="lesson_name">LessonName</option>
-            <option value="lesson_code">LessonCode</option>
-            <option value="lesson_topic_id">LessonTopicID</option>
+            <option value="quiz_id">All</option>
+            <option value="quiz_name">CourseName</option>
+            <option value="quiz_code">CourseCode</option>
+            <option value="quiz_level">CourseLevel</option>
           </select>
           <br></br>
           <input type="submit" value="Submit" />
         </form>
         <p>Click the "Submit" button .</p>
       </div>
-      <LessonList sortBy={sortBy} />
-  
+      <QuizList sortBy={sortBy} />
     </main>
   );
 };
 
-export default SortLessons;
+export default SortQuizzes;

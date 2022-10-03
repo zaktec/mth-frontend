@@ -57,6 +57,7 @@ export const patchCourseApi = (course_id) => {
 
 export const deleteCourseApi = (course_id) => {
   return mthApi.delete(`/courses/${course_id}`).then(({ data }) => {
+    console.log("data",data)
     return data.course;
   });
 };
@@ -81,7 +82,7 @@ export const getTopicsApi = (sortBy) => {
   // })
   //console.log(path)
    return mthApi.get(path).then(({ data}) => {
-     console.log(data.topics)
+     console.log("alldata",data.topics)
     return data.topics;
   });
 };
@@ -159,11 +160,83 @@ export const getSingleTutorApi = (tutor_id) => {
 export const getLessonApi = (sortBy) => {
  
   return mthApi
-    .get(`/tutors`, {
+    .get(`/lessons`, {
       params: { sort_by: sortBy },
     })
     .then(({ data }) => {
       console.log(data)
       return data.lessons;
     });
+};
+
+export const getSingleLessonApi = (lesson_id) => {
+  return mthApi.get(`/lessons/${lesson_id}`).then((res) => {
+    console.log(res)
+    return res.data.lesson;
+  });
+};
+
+export const deleteLessonApi = (lesson_id) => {
+  return mthApi.delete(`/lessons/${lesson_id}`).then(({ data }) => {
+    console.log(data);
+    return data.lesson;
+  });
+};
+
+
+// Quiz Api 
+
+
+export const getQuizApi = (sortBy) => {
+ 
+  return mthApi
+    .get(`/quizzes`, {
+      params: { sort_by: sortBy },
+    })
+    .then(({ data }) => {
+      console.log(data)
+      return data.quizzes;
+    });
+};
+export const getSingleQuizApi = (quiz_id) => {
+  return mthApi.get(`/quizzes/${quiz_id}`).then((res) => {
+    console.log(res)
+    return res.data.quiz;
+  });
+};
+
+
+export const deleteQuizApi = (quiz_id) => {
+  return mthApi.delete(`/quizzes/${quiz_id}`).then(({ data }) => {
+    console.log(data);
+    return data.quiz;
+  });
+};
+// Question Api 
+
+
+export const getQuestionApi = (sortBy) => {
+ 
+  return mthApi
+    .get(`/questions`, {
+      params: { sort_by: sortBy },
+    })
+    .then(({ data }) => {
+      console.log(data)
+      return data.questions;
+    });
+};
+export const getSingleQuestionApi = (ques_id) => {
+  return mthApi.get(`/questions/${ques_id}`).then((res) => {
+    console.log(res)
+    return res.data.question;
+  });
+};
+
+
+export const deleteQuestionApi = (ques_id) => {
+  return mthApi.delete(`/questions/${ques_id}`).then(({ data }) => {
+    console.log(data);
+    return data.question;
+  });
 };

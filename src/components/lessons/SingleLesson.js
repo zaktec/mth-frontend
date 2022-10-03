@@ -2,7 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleLessonApi } from "../../utils/api";
-import EditStudent from "./EditStudent";
+import DeleteLesson from "./DeleteLesson";
+
 
 function SingleLesson() {
   const { lesson_id } = useParams();
@@ -45,6 +46,11 @@ function SingleLesson() {
           <p>
             <b>Lesson Topic Id :</b> {lesson.lesson_topic_id}
           </p>
+
+          <DeleteLesson
+            lesson_id={lesson.lesson_id}
+            setLessonName={setLesson}
+          />
          
           {/* <EditStudent student = {student}
            setStudent={setStudent} /> */}

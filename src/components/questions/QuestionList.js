@@ -1,21 +1,20 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getLessonApi } from '../../utils/api'
+import { getQuestionApi } from '../../utils/api'
 import { Link } from "react-router-dom";
 
 // import Search from "../Search";
 
-function LessonList(props) {
-  const [lessonList, setLessonList] = useState([]);
+function QuestionList(props) {
+  const [questionList, setQuestionList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const [searchTerm, setSearchTerm] = useState("");
- 
-  // const { SortBy } =props
+
 
   useEffect(() => {
-    getLessonApi(props.sortBy).then((lessonsFromApi) => {
-      console.log(lessonsFromApi);
-      setLessonList(lessonsFromApi);
+    getQuestionApi(props.sortBy).then((questionFromApi) => {
+      console.log(questionFromApi);
+      setQuestionList(questionFromApi);
       setIsLoading(false);
     });
   }, [props.sortBy]);
@@ -23,11 +22,11 @@ function LessonList(props) {
   if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className="LessonListPage">
+    <main className="QuizListPage">
   {/* <Search setSearchTerm={setSearchTerm} /> */}
      
 
-      <h1 className="LessonList__h1"> Lesson List </h1>
+      <h1 className="CourseList__h1"> QuestionsList </h1>
       
       {/* <PostCourse
             course_id={course.course_id}
@@ -35,15 +34,14 @@ function LessonList(props) {
           /> */}
 
 
-      <ul className="Lesson__List">
-        {lessonList.map((lesson) => {
+      <ul className="Courses__List">
+        {questionList.map((question) => {
           return (
-            <Link key={lesson.lesson_id} to={`/lessons/${lesson.lesson_id}`}>
-              <li className="LessonList__card">
-                <p><b>Lesson Name: </b> {lesson.lesson_name}</p>
-                <p><b>Lesson Code: </b>{lesson.lesson_code}</p>
+            <Link key={question.ques_id} to={`/question/${question.ques_id}`}>
+              <li className="CourseList__card">
+                <p><b>Question Id: </b> {question.ques_id}</p>
+                <p><b>Question Code: </b>{question.ques_body}</p>
                 <button> Click for more detail</button>
-
               </li>
             </Link>
           );
@@ -53,4 +51,4 @@ function LessonList(props) {
   );
 }
 
-export default LessonList;
+export default QuestionList;
