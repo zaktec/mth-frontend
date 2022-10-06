@@ -6,9 +6,9 @@ import { deleteQuestionApi, getCoursesApi } from "../../utils/api";
 function DeleteQuestion(props) {
   const navigate = useNavigate();
   const deleteQuestionButton = () => {
-    console.log(props.lesson_id);
+    console.log(props.question_id);
    
-    deleteQuestionApi(props.lesson_id).then(() =>
+    deleteQuestionApi(props.question_id).then(() =>
 
     {
       //props.setCourse(course);

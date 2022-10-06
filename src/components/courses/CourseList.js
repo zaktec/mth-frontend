@@ -31,7 +31,7 @@ function CourseList(props) {
       
       <PostCourse
             course_id={course.course_id}
-            setCourseName={setCourse}
+            setCourseName={setCoursesList}
           />
 
 

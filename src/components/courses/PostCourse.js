@@ -3,6 +3,7 @@ import { postCourseApi } from '../../utils/api'
 
 function PostCourse(props) {
     const { course_id, setCourseName } = props;
+    console.log(props)
    
     const [displayPost, setPostDisplay] = useState(false);
     const [newCourseName, setNewCourseName] = useState("");
@@ -16,8 +17,9 @@ const handleSubmit = (event) => {
     console.log(newObject);
     postCourseApi(course_id, newObject);
     setCourseName ((currentValue) => {
-      const newCourseList = currentValue.map((course) => {
-        return { ...course };
+      const newCourseList = currentValue.map((course, i) => {
+        return { ...course }
+
       });
       newObject.course_level = 0;
       newObject.course_image = 0;

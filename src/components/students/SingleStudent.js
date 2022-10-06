@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleStudentApi } from "../../utils/api";
+import DeleteStudent from "./DeleteStudent";
 import EditStudent from "./EditStudent";
 
 function SingleStudent() {
@@ -12,7 +13,7 @@ function SingleStudent() {
     
     getSingleStudentApi(student_id).then((res) => {
       setStudent(res);
-      console.log("single",res)
+     
     });
   }, [student_id]);
   console.log(student_id)
@@ -57,6 +58,10 @@ function SingleStudent() {
           <p>
             <b>Student Image :</b> {student.student_image}
           </p>
+
+          <DeleteStudent student_id={student.student_id} 
+          setStudent={setStudent} 
+          />
           <EditStudent student = {student}
            setStudent={setStudent} />
         </li>

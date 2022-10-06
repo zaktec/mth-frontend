@@ -39,10 +39,10 @@ export const getSingleCourseApi = (course_id) => {
   });
 };
 
-export const patchCourseApi = (course_id) => {
+export const patchCourseApi = (course_id, newObject) => {
   return mthApi
     .patch(`/courses/${course_id}`, {
-      course_name: "New MTH GCSE Maths Foundation",
+     course_name: "New MTH GCSE Maths Foundation",
       course_id: 1,
       course_code: "MTH-GF",
       course_desc: "MTH GCSE Maths Foundation Online Course",
@@ -66,7 +66,9 @@ export const postCourseApi = (course_id, resBody) => {
   return mthApi.post
   (`/courses/${course_id}`, resBody)
   .then(({data}) => {
+    console.log(data.course)
     return data.course;
+   
   });
 };
 
@@ -133,6 +135,12 @@ export const patchStudentApi = (student_id, resBody) => {
     });
 };
 
+export const deleteStudentApi = (student_id) => {
+  return mthApi.delete(`/students/${student_id}`).then(({ data }) => {
+    console.log(data);
+    return data.student;
+  });
+};
 
 // Tutor Api 
 
