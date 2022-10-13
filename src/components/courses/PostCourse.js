@@ -2,28 +2,31 @@ import React, { useState } from "react";
 import { postCourseApi } from '../../utils/api'
 
 function PostCourse(props) {
-    const { course_id, setCourseName } = props;
+    const {  setCourseName } = props;
     console.log(props)
    
     const [displayPost, setPostDisplay] = useState(false);
     const [newCourseName, setNewCourseName] = useState("");
     const [newCode, setNewCode] = useState("");
+    const [newCourseLevel, setNewCourseLevel] = useState("");
+    const [newCourseImage, setNewCourseImage] = useState("");
+    const [newCourseDescription, setNewCourseDescription] = useState("");
 
 
 const handleSubmit = (event) => {
     event.preventDefault();
-    const newObject = { course_Name: newCourseName, course_code: newCode };
+    const newObject = { course_name: newCourseName, course_code: newCode, course_desc: newCourseDescription, course_level: newCourseLevel, course_image: newCourseImage };
     console.log(newCourseName, newCode);
+   // newObject.course_image = 0;
+
     console.log(newObject);
-    postCourseApi(course_id, newObject);
+    postCourseApi(newObject);
     setCourseName ((currentValue) => {
       const newCourseList = currentValue.map((course, i) => {
         return { ...course }
 
       });
-      newObject.course_level = 0;
-      newObject.course_image = 0;
-      newObject.course_desc = "created now";
+    
       newCourseList.unshift(newObject);
       console.log(newCourseList)
 
@@ -62,20 +65,20 @@ const handleSubmit = (event) => {
               <input
                 name="newCourse"
                 placeholder="Course Description"
-                onChange={(event) => setNewCourseName(event.target.value)}
-                value={newCourseName}
+                onChange={(event) => setNewCourseDescription(event.target.value)}
+                value={newCourseDescription}
               />
                <input
                 name="newCourse"
                 placeholder="Course Level"
-                onChange={(event) => setNewCourseName(event.target.value)}
-                value={newCourseName}
+                onChange={(event) => setNewCourseLevel(event.target.value)}
+                value={newCourseLevel}
               />
                <input
                 name="newCourse"
                 placeholder="Course Image"
-                onChange={(event) => setNewCourseName(event.target.value)}
-                value={newCourseName}
+                onChange={(event) => setNewCourseImage(event.target.value)}
+                value={newCourseImage}
               />
               
             </label>

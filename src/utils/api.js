@@ -62,15 +62,18 @@ export const deleteCourseApi = (course_id) => {
   });
 };
 
-export const postCourseApi = (course_id, resBody) => {
-  return mthApi.post
-  (`/courses/${course_id}`, resBody)
+export const postCourseApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/courses`, resBody
+  )
   .then(({data}) => {
-    console.log(data.course)
+    console.log(data)
     return data.course;
    
   });
 };
+
+
 
 ////  Topic Api
 
