@@ -9,7 +9,7 @@ function CourseList(props) {
   const [coursesList, setCoursesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const [searchTerm, setSearchTerm] = useState("");
-  const [course, setCourse] = useState({});
+ // const [course, setCourse] = useState({});
   // const { SortBy } =props
 
   useEffect(() => {
@@ -30,9 +30,7 @@ function CourseList(props) {
       <h1 className="CourseList__h1"> CourseList </h1>
       
       <PostCourse
-            course_id={course.course_id}
-            setCourseName={setCoursesList}
-          />
+            setCoursesList={setCoursesList}/>
 
 
       <ul className="Courses__List">
@@ -43,11 +41,6 @@ function CourseList(props) {
                 <p><b>Course Name: </b> {course.course_name}</p>
                 <p><b>Course Code: </b>{course.course_code}</p>
                 <button> Click for more detail</button>
-                {/* <p><b>Course Description: </b>{course.course_desc}</p>
-                <p><b>Course ID: </b>{course.course_id}</p>
-                <p><b>Course Level:</b>{course.course_level}</p> 
-                <img className="ListImage" src={course.course_image}
-                  alt={course.course_name}/> */}
               </li>
             </Link>
           );

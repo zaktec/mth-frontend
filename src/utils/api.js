@@ -194,6 +194,16 @@ export const deleteLessonApi = (lesson_id) => {
   });
 };
 
+export const postLessonApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/lessons`, resBody
+  )
+  .then(({data}) => {
+    return data.lesson;
+
+   
+  });
+};
 
 // Quiz Api 
 
