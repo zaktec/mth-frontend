@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { getQuestionApi } from '../../utils/api'
 import { Link } from "react-router-dom";
+import PostQuestion from "./PostQuestion";
 
 // import Search from "../Search";
 
@@ -28,10 +29,7 @@ function QuestionList(props) {
 
       <h1 className="CourseList__h1"> QuestionsList </h1>
       
-      {/* <PostCourse
-            course_id={course.course_id}
-            setCourseName={setCourse}
-          /> */}
+      <PostQuestion setQuestionList={ setQuestionList}/> 
 
 
       <ul className="Courses__List">

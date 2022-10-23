@@ -107,6 +107,16 @@ export const deleteTopicApi = (topic_id) => {
   });
 };
 
+export const postTopicApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/topics`, resBody
+  )
+  .then(({data}) => {
+    return data.topic; 
+  });
+};
+
+
 //  student Api 
 
 export const getStudentsApi = (sortBy) => {
@@ -142,6 +152,15 @@ export const deleteStudentApi = (student_id) => {
   return mthApi.delete(`/students/${student_id}`).then(({ data }) => {
     console.log(data);
     return data.student;
+  });
+};
+
+export const postStudentApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/students`, resBody
+  )
+  .then(({data}) => {
+    return data.student; 
   });
 };
 
@@ -199,9 +218,7 @@ export const postLessonApi = (resBody) => {
   return mthApi.post(`/lessons`, resBody
   )
   .then(({data}) => {
-    return data.lesson;
-
-   
+    return data.lesson; 
   });
 };
 
@@ -259,5 +276,14 @@ export const deleteQuestionApi = (ques_id) => {
   return mthApi.delete(`/questions/${ques_id}`).then(({ data }) => {
     console.log(data);
     return data.question;
+  });
+};
+
+export const postQuestionApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/questions`, resBody
+  )
+  .then(({data}) => {
+    return data.question; 
   });
 };

@@ -19,21 +19,20 @@ function PostCourse(props) {
       course_level: newCourseLevel,
       course_image: newCourseImage,
     };
-    console.log(newCourseName, newCode);
+   
     // newObject.course_image = 0;
 
-    console.log(newObject);
-    postCourseApi(newObject);
+   postCourseApi(newObject).then((response)=>{
     setCourseList((currentValue) => {
-      const newCourseList = currentValue.map((course, i) => {
+      const newCourseList = currentValue.map((course) => {
         return { ...course };
       });
-
-      newCourseList.unshift(newObject);
+      newCourseList.unshift(response);
       console.log(newCourseList);
-
+      setPostDisplay(false)
       return newCourseList;
     });
+   });  
   };
   return (
     <div>
@@ -58,9 +57,10 @@ function PostCourse(props) {
                 value={newCourseName}
               />
               <p>Please Insert Your course Code </p>
-              <input
+              <input type="number"
+                 min="1" max="15"
                 name="newCode"
-                placeholder="Course Code"
+                placeholder="Nu."
                 onChange={(event) => setNewCode(event.target.value)}
                 value={newCode}
               />

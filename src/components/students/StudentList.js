@@ -30,10 +30,7 @@ if (isLoading) return <p>Loading....</p>;
       <h2>Students</h2>
       <ul className="Students__list">
 
-      {/* <PostStudent
-        
-            setStudents={setStudentList}
-          /> */}
+       <PostStudent setStudents={setStudentList}/> 
 
         {studentList.map((student) => {
           return (

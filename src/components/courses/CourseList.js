@@ -30,7 +30,7 @@ function CourseList(props) {
       <h1 className="CourseList__h1"> CourseList </h1>
       
       <PostCourse
-            setCoursesList={setCoursesList}/>
+            setCourseList={setCoursesList}/>
 
 
       <ul className="Courses__List">
