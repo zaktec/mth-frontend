@@ -185,6 +185,14 @@ export const getSingleTutorApi = (tutor_id) => {
 };
 
 
+export const postTutorApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/tutors`, resBody
+  )
+  .then(({data}) => {
+    return data.tutor; 
+  });
+};
 // Lesson Api 
 
 export const getLessonApi = (sortBy) => {
@@ -248,6 +256,15 @@ export const deleteQuizApi = (quiz_id) => {
   return mthApi.delete(`/quizzes/${quiz_id}`).then(({ data }) => {
     console.log(data);
     return data.quiz;
+  });
+};
+
+export const postQuizApi = (resBody) => {
+  console.log(resBody)
+  return mthApi.post(`/quizzes`, resBody
+  )
+  .then(({data}) => {
+    return data.quiz; 
   });
 };
 // Question Api 

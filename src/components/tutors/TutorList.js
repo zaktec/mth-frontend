@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { getTutorApi } from '../../utils/api'
 import { Link } from "react-router-dom";
+import PostTutor from "./PostTutor";
 
 // import Search from "../Search";
 
@@ -26,13 +27,10 @@ function TutorList(props) {
     <main className="TutorListPage">
   {/* <Search setSearchTerm={setSearchTerm} /> */}
      
-
-      <h1 className="TutorList__h1"> CourseList </h1>
+  <PostTutor setTutorList={setTutorList}/> 
+      <h1 className="TutorList__h1"> TutorList </h1>
       
-      {/* <PostCourse
-            course_id={course.course_id}
-            setCourseName={setCourse}
-          /> */}
+      
 
 
       <ul className="Courses__List">

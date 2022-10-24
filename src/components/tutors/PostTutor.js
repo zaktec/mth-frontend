@@ -1,47 +1,40 @@
 import React, { useState } from "react";
-import { postStudentApi } from "../../utils/api";
+import {  postTutorApi } from "../../utils/api";
 
-function PostStudent(props) {
-  const { setStudentList } = props;
+function PostTutor(props) {
+  const { setTutorList } = props;
   const [displayPost, setPostDisplay] = useState(false);
   const [newStudentActive, setnewStudentActive] = useState(false);
   const [newFirstName, setnewFirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [newPassword, setnewPassword] = useState("");
   const [newImage, setnewImage] = useState("");
-  const [newGrade, setNewGrade] = useState("");
-  const [newNotes, setNewNotes] = useState("");
+
   const [newEmail, setNewTopicDescription] = useState("");
-  const [newTargetGrade, setNewTargetGrade] = useState("");
-  const [newProgressBar, setnewProgressBar] = useState("");
 
   
   const handleSubmit = (event) => {
     event.preventDefault();
     const newObject = {
-      student_firstname: newFirstName,
-      student_lastname: lastName,
-      student_email: newEmail,
-      student_password: newPassword,
-      student_active: newStudentActive,
-        student_grade: newGrade,
-        student_targetgrade: newTargetGrade,
-        student_notes: newNotes,
-        student_progressbar: newProgressBar,
-        student_image: newImage,
+      tutor_firstname:  newFirstName,
+      tutor_lastname:  lastName,
+      tutor_email:  newEmail,
+      tutor_password:  newPassword,
+      tutor_active: newStudentActive,
+      tutor_image: newImage,
     };
    
     // newObject.course_image = 0;
 
-   postStudentApi(newObject).then((response)=>{
-    setStudentList((currentValue) => {
-      const newStudentList = currentValue.map((student) => {
-        return { ...student };
+   postTutorApi(newObject).then((response)=>{
+    setTutorList((currentValue) => {
+      const newTutorList = currentValue.map((tutor) => {
+        return { ...tutor };
       });
-      newStudentList.unshift(response);
-      console.log(newStudentList);
+      newTutorList.unshift(response);
+      console.log(newTutorList);
       setPostDisplay(false)
-      return newStudentList;
+      return newTutorList;
     });
    });  
   };
@@ -53,7 +46,7 @@ function PostStudent(props) {
             return !currentValue;
           })
         }
-      >Add Student
+      >Add Tutor
       </button>
       {displayPost ? (
         <div>
@@ -111,38 +104,7 @@ function PostStudent(props) {
                 </div>
               </fieldset>
              
-              <p>Please Insert Your Grade </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newGrade"
-                placeholder="Nu."
-                onChange={(event) => setNewGrade(event.target.value)}
-                value={newGrade}
-              />
-               <p>Please Insert Your Target grade </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newTargetGrade"
-                placeholder="Nu."
-                onChange={(event) => setNewTargetGrade(event.target.value)}
-                value={newTargetGrade}
-              />
-<p>Please Insert Your notes </p>
-              <input type="text"
-                name="newNotes"
-                placeholder="Insert Notes"
-                onChange={(event) => setNewNotes(event.target.value)}
-                value={newNotes}
-              />
-  <p>Please Insert the progress bar </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newProgressBar"
-                placeholder="Nu."
-                onChange={(event) => setnewProgressBar(event.target.value)}
-                value={newProgressBar}
-              />
-              <p>Please Insert Your student image path </p>
+              <p>Please Insert Your tutor image path </p>
               <input type="text"
                 name="newImage"
                 placeholder="Image Path"
@@ -161,4 +123,4 @@ function PostStudent(props) {
   );
 }
 
-export default PostStudent;
+export default PostTutor;

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { getQuizApi } from '../../utils/api'
 import { Link } from "react-router-dom";
+import PostQuiz from "./PostQuiz";
 
 // import Search from "../Search";
 
@@ -28,10 +29,8 @@ function QuizList(props) {
 
       <h1 className="CourseList__h1"> QuizList </h1>
       
-      {/* <PostCourse
-            course_id={course.course_id}
-            setCourseName={setCourse}
-          /> */}
+       <PostQuiz
+            setQuizList={setQuizList}/> 
 
 
       <ul className="Courses__List">
@@ -42,11 +41,6 @@ function QuizList(props) {
                 <p><b>Quiz Name: </b> {quiz.quiz_name}</p>
                 <p><b>Quiz Code: </b>{quiz.quiz_code}</p>
                 <button> Click for more detail</button>
-                {/* <p><b>Course Description: </b>{course.course_desc}</p>
-                <p><b>Course ID: </b>{course.course_id}</p>
-                <p><b>Course Level:</b>{course.course_level}</p> 
-                <img className="ListImage" src={course.course_image}
-                  alt={course.course_name}/> */}
               </li>
             </Link>
           );

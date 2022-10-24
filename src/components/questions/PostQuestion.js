@@ -104,22 +104,20 @@ function PostQuestion(props) {
                 <div>
                   <input
                     type="checkbox"
-                    id="coding"
                     name="newQuestionCalc"
                     //value="true"
                     onChange={(event) => setnewQuestionCalc(true)}
                     value={newQuestionCalc}
                   />
-                  <label htmlFor="coding">True</label>
+                  <label htmlFor="true">True</label>
                   <input
                     type="checkbox"
-                    id="music"
                     name="newQuestionCalc"
                     //value="false"
                     onChange={(event) => setnewQuestionCalc(true)}
                     value={newQuestionCalc}
                   />
-                  <label htmlFor="music">False</label>
+                  <label htmlFor="false">False</label>
                 </div>
               </fieldset>
 
