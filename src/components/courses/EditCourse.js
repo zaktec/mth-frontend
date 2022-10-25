@@ -2,74 +2,93 @@ import React, { useState } from "react";
 import { patchCourseApi } from '../../utils/api'
 
 function EditCourse(props) {
-    const { course_id, setCourseName } = props;
-   
+    const { course } = props;
     const [displayPost, setPostDisplay] = useState(false);
     const [newCourseName, setNewCourseName] = useState("");
     const [newCode, setNewCode] = useState("");
-
-/* const updateCourse= () =>{
-
-patchCourse(course_id)
-} */
-
-const handleSubmit = (event) => {
-    event.preventDefault();
-    const newObject = { course_Name: newCourseName, course_code: newCode };
-    console.log(newCourseName, newCode);
-    console.log(newObject);
-    patchCourseApi(course_id, newObject);
-    setCourseName ((currentValue) => {
-      const newCourseList = currentValue.map((course) => {
-        return { ...course };
-      });
-      newObject.course_level = 0;
-      newObject.course_image = 0;
-      newObject.course_desc = "created now";
-      newCourseList.unshift(newObject);
-      console.log(newCourseList)
-
-      return newCourseList;
-    });
-  };
+    const [newCourseLevel, setNewCourseLevel] = useState("");
+    const [newCourseImage, setNewCourseImage] = useState("");
+    const [newCourseDescription, setNewCourseDescription] = useState("");
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const newObject = {
+        course_name: newCourseName,
+        course_code: newCode,
+        course_desc: newCourseDescription,
+        course_level: newCourseLevel,
+        course_image: newCourseImage,
+      };
+     
+      // newObject.course_image = 0;
+  
+      patchCourseApi(course.course_id, newObject);
+    };
     return (
-        <div>
-            {/* <button onClick={()=>updateCourse()}> Edit Course {course_id}</button> */}
+      <div>
+        <button
+          onClick={() =>
+            setPostDisplay((currentValue) => {
+              return !currentValue;
+            })
+          }
+        >
+          Edit Course
+        </button>
+        {displayPost ? (
+          <div>
+            <form onSubmit={handleSubmit}>
+              <label>
+                <p>Please Insert Your course Name </p>
+                <input
+                  name="newCourseName"
+                  placeholder={course.course_name}
+                  onChange={(event) => setNewCourseName(event.target.value)}
+                  value={newCourseName}
+                />
+                <p>Please Insert Your course Code </p>
+                <input type="text"
+                  name="newCode"
+                  placeholder={course.course_code}
+                  onChange={(event) => setNewCode(event.target.value)}
+                  value={newCode}
+                />
+                <p>Please Insert Your Course Description </p>
+                <input
+                  name="newCourseDescription"
+                  placeholder={course.course_desc}
+                  onChange={(event) =>
+                    setNewCourseDescription(event.target.value)
+                  }
+                  value={newCourseDescription}
+                />
+                <p>Please Insert Your Course Level </p>
+                <input
+                  name="newCourseLevel"
+                  placeholder={course.course_level}
+                  onChange={(event) => setNewCourseLevel(event.target.value)}
+                  value={newCourseLevel}
+                />
+                <p>Please Insert Your Course Image </p>
+                <input
+                  name="newCourseImage"
+                  placeholder={course.course_image}
+                  onChange={(event) => setNewCourseImage(event.target.value)}
+                  value={newCourseImage}
+                />
+              </label>
+              <p></p>
+              <button>Go!</button>
+              <p></p>
+            </form>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  }
 
-            <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            return !currentValue;
-          })
-        }
-      >Edit Course
-      </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Your course Name </p>
-              <input
-                name="newCourse"
-                placeholder="Insert Course Name"
-                onChange={(event) => setNewCourseName(event.target.value)}
-                value={newCourseName}
-              />
-              <input
-                name="newCode"
-                placeholder="Code Name"
-                onChange={(event) => setNewCode(event.target.value)}
-                value={newCode}
-              />
-            </label>
-            <button>Go!</button>
-          </form>
-        </div>
-      ) : (
-        <div></div>
-      )}
-        </div>
-    )
-}
+
 
 export default EditCourse

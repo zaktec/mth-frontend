@@ -39,21 +39,34 @@ export const getSingleCourseApi = (course_id) => {
   });
 };
 
+
+
 export const patchCourseApi = (course_id, newObject) => {
   return mthApi
-    .patch(`/courses/${course_id}`, {
-     course_name: "New MTH GCSE Maths Foundation",
-      course_id: 1,
-      course_code: "MTH-GF",
-      course_desc: "MTH GCSE Maths Foundation Online Course",
-      course_level: "Foundation",
-      course_image: "/course/mth_gcse_foundation.png",
-    })
+    .patch(`/courses/${course_id}`, newObject)
     .then((res) => {
       console.log(res.data);
       return res.data.updatedCourses;
     });
 };
+
+
+
+// export const patchCourseApi = (course_id, newObject) => {
+//   return mthApi
+//     .patch(`/courses/${course_id}`, {
+//      course_name: "New MTH GCSE Maths Foundation",
+//       course_id: 1,
+//       course_code: "MTH-GF",
+//       course_desc: "MTH GCSE Maths Foundation Online Course",
+//       course_level: "Foundation",
+//       course_image: "/course/mth_gcse_foundation.png",
+//     })
+//     .then((res) => {
+//       console.log(res.data);
+//       return res.data.updatedCourses;
+//     });
+// };
 
 export const deleteCourseApi = (course_id) => {
   return mthApi.delete(`/courses/${course_id}`).then(({ data }) => {

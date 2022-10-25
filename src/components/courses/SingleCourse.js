@@ -47,17 +47,21 @@ function SingleCourse() {
             alt={course.course_name}
           />
 
+          
+        </li>
+      </ul>
+      <div>
+          <EditCourse
+            course={course}
+            setCourse={setCourse}
+          />
+          </div>
+      <div>
           <DeleteCourse
             course_id={course.course_id}
             setCourseName={setCourse}
           />
-
-          <EditCourse
-            course_id={course.course_id}
-            setCourseName={setCourseName}
-          />
-        </li>
-      </ul>
+          </div>
     </main>
   );
 }
