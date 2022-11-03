@@ -19,6 +19,7 @@ import SortQuizzes from "./components/quizzes/SortQuizzes";
 import SingleQuiz from "./components/quizzes/SingleQuiz";
 import SortQuestions from "./components/questions/SortQuestions";
 import SingleQuestion from "./components/questions/SingleQuestion";
+import Userhomepage from "./components/userpages/Userhomepage";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="*" element={<Home />}></Route>
           <Route path="/endpoint" element={<Endpoint />}></Route>
+
+         
+          <Route path="/userhomepage" element={<Userhomepage />}></Route>
           
           <Route path="/courselist" element={<SortCourses />}> </Route>
           <Route path="/courses/:course_id" element={<SingleCourse />}></Route>

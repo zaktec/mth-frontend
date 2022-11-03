@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteCourseApi, getCoursesApi } from "../../utils/api";
+import { deleteCourseApi } from "../../utils/api";
 
 
 function DeleteCourse(props) {
@@ -12,7 +12,7 @@ function DeleteCourse(props) {
 
     {
       //props.setCourse(course);
-      navigate('/topiclist')
+      navigate('/courselist')
     //  getCoursesApi(props.course_id).then((course) => {
     //    
     });

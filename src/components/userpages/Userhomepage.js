@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { getUserMessageApi } from "../../utils/api";
 //import "../styles/App.css";
-import {  getMessageApi } from "../utils/api";
 
-const Home = () => {
+
+const Userhomepage = () => {
   const [msg, setMsg] = useState("");
 
+
   useEffect(() => {
-    getMessageApi().then((res) => {
+    getUserMessageApi().then((res) => {
       console.log(res)
       setMsg(res);
     });
@@ -14,9 +16,9 @@ const Home = () => {
 
   return (
     <div className="HomePage">
-      <h1>Home </h1>
+      <h1>User Home Page  </h1>
       <p>{msg}</p>
     </div>
   );
 };
-export default Home;
+export default Userhomepage;

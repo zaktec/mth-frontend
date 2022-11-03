@@ -4,6 +4,11 @@ const mthApi = axios.create({
   baseURL: "http://localhost:3009/api",
 });
 
+
+
+////  homepage 
+
+
 export const getMessageApi = () => {
   return mthApi.get("/homepage").then((res) => {
     console.log(res);
@@ -17,6 +22,18 @@ export const getEndpointApi = () => {
     return res;
   });
 };
+
+
+////  user homepage 
+
+
+export const getUserMessageApi = () => {
+  return mthApi.get("/userhomepage").then((res) => {
+    console.log(res);
+    return res.data.msg;
+  });
+};
+
 
 ////  Courses Api
 
@@ -50,23 +67,6 @@ export const patchCourseApi = (course_id, newObject) => {
     });
 };
 
-
-
-// export const patchCourseApi = (course_id, newObject) => {
-//   return mthApi
-//     .patch(`/courses/${course_id}`, {
-//      course_name: "New MTH GCSE Maths Foundation",
-//       course_id: 1,
-//       course_code: "MTH-GF",
-//       course_desc: "MTH GCSE Maths Foundation Online Course",
-//       course_level: "Foundation",
-//       course_image: "/course/mth_gcse_foundation.png",
-//     })
-//     .then((res) => {
-//       console.log(res.data);
-//       return res.data.updatedCourses;
-//     });
-// };
 
 export const deleteCourseApi = (course_id) => {
   return mthApi.delete(`/courses/${course_id}`).then(({ data }) => {

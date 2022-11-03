@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/App.css";
-import Navusers from "./Navusers";
 
-const Nav = () => {
+const Navusers = () => {
   return (
     <nav className="NavPage">
-      <h1> Admin Menu </h1>
-      <Link className="Nav__Link" to="/">
-      |   Home 
+      <h1> User Menu </h1>
+      <Link className="Nav__Link" to="/userhomepage">
+      |   UserHomePage 
       </Link>
       <Link className="Nav__Link" to="/courselist">
       |  Courses 
@@ -37,8 +36,7 @@ const Nav = () => {
       <Link className="Nav__Link" to="/topics">
       |  Contact Us
       </Link>
-      <Navusers />
     </nav>
   );
 };
-export default Nav;
+export default Navusers;

@@ -48,7 +48,7 @@ function SingleTopic() {
           <DeleteTopic topic_id={topic.topic_id} setTopic={setTopic} 
           />
 
-          <EditTopic topic_id={topic.topic_id} setTopicName={setTopicName} />
+          <EditTopic topic={topic} />
         </li>
       </ul>
     </main>

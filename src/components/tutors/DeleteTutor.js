@@ -1,5 +1,5 @@
 import React from "react";
-import {  deleteTopicApi, getTopicsApi } from '../../utils/api';
+import {  deleteTopicApi } from '../../utils/api';
 import { useNavigate } from "react-router-dom";
 
 function DeleteTutor(props) {
@@ -7,7 +7,7 @@ function DeleteTutor(props) {
   const deleteTopicButton = () => {
     console.log(props.topic_id);
     deleteTopicApi(props.topic_id).then(() => {
-      navigate('/courselist')
+      navigate('/tutorlist')
       // getTopicsApi(props.topic_id).then((topics) => {
       //   props.setTopic(topics);
       // });
