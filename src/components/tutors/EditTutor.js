@@ -1,40 +1,33 @@
 import React, { useState } from "react";
-import { postStudentApi } from "../../utils/api";
+import {  patchTutorApi } from "../../utils/api";
 
-function EditStudent(props) {
-  const { student } = props;
+function EditTutor(props) {
+  const { tutor } = props;
   const [displayPost, setPostDisplay] = useState(false);
   const [newStudentActive, setnewStudentActive] = useState(false);
   const [newFirstName, setnewFirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [newPassword, setnewPassword] = useState("");
   const [newImage, setnewImage] = useState("");
-  const [newGrade, setNewGrade] = useState("");
-  const [newNotes, setNewNotes] = useState("");
+
   const [newEmail, setNewTopicDescription] = useState("");
-  const [newTargetGrade, setNewTargetGrade] = useState("");
-  const [newProgressBar, setnewProgressBar] = useState("");
 
   
   const handleSubmit = (event) => {
     event.preventDefault();
     const newObject = {
-      student_firstname: newFirstName === "" ? student.student_firstname:newFirstName,
-      student_lastname: lastName=== "" ? student.student_lastname:lastName,
-      student_email: newEmail === "" ? student.student_email:newEmail,
-      student_password: newPassword=== "" ? student.student_password:newPassword,
-      student_active: newStudentActive === "" ? student.student_active:newStudentActive,
-        student_grade: newGrade === "" ? student.student_grade:newGrade,
-        student_targetgrade: newTargetGrade === "" ? student.student_targetgrade:newTargetGrade,
-        student_notes: newNotes === "" ? student.student_firstname:newNotes,
-        student_progressbar: newProgressBar === "" ? student.student_progressbar:newProgressBar,
-        student_image: newImage=== "" ? student.student_image:newImage,
+      tutor_firstname:  newFirstName === "" ? tutor.tutor_firstname : newFirstName,
+      tutor_lastname:  lastName === "" ? tutor.tutor_lastname : lastName,
+      tutor_email:  newEmail === "" ? tutor.tutor_email : newEmail,
+      tutor_password:  newPassword=== "" ? tutor.tutor_password : newPassword,
+      tutor_active: newStudentActive=== "" ? tutor.tutor_active : newStudentActive,
+      tutor_image: newImage=== "" ? tutor.tutor_image : newImage,
     };
    
     // newObject.course_image = 0;
 
-   postStudentApi(newObject).then((response)=>{
-  });
+   patchTutorApi(newObject).then((response)=>{
+   });  
   };
   return (
     <div>
@@ -44,7 +37,7 @@ function EditStudent(props) {
             return !currentValue;
           })
         }
-      >Edit Student
+      >Edit Tutor
       </button>
       {displayPost ? (
         <div>
@@ -102,38 +95,7 @@ function EditStudent(props) {
                 </div>
               </fieldset>
              
-              <p>Please Insert Your Grade </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newGrade"
-                placeholder="Nu."
-                onChange={(event) => setNewGrade(event.target.value)}
-                value={newGrade}
-              />
-               <p>Please Insert Your Target grade </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newTargetGrade"
-                placeholder="Nu."
-                onChange={(event) => setNewTargetGrade(event.target.value)}
-                value={newTargetGrade}
-              />
-<p>Please Insert Your notes </p>
-              <input type="text"
-                name="newNotes"
-                placeholder="Insert Notes"
-                onChange={(event) => setNewNotes(event.target.value)}
-                value={newNotes}
-              />
-  <p>Please Insert the progress bar </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newProgressBar"
-                placeholder="Nu."
-                onChange={(event) => setnewProgressBar(event.target.value)}
-                value={newProgressBar}
-              />
-              <p>Please Insert Your student image path </p>
+              <p>Please Insert Your tutor image path </p>
               <input type="text"
                 name="newImage"
                 placeholder="Image Path"
@@ -152,4 +114,4 @@ function EditStudent(props) {
   );
 }
 
-export default EditStudent;
+export default EditTutor;

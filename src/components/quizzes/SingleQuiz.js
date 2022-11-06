@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleQuizApi } from "../../utils/api";
 import DeleteQuizzes from "./DeleteQuizzes";
+import EditQuiz from "./EditQuiz";
 
 
 function SingleQuiz() {
@@ -39,8 +40,7 @@ function SingleQuiz() {
           <DeleteQuizzes quiz_id={quiz.quiz_id} setQuiz={setQuiz} 
           />
          
-          {/* <EditStudent student = {student}
-           setStudent={setStudent} /> */}
+           <EditQuiz quiz = {quiz}/> 
         </li>
       </ul>
     </main>

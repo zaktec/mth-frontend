@@ -2,12 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleTutorApi } from "../../utils/api";
+import EditTutor from "./EditTutor";
+import DeleteTutor from "./DeleteTutor";
 
 
 function SingleTutor() {
   const { tutor_id } = useParams();
   const [tutor, setTutor] = useState({});
-  const [courseName, setCourseName] = useState([]);
+
 
   useEffect(() => {
     getSingleTutorApi(tutor_id).then((tutorsFromApi) => {
@@ -45,16 +47,16 @@ function SingleTutor() {
             src={tutor.tutor_image}
             alt={tutor.tutor_firstname}
           />
-
-          {/* <DeleteCourse
-            course_id={course.course_id}
-            setCourseName={setCourse}
+    
+    <DeleteTutor
+            tutor_id={tutor.tutor_id}
+            setTutor={setTutor}
           />
 
-          <EditCourse
-            course_id={course.course_id}
-            setCourseName={setCourseName}
-          /> */}
+          <EditTutor
+            tutor={tutor}
+            
+          /> 
         </li>
       </ul>
     </main>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postTopicApi } from "../../utils/api";
+import { patchTopicApi } from "../../utils/api";
 
 function EditTopic(props) {
   const { topic } = props;
@@ -14,26 +14,18 @@ function EditTopic(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const newObject = {
-      topic_name: newTopicName,
-      topic_code: newCode,
-      topic_desc: newTopicDescription,
-      topic_index: newTopicIndex,
-      topic_course_id: newCourseId,
-      topic_id: newTopicId,
+      topic_name: newTopicName === "" ? topic.copic_name:newTopicName,
+      topic_code: newCode=== "" ? topic.topic_code:newCode,
+      topic_desc: newTopicDescription === "" ? topic.topic_desc:newTopicDescription,
+      topic_index: newTopicIndex=== "" ? topic.topic_index:newTopicIndex,
+      topic_course_id: newCourseId=== "" ? topic.copic_name:newTopicName,
+      topic_id: newTopicId=== "" ? topic.topic_id:newTopicId,
     };
 
     // newObject.course_image = 0;
 
-    postTopicApi(newObject).then((response) => {
-      setTopicList((currentValue) => {
-        const newTopicList = currentValue.map((topic) => {
-          return { ...topic };
-        });
-        newTopicList.unshift(response);
-        console.log(newTopicList);
-        setPostDisplay(false);
-        return newTopicList;
-      });
+    patchTopicApi(topic.topic_id, newObject).then((response) => {
+      console.log(response);
     });
   };
   return (

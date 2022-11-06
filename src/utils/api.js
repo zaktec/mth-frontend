@@ -129,6 +129,14 @@ export const postTopicApi = (resBody) => {
   });
 };
 
+export const patchTopicApi = (topic_id, newObject) => {
+  return mthApi
+    .patch(`/topics/${topic_id}`, newObject)
+    .then((res) => {
+      console.log(res.data);
+      return res.data.updatedTopics;
+    });
+};
 
 //  student Api 
 
@@ -157,7 +165,7 @@ export const patchStudentApi = (student_id, resBody) => {
   
   .then((res) => {
       console.log(res.data);
-      return res.data.updatedCourses;
+      return res.data.updatedStudents;
     });
 };
 
@@ -206,6 +214,17 @@ export const postTutorApi = (resBody) => {
     return data.tutor; 
   });
 };
+
+
+export const patchTutorApi = (tutor_id, resBody) => {
+  console.log(resBody)
+  return mthApi.patch(`/tudor/${tutor_id}`, resBody)
+  
+  .then((res) => {
+      console.log(res.data);
+      return res.data.updatedTutors;
+    });
+};
 // Lesson Api 
 
 export const getLessonApi = (sortBy) => {
@@ -241,6 +260,15 @@ export const postLessonApi = (resBody) => {
   .then(({data}) => {
     return data.lesson; 
   });
+};
+
+export const patchLessonApi = (lesson_id, newObject) => {
+  return mthApi
+    .patch(`/lessons/${lesson_id}`, newObject)
+    .then((res) => {
+      console.log(res.data);
+      return res.data.updatedLessons;
+    });
 };
 
 // Quiz Api 

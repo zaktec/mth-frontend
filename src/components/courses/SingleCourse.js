@@ -53,7 +53,6 @@ function SingleCourse() {
       <div>
           <EditCourse
             course={course}
-            setCourse={setCourse}
           />
           </div>
       <div>

@@ -62,8 +62,7 @@ function SingleStudent() {
           <DeleteStudent student_id={student.student_id} 
           setStudent={setStudent} 
           />
-          <EditStudent student = {student}
-           setStudent={setStudent} />
+          <EditStudent student = {student}/>
         </li>
       </ul>
     </main>

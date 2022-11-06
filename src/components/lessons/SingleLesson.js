@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleLessonApi } from "../../utils/api";
 import DeleteLesson from "./DeleteLesson";
+import EditLesson from "./EditLesson";
 
 
 function SingleLesson() {
@@ -13,7 +14,6 @@ function SingleLesson() {
     
     getSingleLessonApi(lesson_id).then((res) => {
       setLesson(res);
-      console.log("single",res)
     });
   }, [lesson_id]);
  
@@ -52,8 +52,7 @@ function SingleLesson() {
             setLessonName={setLesson}
           />
          
-          {/* <EditStudent student = {student}
-           setStudent={setStudent} /> */}
+           <EditLesson lesson = {lesson} /> 
         </li>
       </ul>
     </main>
