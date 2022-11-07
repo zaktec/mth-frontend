@@ -308,6 +308,16 @@ export const postQuizApi = (resBody) => {
     return data.quiz; 
   });
 };
+
+export const patchQuizApi = (quiz_id, resBody) => {
+  console.log(resBody)
+  return mthApi.patch(`/quizzes/${quiz_id}`, resBody)
+  
+  .then((res) => {
+      console.log(res.data);
+      return res.data.updatedQuizzes;
+    });
+};
 // Question Api 
 
 
@@ -344,4 +354,14 @@ export const postQuestionApi = (resBody) => {
   .then(({data}) => {
     return data.question; 
   });
+};
+
+export const patchQuestionApi = (question_id, resBody) => {
+  console.log(resBody)
+  return mthApi.patch(`/questions/${question_id}`, resBody)
+  
+  .then((res) => {
+      console.log(res.data);
+      return res.data.updatedQuestion;
+    });
 };

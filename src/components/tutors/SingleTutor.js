@@ -5,15 +5,13 @@ import { getSingleTutorApi } from "../../utils/api";
 import EditTutor from "./EditTutor";
 import DeleteTutor from "./DeleteTutor";
 
-
 function SingleTutor() {
   const { tutor_id } = useParams();
   const [tutor, setTutor] = useState({});
 
-
   useEffect(() => {
     getSingleTutorApi(tutor_id).then((tutorsFromApi) => {
-    console.log(tutorsFromApi);
+      console.log(tutorsFromApi);
       setTutor(tutorsFromApi);
     });
   }, [tutor_id]);
@@ -47,16 +45,10 @@ function SingleTutor() {
             src={tutor.tutor_image}
             alt={tutor.tutor_firstname}
           />
-    
-    <DeleteTutor
-            tutor_id={tutor.tutor_id}
-            setTutor={setTutor}
-          />
 
-          <EditTutor
-            tutor={tutor}
-            
-          /> 
+          <DeleteTutor tutor_id={tutor.tutor_id} setTutor={setTutor} />
+
+          <EditTutor tutor={tutor} />
         </li>
       </ul>
     </main>

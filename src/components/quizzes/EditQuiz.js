@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postQuizApi } from "../../utils/api";
+import { patchQuizApi } from "../../utils/api";
 
 function EditQuiz(props) {
   const { quiz } = props;
@@ -20,7 +20,7 @@ function EditQuiz(props) {
 
     // newObject.course_image = 0;
 
-    postQuizApi(newObject).then((response) => {
+    patchQuizApi(quiz.quiz_id,newObject).then((response) => {
     
     });
   };

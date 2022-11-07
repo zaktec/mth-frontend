@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleQuestionApi } from "../../utils/api";
 import DeleteQuestion from "./DeleteQuestion";
+import EditQuestion from "./EditQuestion";
 
 
 function SingleQuestion() {
@@ -78,7 +79,8 @@ function SingleQuestion() {
             question_id={question.ques_id}
             setQuestion={setQuestion}
           /> 
-         
+
+         <EditQuestion question={question}/>
         
         </li>
       </ul>
