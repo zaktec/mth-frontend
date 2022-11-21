@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import "../../styles/App.css";
+import "../../css/App.css";
 import QuestionList from "./QuestionList";
-
 
 const SortQuestions = () => {
   const [sortBy, setSortBy] = useState("ques_id");

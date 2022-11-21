@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/App.css";
+import "../../css/App.css";
 import LessonList from "./LessonList";
 
 const SortLessons = () => {
@@ -33,7 +33,6 @@ const SortLessons = () => {
         <p>Click the "Submit" button .</p>
       </div>
       <LessonList sortBy={sortBy} />
-  
     </main>
   );
 };

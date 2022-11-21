@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/App.css";
+import "../../css/App.css";
 import StudentList from "./StudentList";
 
 const SortStudents = () => {

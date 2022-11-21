@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/App.css";
+import "../../css/App.css";
 import TopicList from "./TopicList";
 
 const SortTopics = () => {
@@ -13,7 +13,7 @@ const SortTopics = () => {
     console.log(event.target.value);
     setSortBy(event.target.value);
   };
- console.log(sortBy)
+  console.log(sortBy);
   return (
     <main className="SortStudentPage">
       <div>
@@ -33,7 +33,7 @@ const SortTopics = () => {
         </form>
         <p>Click the "Submit" button .</p>
       </div>
-      
+
       <TopicList sortBy={sortBy} />
     </main>
   );

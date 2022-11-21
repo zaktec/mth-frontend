@@ -1,40 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/App.css";
+import "../../css/App.css";
 
 const Navusers = () => {
   return (
     <nav className="NavPage">
       <h1> User Menu </h1>
       <Link className="Nav__Link" to="/userhomepage">
-      |   UserHomePage 
+        | UserHomePage
       </Link>
       <Link className="Nav__Link" to="/courselist">
-      |  Courses 
+        | Courses
       </Link>
       <Link className="Nav__Link" to="/topiclist">
-      |  Topics
+        | Topics
       </Link>
       <Link className="Nav__Link" to="/studentlist">
-      |  Students
+        | Students
       </Link>
       <Link className="Nav__Link" to="/tutorlist">
-      |  Tutors
+        | Tutors
       </Link>
       <Link className="Nav__Link" to="/lessonlist">
-      |  Lessons 
+        | Lessons
       </Link>
       <Link className="Nav__Link" to="/quizlist">
-      |  Quizzes
+        | Quizzes
       </Link>
       <Link className="Nav__Link" to="/questionlist">
-      |  Questions
+        | Questions
       </Link>
       <Link className="Nav__Link" to="/topics">
-      |  Settings
+        | Settings
       </Link>
       <Link className="Nav__Link" to="/topics">
-      |  Contact Us
+        | Contact Us
       </Link>
     </nav>
   );
