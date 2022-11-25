@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import LoginFormCSS from "../../css/loginform.module.css";
 
-const Login = () => {
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
+const Login = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(email);
   };
-
   return (
-    <div className="LoginPage">
+    <div className={LoginFormCSS["auth-form-container"]}>
       <h1>Login Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form className={LoginFormCSS["login-form"]} onSubmit={handleSubmit}>
+        <label htmlFor="email"> email </label>
         <input
           type="email"
           placeholder="youremail@gmail.com"
@@ -23,7 +22,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
-      
+        <label htmlFor="password"> password</label>
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -32,9 +31,12 @@ const Login = () => {
           id="password"
           name="password"
         />
-         </label>
         <button type="submit"> Log In</button>
-      </form> 
+      </form>
+      <button onClick={() => props.onFormSwitch("register")}>
+        {" "}
+        Dont have an account? Register here
+      </button>
     </div>
   );
 };
