@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { postQuestionApi } from "../../utils/api";
+import QuestionCSS from "../../css/question.module.css";
 
 function PostQuestion(props) {
   const { setQuestionList } = props;

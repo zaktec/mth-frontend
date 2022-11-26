@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../css/App.css";
 import QuestionList from "./QuestionList";
+import QuestionCSS from "../../css/question.module.css";
 
 const SortQuestions = () => {
   const [sortBy, setSortBy] = useState("ques_id");
@@ -15,7 +16,7 @@ const SortQuestions = () => {
   };
 
   return (
-    <main className="SortQuestionPage">
+    <main className={QuestionCSS.SortQuestionPage}>
       <div>
         <h1> Sort Questions List </h1>
         <p> Choose a column to sort the quiz list </p>

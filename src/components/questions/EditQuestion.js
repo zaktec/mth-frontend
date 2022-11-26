@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { patchQuestionApi } from "../../utils/api";
+import QuestionCSS from "../../css/question.module.css";
 
 function EditQuestion(props) {
   const { question } = props;

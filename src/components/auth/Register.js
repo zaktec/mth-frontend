@@ -15,7 +15,7 @@ const handleSubmit = (e) => {
 
 return(
     <div className={LoginFormCSS["auth-form-container"]}>
-    <h1>Register Page</h1>
+    <h2>Register Page</h2>
     <form className={LoginFormCSS["register-form"]} onSubmit={handleSubmit}>
     <label htmlFor="name" > Full name </label>
       <input
@@ -44,7 +44,7 @@ return(
         id="password"
         name="password"
       />
-      <button type="submit"> Log In</button>
+      <button type="submit"> Register Here</button>
     </form>
     <button onClick = {() => props.onFormSwitch('login')}>Already have an account? Login here</button> 
   </div>

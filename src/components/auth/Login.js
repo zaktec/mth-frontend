@@ -11,7 +11,7 @@ const Login = (props) => {
   };
   return (
     <div className={LoginFormCSS["auth-form-container"]}>
-      <h1>Login Page</h1>
+      <h2>Login Page</h2>
       <form className={LoginFormCSS["login-form"]} onSubmit={handleSubmit}>
         <label htmlFor="email"> email </label>
         <input

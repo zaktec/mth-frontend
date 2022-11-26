@@ -1,15 +1,16 @@
-.LessonListPage {
+.QuestionListPage {
     border: 1px solid red;
   }
 
-  .SortLessonPage {
-    border: 10px solid black; 
+  .SortQuestionPage {
+    border: 1px solid black;
+    
   }
   
-.SingleLessonPage {
+.SingleQuestionPage {
     border: 10px solid red;
   }
-  .Lesson__List {
+  .Question__List {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -17,13 +18,13 @@
     padding: 0;
     list-style-type: none;
   }
-  .LessonList__card {
+  .QuestionList__card {
     border: 5px solid black;
     margin: 1em;
   
     padding: 1em;
   }
-  .lessonList__h1 {
+  .QuestionList__h1 {
     font-size: 2em;
   }
   

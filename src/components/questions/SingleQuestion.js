@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSingleQuestionApi } from "../../utils/api";
 import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
+import QuestionCSS from "../../css/question.module.css";
 
 
 function SingleQuestion() {
@@ -20,10 +21,10 @@ function SingleQuestion() {
  
 
   return (
-    <main className="SinglelessonPage">
+    <main className={QuestionCSS.SingleQuestionPage}>
       <h1> Single Question page </h1>
-      <ul className="LessonList">
-        <li className="LessonList__card">
+      <ul className={QuestionCSS.Question__List}>
+        <li className={QuestionCSS.LessonList__card}>
         <p>
             <b>Question ID :</b> {question.ques_id}
           </p>

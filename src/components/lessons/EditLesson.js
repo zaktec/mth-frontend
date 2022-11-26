@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { patchLessonApi } from "../../utils/api";
+import LessonCSS from "../../css/lesson.module.css";
 
 function EditLesson(props) {
   const { lesson } = props;

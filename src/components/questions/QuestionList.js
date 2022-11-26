@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getQuestionApi } from '../../utils/api'
 import { Link } from "react-router-dom";
 import PostQuestion from "./PostQuestion";
+import QuestionCSS from "../../css/question.module.css";
 
 // import Search from "../Search";
 
@@ -23,20 +24,20 @@ function QuestionList(props) {
   if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className="QuizListPage">
+    <main className={QuestionCSS.QuestionListPage}>
   {/* <Search setSearchTerm={setSearchTerm} /> */}
      
 
-      <h1 className="CourseList__h1"> QuestionsList </h1>
+      <h1 className={QuestionCSS.QuestionList__h1}> QuestionsList </h1>
       
       <PostQuestion setQuestionList={ setQuestionList}/> 
 
 
-      <ul className="Courses__List">
+      <ul className={QuestionCSS.Question__List}>
         {questionList.map((question) => {
           return (
             <Link key={question.ques_id} to={`/question/${question.ques_id}`}>
-              <li className="CourseList__card">
+              <li className={QuestionCSS.QuestionList__card}>
                 <p><b>Question Id: </b> {question.ques_id}</p>
                 <p><b>Question Code: </b>{question.ques_body}</p>
                 <button> Click for more detail</button>

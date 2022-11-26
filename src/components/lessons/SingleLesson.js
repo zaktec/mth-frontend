@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSingleLessonApi } from "../../utils/api";
 import DeleteLesson from "./DeleteLesson";
 import EditLesson from "./EditLesson";
+import LessonCSS from "../../css/lesson.module.css";
 
 
 function SingleLesson() {
@@ -19,10 +20,10 @@ function SingleLesson() {
  
 
   return (
-    <main className="SinglelessonPage">
+    <main className={LessonCSS.SingleLessonPage}>
       <h1> Single Lesson page </h1>
-      <ul className="LessonList">
-        <li className="LessonList__card">
+      <ul className={LessonCSS.Lesson__List}>
+        <li className={LessonCSS.LessonList__card}>
         <p>
             <b>Lesson ID :</b> {lesson.lesson_id}
           </p>

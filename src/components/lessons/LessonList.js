@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getLessonApi } from "../../utils/api";
 import { Link } from "react-router-dom";
 import PostLesson from "./PostLesson";
+import LessonCSS from "../../css/lesson.module.css";
 
 // import Search from "../Search";
 
@@ -24,13 +25,13 @@ function LessonList(props) {
   if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className="LessonListPage">
+    <main className={LessonCSS.LessonListPage}>
       {/* <Search setSearchTerm={setSearchTerm} /> */}
       <PostLesson setLessonList={setLessonList} />
 
-      <h1 className="LessonList__h1"> Lesson List </h1>
+      <h1 className={LessonCSS.LessonList__h1}> Lesson List </h1>
 
-      <ul className="Lesson__List">
+      <ul className={LessonCSS.Lesson__List}>
         {lessonList.map((lesson) => {
           return (
             <Link key={lesson.lesson_id} to={`/lessons/${lesson.lesson_id}`}>

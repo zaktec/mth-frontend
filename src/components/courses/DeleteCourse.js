@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteCourseApi } from "../../utils/api";
+import CourseCSS from "../../css/course.module.css";
 
 
 function DeleteCourse(props) {

@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import { getSingleCourseApi } from "../../utils/api";
 import EditCourse from "./EditCourse";
 import DeleteCourse from "./DeleteCourse";
+import CourseCSS from "../../css/course.module.css";
+
 
 function SingleCourse() {
   const { course_id } = useParams();
   const [course, setCourse] = useState({});
-  const [courseName, setCourseName] = useState([]);
+
 
   useEffect(() => {
     getSingleCourseApi(course_id).then((res) => {
@@ -18,10 +20,10 @@ function SingleCourse() {
   }, [course_id]);
 
   return (
-    <main className="SingleCoursePage">
+    <main className={CourseCSS.SingleCoursePage}>
       <h1>Single Course Page</h1>
-      <ul className="CourseList">
-        <li className="CourseList__card">
+      <ul className={CourseCSS.CourseList}>
+        <li className={CourseCSS.CourseList__card}>
           <p>
             <b>Course Name: </b> {course.course_name}
           </p>

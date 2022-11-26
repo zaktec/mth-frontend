@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { postCourseApi } from "../../utils/api";
+import CourseCSS from "../../css/course.module.css";
 
 function PostCourse(props) {
   const { setCourseList } = props;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../css/App.css";
 import CourseList from "./CourseList";
+import CourseCSS from "../../css/course.module.css";
 
 const SortCourses = () => {
   const [sortBy, setSortBy] = useState("course_id");
@@ -15,7 +16,7 @@ const SortCourses = () => {
   };
 
   return (
-    <main className="SortCoursePage">
+    <main className={CourseCSS.SortCoursePage}>
       <div>
         <h1> Sort Courses List </h1>
         <p> Choose a column to sort the course list </p>

@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   padding: 1em;
+  background-image: linear-gradient(45DEG, #EEEEEE, #FAF8F9, #FFFFFF);
 }
 
 
@@ -93,11 +94,6 @@ code {
 
 /* component box  */
 
-.SingleCoursePage {
-  border: 1px solid red;
-}
-
-
 .SearchPage {
   border: 1px solid blue;
   padding: 1em;
@@ -123,27 +119,7 @@ code {
 
 /* CourseList.js  styles   */
 
-.CourseListPage {
-  border: 1px solid red;
-}
 
-.Courses__List {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 0;
-  list-style-type: none;
-}
-.CourseList__card {
-  border: 1px solid black;
-  margin: 1em;
-
-  padding: 1em;
-}
-.CourseList__h1 {
-  font-size: 2em;
-}
 
 
 
@@ -203,9 +179,3 @@ code {
   border: 1px solid red;
 }
 
-/* SortCourse.js   */
-
-.SortCoursePage {
-  border: 1px solid black;
-  
-}
