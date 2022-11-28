@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { postQuizApi } from "../../utils/api";
+import QuizCSS from "../../css/quiz.module.css";
+
 
 function PostQuiz(props) {
   const { setQuizList } = props;
@@ -33,7 +35,7 @@ function PostQuiz(props) {
     });
   };
   return (
-    <div>
+    <div className={QuizCSS.PostQuizPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {

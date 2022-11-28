@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {  postTutorApi } from "../../utils/api";
+import TutorCSS from "../../css/tutor.module.css";
 
 function PostTutor(props) {
   const { setTutorList } = props;
@@ -39,7 +40,7 @@ function PostTutor(props) {
    });  
   };
   return (
-    <div>
+    <div className={TutorCSS.PostTutorPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {

@@ -30,7 +30,7 @@ function EditCourse(props) {
     });
   };
   return (
-    <div>
+    <div className= {CourseCSS.EditCoursePage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {
@@ -84,7 +84,7 @@ function EditCourse(props) {
               />
             </label>
             <p></p>
-            <button>Go!</button>
+            <button>Update </button>
             <p></p>
           </form>
         </div>

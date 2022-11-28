@@ -1,28 +1,28 @@
-.QuizListPage {
+.TutorListPage {
     border: 1px solid black;
   }
 
-  .DeleteQuizPage {
+  .DeleteTutorPage {
     border: 1px solid black;
   }
   
   
-  .SortQuizPage {
+  .SortTutorPage {
     border: 1px solid black;
   }
   
-  .SingleQuizPage {
+  .SingleTutorPage {
     border: 1px solid black;
   }
   
-  .EditQuizPage {
+  .EditTutorPage {
     border: 1px solid black;
   }
   
-  .PostQuizPage {
+  .PostTutorPage {
     border: 1px solid black;
   }
-  .Quiz__List {
+  .TutorList {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -30,13 +30,13 @@
     padding: 0;
     list-style-type: none;
   }
-  .QuizList__card {
+  .TutorList__card {
     border: 2px solid black;
     margin: 1em;
   
     padding: 1em;
   }
-  .QuizList__h1 {
+  .TutorList__h1 {
     font-size: 2em;
   }
   

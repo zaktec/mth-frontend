@@ -1,6 +1,7 @@
 import React from "react";
 import {  deleteStudentApi } from '../../utils/api';
 import { useNavigate } from "react-router-dom";
+import StudentCSS from "../../css/student.module.css";
 
 function DeleteStudent(props) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function DeleteStudent(props) {
   };
 
   return (
-    <div>
+    <div className={StudentCSS.DeleteStudentPage}>
       <button onClick={() => deleteStudentButton()}>Delete Student</button>
     </div>
   );

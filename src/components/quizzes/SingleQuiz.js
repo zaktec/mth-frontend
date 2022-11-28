@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSingleQuizApi } from "../../utils/api";
 import DeleteQuizzes from "./DeleteQuizzes";
 import EditQuiz from "./EditQuiz";
+import QuizCSS from "../../css/quiz.module.css";
 
 
 function SingleQuiz() {
@@ -20,10 +21,10 @@ function SingleQuiz() {
  
 
   return (
-    <main className="SinglelessonPage">
+    <main className={QuizCSS.SingleQuizPage}>
       <h1> Single Quiz page </h1>
-      <ul className="LessonList">
-        <li className="LessonList__card">
+      <ul className={QuizCSS.Quiz__List}>
+        <li className={QuizCSS.QuizList__card}>
         <p>
             <b>Quiz ID :</b> {quiz.quiz_id}
           </p>

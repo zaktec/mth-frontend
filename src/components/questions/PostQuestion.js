@@ -40,7 +40,7 @@ function PostQuestion(props) {
     });
   };
   return (
-    <div>
+    <div className={QuestionCSS.PostQuestionPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {
@@ -51,7 +51,7 @@ function PostQuestion(props) {
         Add Question
       </button>
       {displayPost ? (
-        <div>
+        <div className={QuestionCSS.PostQuestionPage}>
           <form onSubmit={handleSubmit}>
             <label>
               <p>Please Insert Your question body </p>

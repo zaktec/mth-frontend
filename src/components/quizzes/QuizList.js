@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getQuizApi } from '../../utils/api'
 import { Link } from "react-router-dom";
 import PostQuiz from "./PostQuiz";
+import QuizCSS from "../../css/quiz.module.css";
 
 // import Search from "../Search";
 
@@ -23,21 +24,21 @@ function QuizList(props) {
   if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className="QuizListPage">
+    <main className={QuizCSS.QuizListPage}>
   {/* <Search setSearchTerm={setSearchTerm} /> */}
      
 
-      <h1 className="CourseList__h1"> QuizList </h1>
+      <h1 className={QuizCSS.QuizList__h1}> QuizList </h1>
       
        <PostQuiz
             setQuizList={setQuizList}/> 
 
 
-      <ul className="Courses__List">
+      <ul className={QuizCSS.Quiz__List}>
         {quizList.map((quiz) => {
           return (
             <Link key={quiz.quiz_id} to={`/quizzes/${quiz.quiz_id}`}>
-              <li className="CourseList__card">
+              <li className={QuizCSS.QuizList__card}>
                 <p><b>Quiz Name: </b> {quiz.quiz_name}</p>
                 <p><b>Quiz Code: </b>{quiz.quiz_code}</p>
                 <button> Click for more detail</button>

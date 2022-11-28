@@ -1,6 +1,7 @@
 import React from "react";
 import {  deleteQuizApi } from '../../utils/api';
 import { useNavigate } from "react-router-dom";
+import QuizCSS from "../../css/quiz.module.css";
 
 function DeleteQuizzes(props) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function DeleteQuizzes(props) {
   };
 
   return (
-    <div>
+    <div div className={QuizCSS.DeleteQuizPage}>
       <button onClick={() => deleteQuizButton()}>Delete Quiz</button>
     </div>
   );

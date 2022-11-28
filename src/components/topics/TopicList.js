@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getTopicsApi } from "../../utils/api";
 import { Link } from "react-router-dom";
 import PostTopic from "./PostTopic";
-//import Search from "../Search";
+import TopicCSS from "../../css/topic.module.css";
 
 function TopicList(props) {
   const [topicsList, setTopicList] = useState([]);
@@ -24,17 +24,17 @@ function TopicList(props) {
   if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className="TopicListPage">
+    <main className={TopicCSS.TopicListPage}>
       {/* <Search setSearchTerm={setSearchTerm} /> */}
-      <h1 className="List__h1"> TopicList </h1>
+      <h1 className={TopicCSS.TopicList__h1}> TopicList </h1>
       <PostTopic
             setTopicList={setTopicList}/>
 
-      <ul className="Topic__List">
+      <ul className={TopicCSS.TopicList}>
         {topicsList.map((topic) => {
           return (
             <Link key={topic.topic_id} to={`/topics/${topic.topic_id}`}>
-              <li className="TopicList__card">
+              <li className={TopicCSS.TopicList__card}>
                 <p>
                   <b>Topic Name: </b> {topic.topic_name}
                 </p>

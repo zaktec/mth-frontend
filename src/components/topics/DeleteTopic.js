@@ -1,6 +1,7 @@
 import React from "react";
 import {  deleteTopicApi, getTopicsApi } from '../../utils/api';
 import { useNavigate } from "react-router-dom";
+import TopicCSS from "../../css/topic.module.css";
 
 function DeleteTopic(props) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function DeleteTopic(props) {
   };
 
   return (
-    <div>
+    <div className={TopicCSS.DeleteTopicPage}>
       <button onClick={() => deleteTopicButton()}>Delete Topic</button>
     </div>
   );

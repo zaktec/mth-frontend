@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import { getSingleTopicApi } from "../../utils/api";
 import EditTopic from "./EditTopic";
 import DeleteTopic from "./DeleteTopic";
+import TopicCSS from "../../css/topic.module.css";
 
 function SingleTopic() {
   const { topic_id } = useParams();
   const [topic, setTopic] = useState({});
-  const [topicName, setTopicName] = useState([]);
 
   useEffect(() => {
     getSingleTopicApi(topic_id).then((res) => {
@@ -17,10 +17,10 @@ function SingleTopic() {
     });
   }, [topic_id]);
   return (
-    <main>
+    <main className={TopicCSS.SingleTopicPage}>
       <h1>Single topic Page</h1>
-      <ul className="List">
-        <li className="List__card">
+      <ul className={TopicCSS.TopicList}>
+        <li className={TopicCSS.TopicList__card}>
           <p>
             <b>Topic Name: </b> {topic.topic_name}
           </p>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSingleStudentApi } from "../../utils/api";
 import DeleteStudent from "./DeleteStudent";
 import EditStudent from "./EditStudent";
+import StudentCSS from "../../css/student.module.css";
 
 function SingleStudent() {
   const { student_id } = useParams();
@@ -19,9 +20,9 @@ function SingleStudent() {
   console.log(student_id)
 
   return (
-    <main className="SingleStudentPage">
+  <main className={StudentCSS.SingleStudentPage}>
       <h1> Single Student page </h1>
-      <ul className="StudentList">
+      <ul className={StudentCSS.StudentList}>
         <li className="StudentList__card">
         <p>
             <b>Student ID :</b> {student.student_id}

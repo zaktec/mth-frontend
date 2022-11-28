@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { patchQuizApi } from "../../utils/api";
+import QuizCSS from "../../css/quiz.module.css";
 
 function EditQuiz(props) {
   const { quiz } = props;
@@ -25,7 +26,7 @@ function EditQuiz(props) {
     });
   };
   return (
-    <div>
+    <div className={QuizCSS.EditQuizPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {

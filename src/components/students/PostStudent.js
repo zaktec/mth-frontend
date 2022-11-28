@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { postStudentApi } from "../../utils/api";
+import StudentCSS from "../../css/student.module.css";
 
 function PostStudent(props) {
   const { setStudentList } = props;
@@ -46,7 +47,7 @@ function PostStudent(props) {
    });  
   };
   return (
-    <div>
+    <div className={StudentCSS.PostStudentPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {

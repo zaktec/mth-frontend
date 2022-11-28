@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../css/App.css";
 import QuestionList from "./QuestionList";
 import QuestionCSS from "../../css/question.module.css";
 

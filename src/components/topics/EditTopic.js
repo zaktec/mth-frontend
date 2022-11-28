@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { patchTopicApi } from "../../utils/api";
+import TopicCSS from "../../css/question.module.css";
 
 function EditTopic(props) {
   const { topic } = props;
@@ -13,12 +14,13 @@ function EditTopic(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(topic)
     const newObject = {
-      topic_name: newTopicName === "" ? topic.copic_name:newTopicName,
+      topic_name: newTopicName === "" ? topic.topic_name:newTopicName,
       topic_code: newCode=== "" ? topic.topic_code:newCode,
       topic_desc: newTopicDescription === "" ? topic.topic_desc:newTopicDescription,
       topic_index: newTopicIndex=== "" ? topic.topic_index:newTopicIndex,
-      topic_course_id: newCourseId=== "" ? topic.copic_name:newTopicName,
+      topic_course_id: newCourseId=== "" ? topic.topic_course_id:newTopicName,
       topic_id: newTopicId=== "" ? topic.topic_id:newTopicId,
     };
 
@@ -29,7 +31,7 @@ function EditTopic(props) {
     });
   };
   return (
-    <div>
+    <div className= {TopicCSS.EditTopicPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {
@@ -46,21 +48,21 @@ function EditTopic(props) {
               <p>Please Insert Your topic Name </p>
               <input
                 name="newTopicName"
-                placeholder="Insert Topic Name"
+                placeholder={topic.topic_name}
                 onChange={(event) => setnewTopicName(event.target.value)}
                 value={newTopicName}
               />
               <p>Please Insert Your topic Code </p>
               <input
                 name="newCode"
-                placeholder="Course Code"
+                placeholder={topic.topic_code}
                 onChange={(event) => setNewCode(event.target.value)}
                 value={newCode}
               />
               <p>Please Insert Your Topic Description </p>
               <input
                 name="newTopicDescription"
-                placeholder="Course Description"
+                placeholder={topic.topic_desc}
                 onChange={(event) => setNewTopicDescription(event.target.value)}
                 value={newTopicDescription}
               />
@@ -70,7 +72,7 @@ function EditTopic(props) {
                 min="1"
                 max="15"
                 name="newTopicIndex"
-                placeholder="Nu."
+                placeholder={topic.topic_index}
                 onChange={(event) => setNewTopicIndex(event.target.value)}
                 value={newTopicIndex}
               />
@@ -80,7 +82,7 @@ function EditTopic(props) {
                 min="1"
                 max="15"
                 name="newCourseId"
-                placeholder="Nu."
+                placeholder={topic.topic_course_id}
                 onChange={(event) => setNewCourseId(event.target.value)}
                 value={newCourseId}
               />
@@ -90,13 +92,13 @@ function EditTopic(props) {
                 min="1"
                 max="15"
                 name="newTopicID"
-                placeholder="Nu."
+                placeholder={topic.topic_id}
                 onChange={(event) => setNewTopicId(event.target.value)}
                 value={newTopicId}
               />
             </label>
             <p></p>
-            <button>Go!</button>
+            <button>Update</button>
           </form>
         </div>
       ) : (

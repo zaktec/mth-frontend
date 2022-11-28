@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {  patchTutorApi } from "../../utils/api";
+import TutorCSS from "../../css/tutor.module.css";
 
 function EditTutor(props) {
   const { tutor } = props;
@@ -30,7 +31,7 @@ function EditTutor(props) {
    });  
   };
   return (
-    <div>
+    <div className={TutorCSS.EditTutorPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {

@@ -11,6 +11,7 @@ function DeleteQuestion(props) {
     deleteQuestionApi(props.question_id).then(() =>
 
     {
+      console.log(props.question_id, "deleted" )
       //props.setCourse(course);
       navigate('/questionlist')
     //  getCoursesApi(props.course_id).then((course) => {

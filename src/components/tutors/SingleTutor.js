@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSingleTutorApi } from "../../utils/api";
 import EditTutor from "./EditTutor";
 import DeleteTutor from "./DeleteTutor";
+import TutorCSS from "../../css/tutor.module.css";
 
 function SingleTutor() {
   const { tutor_id } = useParams();
@@ -17,10 +18,10 @@ function SingleTutor() {
   }, [tutor_id]);
 
   return (
-    <main className="SingleTutorPage">
+    <main className= {TutorCSS.SingleTutorPage}>
       <h1>Single Tutor Page</h1>
-      <ul className="TutorList">
-        <li className="TutorList__card">
+      <ul className={TutorCSS.TutorList}>
+        <li className= {TutorCSS.TutorList__card}>
           <p>
             <b>Tutor Name: </b> {tutor.tutor_firstname}
           </p>

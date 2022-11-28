@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { postTopicApi } from "../../utils/api";
+import TopicCSS from "../../css/topic.module.css";
+
 
 function PostTopic(props) {
   const { setTopicList } = props;
@@ -37,7 +39,7 @@ function PostTopic(props) {
     });
   };
   return (
-    <div>
+    <div className={TopicCSS.PostTopicPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {

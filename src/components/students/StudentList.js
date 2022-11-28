@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getStudentsApi } from "../../utils/api";
 import { Link } from "react-router-dom";
 import PostStudent from "./PostStudent";
+import StudentCSS from "../../css/student.module.css";
 
 const StudentList = (props) => {
   console.log(props);
@@ -23,9 +24,9 @@ const StudentList = (props) => {
   if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className="StudentPage">
+    <main className={StudentCSS.StudentListPage}>
       <h2>Students</h2>
-      <ul className="Students__list">
+      <ul className={StudentCSS.StudentList}>
         <PostStudent setStudentList={setStudentList} />
 
         {studentList.map((student) => {
@@ -34,7 +35,7 @@ const StudentList = (props) => {
               key={student.student_id}
               to={`/students/${student.student_id}`}
             >
-              <li key={student.student_id} className="Student__card">
+              <li key={student.student_id} className={StudentCSS.StudentList__card}>
                 <p>
                   <b>Student ID :</b> {student.student_id}
                 </p>

@@ -32,7 +32,7 @@ function EditQuestion(props) {
     });
   };
   return (
-    <div>
+    <div className={QuestionCSS.EditQuestionPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {
@@ -48,6 +48,7 @@ function EditQuestion(props) {
             <label>
               <p>Please Insert Your question body </p>
               <input
+                type= "text"
                 name="newQuestionBody"
                 placeholder="Insert Question"
                 onChange={(event) => setnewQuestionBody(event.target.value)}
