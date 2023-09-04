@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getQuizApi } from '../../utils/api'
+import { getQuizApi } from '../../api/axios'
 import { Link } from "react-router-dom";
 import PostQuiz from "./PostQuiz";
 import QuizCSS from "../../css/quiz.module.css";

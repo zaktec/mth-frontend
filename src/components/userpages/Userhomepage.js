@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserMessageApi } from "../../utils/api";
+import { getUserMessageApi } from "../../api/axios";
 //import "../css/App.css";
 import TutorCSS from "../../css/tutor.module.css";
 

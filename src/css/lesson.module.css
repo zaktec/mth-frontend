@@ -9,6 +9,10 @@
 .SingleLessonPage {
     border: 10px solid red;
   }
+
+  .EditLessonPage {
+    border: 10px solid red;
+  }
   .Lesson__List {
     display: flex;
     flex-wrap: wrap;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleQuestionApi } from "../../utils/api";
+import { getSingleQuestionApi } from "../../api/axios";
 import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
 import QuestionCSS from "../../css/question.module.css";

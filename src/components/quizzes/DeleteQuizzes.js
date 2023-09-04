@@ -1,5 +1,5 @@
 import React from "react";
-import {  deleteQuizApi } from '../../utils/api';
+import {  deleteQuizApi } from '../../api/axios';
 import { useNavigate } from "react-router-dom";
 import QuizCSS from "../../css/quiz.module.css";
 

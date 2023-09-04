@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getCoursesApi } from '../../utils/api'
+import { getCoursesApi } from '../../api/axios'
 import { Link } from "react-router-dom";
 import PostCourse from "./PostCourse";
 import CourseCSS from "../../css/course.module.css";

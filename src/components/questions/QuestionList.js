@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getQuestionApi } from '../../utils/api'
+import { getQuestionApi } from '../../api/axios'
 import { Link } from "react-router-dom";
 import PostQuestion from "./PostQuestion";
 import QuestionCSS from "../../css/question.module.css";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postTopicApi } from "../../utils/api";
+import { postTopicApi } from "../../api/axios";
 import TopicCSS from "../../css/topic.module.css";
 
 

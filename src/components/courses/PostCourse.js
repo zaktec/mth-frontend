@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postCourseApi } from "../../utils/api";
+import { postCourseApi } from "../../api/axios";
 import CourseCSS from "../../css/course.module.css";
 
 function PostCourse(props) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getTopicsApi } from "../../utils/api";
+import { getTopicsApi } from "../../api/axios";
 import { Link } from "react-router-dom";
 import PostTopic from "./PostTopic";
 import TopicCSS from "../../css/topic.module.css";

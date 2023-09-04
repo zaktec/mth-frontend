@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  patchTutorApi } from "../../utils/api";
+import { patchTutorApi } from "../../api/axios";
 import TutorCSS from "../../css/tutor.module.css";
 
 function EditTutor(props) {
@@ -13,22 +13,22 @@ function EditTutor(props) {
 
   const [newEmail, setNewTopicDescription] = useState("");
 
-  
   const handleSubmit = (event) => {
     event.preventDefault();
     const newObject = {
-      tutor_firstname:  newFirstName === "" ? tutor.tutor_firstname : newFirstName,
-      tutor_lastname:  lastName === "" ? tutor.tutor_lastname : lastName,
-      tutor_email:  newEmail === "" ? tutor.tutor_email : newEmail,
-      tutor_password:  newPassword=== "" ? tutor.tutor_password : newPassword,
-      tutor_active: newStudentActive=== "" ? tutor.tutor_active : newStudentActive,
-      tutor_image: newImage=== "" ? tutor.tutor_image : newImage,
+      tutor_firstname:
+        newFirstName === "" ? tutor.tutor_firstname : newFirstName,
+      tutor_lastname: lastName === "" ? tutor.tutor_lastname : lastName,
+      tutor_email: newEmail === "" ? tutor.tutor_email : newEmail,
+      tutor_password: newPassword === "" ? tutor.tutor_password : newPassword,
+      tutor_active:
+        newStudentActive === "" ? tutor.tutor_active : newStudentActive,
+      tutor_image: newImage === "" ? tutor.tutor_image : newImage,
     };
-   
+
     // newObject.course_image = 0;
 
-   patchTutorApi(newObject).then((response)=>{
-   });  
+    patchTutorApi(newObject).then((response) => {});
   };
   return (
     <div className={TutorCSS.EditTutorPage}>
@@ -38,7 +38,8 @@ function EditTutor(props) {
             return !currentValue;
           })
         }
-      >Edit Tutor
+      >
+        Edit Tutor
       </button>
       {displayPost ? (
         <div>
@@ -47,35 +48,34 @@ function EditTutor(props) {
               <p>Please Insert Your First Name </p>
               <input
                 name="newFirstName"
-                placeholder="Insert First Name"
+                placeholder={tutor.tutor_firstname}
                 onChange={(event) => setnewFirstName(event.target.value)}
                 value={newFirstName}
               />
-              <p>Please Insert Your Last Name  </p>
+              <p>Please Insert Your Last Name </p>
               <input
                 name="lastName"
-                placeholder="Last Name"
+                placeholder={tutor.tutor_lastname}
                 onChange={(event) => setlastName(event.target.value)}
                 value={lastName}
               />
               <p>Please Insert Your Email </p>
               <input
                 name="newEmail"
-                placeholder="Email"
-                onChange={(event) =>
-                  setNewTopicDescription(event.target.value)
-                }
+                placeholder={tutor.tutor_email}
+                onChange={(event) => setNewTopicDescription(event.target.value)}
                 value={newEmail}
               />
-<p>Please Insert Your Password </p>
-              <input type="password"
+              <p>Please Insert Your Password </p>
+              <input
+                type="password"
                 name="newPassword"
-                placeholder="Password"
+                placeholder={tutor.tutor_password}
                 onChange={(event) => setnewPassword(event.target.value)}
                 value={newPassword}
               />
-<fieldset>
-                <legend>Is Student Active</legend>
+              <fieldset>
+                <legend>Is Tutor Active</legend>
                 <div>
                   <input
                     type="checkbox"
@@ -95,17 +95,18 @@ function EditTutor(props) {
                   <label htmlFor="false">False</label>
                 </div>
               </fieldset>
-             
+
               <p>Please Insert Your tutor image path </p>
-              <input type="text"
+              <input
+                type="text"
                 name="newImage"
-                placeholder="Image Path"
+                placeholder={tutor.tutor_image}
                 onChange={(event) => setnewImage(event.target.value)}
                 value={newImage}
               />
             </label>
             <p></p>
-            <button>Go!</button>
+            <button>Update</button>
           </form>
         </div>
       ) : (

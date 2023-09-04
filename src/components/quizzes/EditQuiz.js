@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { patchQuizApi } from "../../utils/api";
+import { patchQuizApi } from "../../api/axios";
 import QuizCSS from "../../css/quiz.module.css";
 
 function EditQuiz(props) {
@@ -43,14 +43,14 @@ function EditQuiz(props) {
               <p>Please Insert Quiz Name </p>
               <input
                 name="newQuizName"
-                placeholder="Insert Quiz Name"
+                placeholder= {quiz.quiz_name} 
                 onChange={(event) => setnewQuizName(event.target.value)}
                 value={newQuizName}
               />
               <p>Please Insert Your Quiz Code</p>
               <input
                 name="newQuizCode"
-                placeholder="Insert Answer"
+                placeholder= {quiz.quiz_code}
                 onChange={(event) => setnewQuizCode(event.target.value)}
                 value={newQuizCode}
               />
@@ -58,22 +58,13 @@ function EditQuiz(props) {
               <input type="number"
                  min="1" max="5"
                 name="newQuestionMark"
-                placeholder="Mk."
+                placeholder={quiz.quiz_type}
                 onChange={(event) => setnewQuestionMark(event.target.value)}
                 value={newQuestionMark}
               />
-              <p>Please Insert Your explanation </p>
-              <input
-                name="newQuizType"
-                placeholder="Question Explnation"
-                onChange={(event) => setnewQuizType(event.target.value)}
-                value={newQuizType}
-              />
-
-
             </label>
             <p></p>
-            <button>Go!</button>
+            <button>Update</button>
           </form>
         </div>
       ) : (

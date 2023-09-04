@@ -1,5 +1,5 @@
 import React from "react";
-import {  deleteStudentApi } from '../../utils/api';
+import {  deleteStudentApi } from '../../api/axios';
 import { useNavigate } from "react-router-dom";
 import StudentCSS from "../../css/student.module.css";
 

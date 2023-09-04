@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 //import "../css/App.css";
-import { getMessageApi } from "../utils/api";
+import { getMessageApi } from "../api/axios";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 
+
+
 const Home = () => {
-  const [msg, setMsg] = useState("");
+   const [msg, setMsg] = useState("");
   const toggleForm = (formName) =>{
     setCurrentForm(formName)
 
@@ -17,14 +19,17 @@ const Home = () => {
       console.log(res);
       setMsg(res);
     });
-  }, []);
+  }, []); 
 
   return (
     <div className="HomePage">
+      
       <h1>Home </h1>
-      <p>{msg}</p>   
-       {currentForm === "login" ? <Login onFormSwitch={toggleForm} />: <Register onFormSwitch={toggleForm} />}
-  
+    
+     <p>{msg}</p>    
+   
+       {currentForm === "login" ? <Login onFormSwitch={toggleForm} />: <Register onFormSwitch={toggleForm} />} 
+    
     </div>
   );
 };

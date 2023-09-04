@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getTutorApi } from '../../utils/api'
+import { getTutorApi } from '../../api/axios'
 import { Link } from "react-router-dom";
 import PostTutor from "./PostTutor";
 import TutorCSS from "../../css/tutor.module.css";

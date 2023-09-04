@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { patchQuestionApi } from "../../utils/api";
+import { patchQuestionApi } from "../../api/axios";
 import QuestionCSS from "../../css/question.module.css";
 
 function EditQuestion(props) {
@@ -50,14 +50,14 @@ function EditQuestion(props) {
               <input
                 type= "text"
                 name="newQuestionBody"
-                placeholder="Insert Question"
+                placeholder={question.ques_body}
                 onChange={(event) => setnewQuestionBody(event.target.value)}
                 value={newQuestionBody}
               />
               <p>Please Insert Your Question 1 Answer</p>
               <input
                 name="newQ1Answer"
-                placeholder="Insert Answer"
+                placeholder={question.ques1_ans} 
                 onChange={(event) => setnewQ1Answer(event.target.value)}
                 value={newQ1Answer}
               />
@@ -65,7 +65,7 @@ function EditQuestion(props) {
               <input type="number"
                  min="1" max="5"
                 name="newQuestionMark"
-                placeholder="Mk."
+                placeholder={question.ques_mark} 
                 onChange={(event) => setnewQuestionMark(event.target.value)}
                 value={newQuestionMark}
               />
@@ -73,7 +73,7 @@ function EditQuestion(props) {
               <input type="number"
                  min="1" max="9"
                 name="newQuestionGrade"
-                placeholder="Gr."
+                placeholder={question.ques_grade}
                 onChange={(event) => setnewQuestionGrade(event.target.value)}
                 value={newQuestionGrade}
               />
@@ -81,7 +81,7 @@ function EditQuestion(props) {
               <input type="number"
                  min="1" max="5"
                 name="newQuestionLessonId"
-                placeholder="Id"
+                placeholder={question.ques_lesson_id}
                 onChange={(event) => setnewQuestionLessonId(event.target.value)}
                 value={newQuestionLessonId}
               />
@@ -127,7 +127,7 @@ function EditQuestion(props) {
 
             </label>
             <p></p>
-            <button>Go!</button>
+            <button>Update</button>
           </form>
         </div>
       ) : (

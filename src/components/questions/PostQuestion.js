@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postQuestionApi } from "../../utils/api";
+import { postQuestionApi } from "../../api/axios";
 import QuestionCSS from "../../css/question.module.css";
 
 function PostQuestion(props) {

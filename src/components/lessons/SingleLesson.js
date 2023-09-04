@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleLessonApi } from "../../utils/api";
+import { getSingleLessonApi } from "../../api/axios";
 import DeleteLesson from "./DeleteLesson";
 import EditLesson from "./EditLesson";
 import LessonCSS from "../../css/lesson.module.css";

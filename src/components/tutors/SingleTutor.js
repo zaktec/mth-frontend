@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleTutorApi } from "../../utils/api";
+import { getSingleTutorApi } from "../../api/axios";
 import EditTutor from "./EditTutor";
 import DeleteTutor from "./DeleteTutor";
 import TutorCSS from "../../css/tutor.module.css";

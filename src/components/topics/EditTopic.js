@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { patchTopicApi } from "../../utils/api";
+import { patchTopicApi } from "../../api/axios";
 import TopicCSS from "../../css/question.module.css";
 
 function EditTopic(props) {

@@ -1,7 +1,7 @@
 import React from "react";
 import "../../css/App.css";
 import { useEffect, useState } from "react";
-import { getStudentsApi } from "../../utils/api";
+import { getStudentsApi } from "../../api/axios";
 import { Link } from "react-router-dom";
 import PostStudent from "./PostStudent";
 import StudentCSS from "../../css/student.module.css";

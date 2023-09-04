@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 //import "../css/App.css";
-import { getEndpoint, getEndpointApi } from "../utils/api";
+import { getEndpoint, getEndpointApi } from "../api/axios";
 
 const Endpoint = () => {
   const [msg, setMsg] = useState("");

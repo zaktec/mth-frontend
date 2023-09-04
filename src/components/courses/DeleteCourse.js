@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteCourseApi } from "../../utils/api";
+import { deleteCourseApi } from "../../api/axios";
 import CourseCSS from "../../css/course.module.css";
 
 

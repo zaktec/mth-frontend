@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { patchLessonApi } from "../../utils/api";
+import { patchLessonApi } from "../../api/axios";
 import LessonCSS from "../../css/lesson.module.css";
 
 function EditLesson(props) {
@@ -16,11 +16,11 @@ function EditLesson(props) {
     event.preventDefault();
     const newObject = {
       lesson_name: newLessonName === "" ? lesson.lesson_name : newLessonName,
-      lesson_code: newCode === "" ? lesson.lesson_name : newCode,
+      lesson_code: newCode === "" ? lesson.lesson_code : newCode,
       lesson_desc: newLessonDescription === "" ? lesson.lesson_desc : newLessonDescription,
       lesson_ws: newLessonWorksheet === "" ? lesson.lesson_ws : newLessonWorksheet,
       lesson_body: newLessonBody === "" ? lesson.lesson_body : newLessonBody,
-      lesson_topic_id: newLessonTopicId === "" ? lesson.topic_id : newLessonTopicId,
+      lesson_topic_id: newLessonTopicId === "" ? lesson.lesson_topic_id : newLessonTopicId,
     };
 
     patchLessonApi(lesson.lesson_id,newObject).then((response) => {
@@ -29,7 +29,7 @@ function EditLesson(props) {
   };
 
   return (
-    <div>
+    <div className={LessonCSS.EditLessonPage}>
       <button
         onClick={() =>
           setPostDisplay((currentValue) => {
@@ -47,21 +47,21 @@ function EditLesson(props) {
               <p>Please Insert Your lesson Name </p>
               <input
                 name="newLessonName"
-                placeholder="Insert Lesson Name"
+                placeholder={lesson.lesson_name}
                 onChange={(event) => setNewLessonName(event.target.value)}
                 value={newLessonName}
               />
               <p>Please Insert Your lesson Code </p>
               <input
                 name="newCode"
-                placeholder="Lesson Code"
+                placeholder={lesson.lesson_code} 
                 onChange={(event) => setNewCode(event.target.value)}
                 value={newCode}
               />
               <p>Please Insert Your lesson Description </p>
               <input
                 name="newlessonDescription"
-                placeholder="Lesson Description"
+                placeholder={lesson.lesson_desc}
                 onChange={(event) =>
                   setNewLessonDescription(event.target.value)
                 }
@@ -70,14 +70,14 @@ function EditLesson(props) {
               <p>Please Insert Your lesson Worksheet </p>
               <input
                 name="newlessonWorksheet"
-                placeholder="Upload Lesson Worksheet"
+                placeholder={lesson.lesson_ws}
                 onChange={(event) => setNewLessonWorksheet(event.target.value)}
                 value={newLessonWorksheet}
               />
               <p>Please Insert Your lesson body </p>
               <input
                 name="newlessonWorksheet"
-                placeholder="Upload Lesson Body"
+                placeholder={lesson.lesson_body}
                 onChange={(event) => setNewLessonBody(event.target.value)}
                 value={newLessonBody}
               />
@@ -86,13 +86,13 @@ function EditLesson(props) {
               <input type="number"
                  min="1" max="15"
                 name="newLessonTopicId"
-                placeholder="Lesson Topic ID"
+                placeholder={lesson.lesson_topic_id}
                 onChange={(event) => setnewLessonTopicId(event.target.value)}
                 value={newLessonTopicId}
               />
             </label>
             <p></p>
-            <button>Go!</button>
+            <button>Update</button>
           </form>
         </div>
       ) : (

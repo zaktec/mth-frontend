@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteQuestionApi, getCoursesApi } from "../../utils/api";
+import { deleteQuestionApi, getCoursesApi } from "../../api/axios";
 
 
 function DeleteQuestion(props) {

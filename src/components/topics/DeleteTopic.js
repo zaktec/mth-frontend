@@ -1,5 +1,5 @@
 import React from "react";
-import {  deleteTopicApi, getTopicsApi } from '../../utils/api';
+import {  deleteTopicApi, getTopicsApi } from '../../api/axios';
 import { useNavigate } from "react-router-dom";
 import TopicCSS from "../../css/topic.module.css";
 
