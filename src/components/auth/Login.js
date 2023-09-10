@@ -1,11 +1,15 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../../context/AuthProvider"
-import { postLoginStudentApi } from "../../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
+import { postAdminLoginApi, postLoginStudentApi } from "../../api/axios";
+import { Link, Location, useLocation, useNavigate } from "react-router-dom";
 import AuthCSS from "../../css/auth.module.css";
+import useAuth from "../../hooks/useAuth";
 
 const Login = (props) => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+  const navigate = useNavigate;
+  const location = useLocation;
+  const from = location.state?.from?.pathname || "/";
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -13,7 +17,6 @@ const Login = (props) => {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     userRef.current.focus();
@@ -27,21 +30,24 @@ const Login = (props) => {
     e.preventDefault();
     console.log(user, pwd);
     const newObject = {
-      student_username: user,
-      student_password: pwd,
+      username: user,
+      password: pwd,
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     };
+    console.log(newObject);
     try {
-      postLoginStudentApi(newObject).then((response) => {
-        navigate("/courselist");
+      postAdminLoginApi(newObject).then((response) => {
         console.log(JSON.stringify(response?.data));
         //console.log(JSON.stringify(response));
-        const accessToken = response?.data?.accessToken;
+        const accessToken = response.token;
         setAuth({ user, pwd, accessToken });
+        console.log(user, pwd, accessToken);
         setUser("");
         setPwd("");
         setSuccess(true);
+        navigate(from, { replace: true });
+        //navigate("/admindashboard");
       });
     } catch (error) {
       if (!Error?.response) {
@@ -58,54 +64,54 @@ const Login = (props) => {
   };
 
   return (
-    <>
-      {success ? (
-        <section>
-          <h1>You are logged in!</h1>
-          <br />
-          <p>
-            <a href="#">Go to Home</a>
-          </p>
-        </section>
-      ) : (
-        <section>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
-          <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-              required
-            />
+    // <>
+    //   {success ? (
+    //     <section>
+    //       <h1>You are logged in!</h1>
+    //       <br />
+    //       <p>
+    //         <a href="#">Go to Home</a>
+    //       </p>
+    //     </section>
+    //   ) : (
+    <section className={AuthCSS["register-page"]}>
+      <p
+        ref={errRef}
+        className={errMsg ? "errmsg" : "offscreen"}
+        aria-live="assertive"
+      >
+        {errMsg}
+      </p>
+      <h1>Sign In</h1>
+      <form className={AuthCSS["register-form"]} onSubmit={handleSubmit}>
+        <label htmlFor="username"> Admin Username:</label>
+        <input
+          type="text"
+          id="username"
+          ref={userRef}
+          autoComplete="off"
+          onChange={(e) => setUser(e.target.value)}
+          value={user}
+          required
+        />
 
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-              required
-            />
-            <button>Sign In</button>
-          </form>
-          <button onClick={() => props.onFormSwitch("register")}>
-            {" "}
-            Dont have an account? Register here
-          </button>
-        </section>
-      )}
-    </>
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          onChange={(e) => setPwd(e.target.value)}
+          value={pwd}
+          required
+        />
+        <button>Sign In</button>
+      </form>
+      <button onClick={() => props.onFormSwitch("register")}>
+        {" "}
+        Dont have an account? Register here
+      </button>
+    </section>
+
+    /* </> */
   );
 };
 

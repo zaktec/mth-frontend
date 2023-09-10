@@ -7,7 +7,7 @@ import {
   faCheck,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { postRegisterStudentApi } from "../../api/axios";
+import { postAdminSignInApi, postRegisterStudentApi } from "../../api/axios";
 
 const USER_REGEX = /^[0-9A-Za-z]{6,16}$/;
 const PWD_REGEX = /^(?=.*?[0-9])(?=.*?[A-Za-z]).{8,32}$/;
@@ -31,7 +31,7 @@ const Register = (props) => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const { setNewStudentList } = props;
+  const { setNewAdminList } = props;
   const [displayPost, setPostDisplay] = useState(false);
 
   useEffect(() => {
@@ -75,13 +75,13 @@ const Register = (props) => {
     };
 
     try {
-      postRegisterStudentApi(newObject).then((response) => {
-        setNewStudentList((currentValue) => {
-          const newStudentList = currentValue.map((student) => {
+      postAdminSignInApi(newObject).then((response) => {
+        setNewAdminList((currentValue) => {
+          const newAdminList = currentValue.map((student) => {
             return { ...student };
           });
-          newStudentList.unshift(response);
-          console.log(newStudentList);
+          newAdminList.unshift(response);
+          console.log(newAdminList);
           setPostDisplay(false);
           setSuccess(true);
           //clear state and controlled inputs
@@ -89,7 +89,7 @@ const Register = (props) => {
           setUser("");
           setPwd("");
           setMatchPwd("");
-          return newStudentList;
+          return newAdminList;
         });
       });
     } catch (error) {
@@ -125,11 +125,8 @@ const Register = (props) => {
           </p>
 
           <h1>Register </h1>
-          <form
-            className={AuthCSS["register-form"]}
-            onSubmit={handleSubmit}
-          >
-            <label htmlFor="username">
+          <form className={AuthCSS["register-form"]} onSubmit={handleSubmit}>
+            <label htmlFor=" Admin username">
               {" "}
               Username:
               <span className={validName ? "valid" : "hide"}>
@@ -164,6 +161,17 @@ const Register = (props) => {
               Must begin with a letter. <br />
               Letters, numbers, underscores, hypen allowed
             </p>
+            <label htmlFor="password">
+              Password:
+              <FontAwesomeIcon
+                icon={faCheck}
+                className={validPwd ? "valid" : "hide"}
+              />
+              <FontAwesomeIcon
+                icon={faTimes}
+                className={validPwd || !pwd ? "hide" : "invalid"}
+              />
+            </label>
             <input
               type="password"
               id="password"
@@ -227,13 +235,12 @@ const Register = (props) => {
 
             <button
               disabled={!validName || !validPwd || !validMatch ? true : false}
-            >
-              Sign Up
+            >Sign Up
             </button>
           </form>
 
           <button onClick={() => props.onFormSwitch("login")}>
-            Already have an account? Login here
+            Already registered? Sign In
           </button>
         </section>
       )}
