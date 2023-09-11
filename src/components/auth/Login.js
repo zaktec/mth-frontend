@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 import { postAdminLoginApi, postLoginStudentApi } from "../../api/axios";
-import { Link, Location, useLocation, useNavigate } from "react-router-dom";
+/* import { Link, Location, useLocation, useNavigate } from "react-router-dom"; */
 import AuthCSS from "../../css/auth.module.css";
 import useAuth from "../../hooks/useAuth";
 
 const Login = (props) => {
   const { setAuth } = useAuth();
-  const navigate = useNavigate;
+/*   const navigate = useNavigate;
   const location = useLocation;
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/"; */
 
   const userRef = useRef();
   const errRef = useRef();
@@ -46,7 +46,7 @@ const Login = (props) => {
         setUser("");
         setPwd("");
         setSuccess(true);
-        navigate(from, { replace: true });
+       /*  navigate(from, { replace: true }); */
         //navigate("/admindashboard");
       });
     } catch (error) {
@@ -64,16 +64,16 @@ const Login = (props) => {
   };
 
   return (
-    // <>
-    //   {success ? (
-    //     <section>
-    //       <h1>You are logged in!</h1>
-    //       <br />
-    //       <p>
-    //         <a href="#">Go to Home</a>
-    //       </p>
-    //     </section>
-    //   ) : (
+     <>
+       {success ? (
+         <section>
+           <h1>You are logged in!</h1>
+           <br />
+           <p>
+             <a href="#">Go to Home</a>
+           </p>
+         </section>
+       ) : (
     <section className={AuthCSS["register-page"]}>
       <p
         ref={errRef}
@@ -110,8 +110,8 @@ const Login = (props) => {
         Dont have an account? Register here
       </button>
     </section>
-
-    /* </> */
+       )}
+     </> 
   );
 };
 
