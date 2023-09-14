@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getCoursesApi } from '../../api/axios'
 import { Link } from "react-router-dom";
 import PostCourse from "./PostCourse";

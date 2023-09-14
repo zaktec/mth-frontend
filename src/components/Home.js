@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 //import "../css/App.css";
 import { getMessageApi } from "../api/axios";
-import Login from "./auth/Login";
 import Register from "./auth/Register";
+import Login from "./auth/Login";
 
 
 

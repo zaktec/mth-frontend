@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleCourseApi } from "../../api/axios";
 import EditCourse from "./EditCourse";
