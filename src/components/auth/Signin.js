@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import Navbar from '../navbar/Navbar';
 import Loading from '../loading/Loading';
-import { validateSignin } from '../../helpers';
+import { validateSignin, verifyRole } from '../../helpers';
 import { authAPIsRequests } from '../../api/APIsRequests';
 
 const Signin = () => {
@@ -18,8 +18,7 @@ const Signin = () => {
   });
 
   useEffect(() => {
-    if (role !== 'student' && role !== 'tutor')
-      window.location.replace('/home');
+    verifyRole(role);
   }, [role]);
 
   const handleChange = (key) => {

@@ -3,12 +3,9 @@ import { Routes, Route } from "react-router-dom";
 
 import '../App.scss';
 // import "../css/App.css"
-import Home from "./Home";
+
 import Endpoint from "./Endpoint";
-import Footer from "./layouts/Footer";
-import Layout from "./layouts/Layout";
-import AdminHome from "./admin/Adminhome";
-import RequireAuth from "./auth/RequireAuth";
+
 import SortTopics from "./topics/SortTopics";
 import SortTutors from "./tutors/SortTutors";
 import SingleQuiz from "./quizzes/SingleQuiz";
@@ -34,14 +31,14 @@ const RoutePages = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={<Home />}></Route>
-        <Route path="/" element={<Layout />}></Route>
-        <Route element={<RequireAuth />}>
-            <Route path="/admindb" element={<AdminHome />}></Route>
-        </Route>
+   
 
-        <Route path="/endpoint" element={<Endpoint />}></Route>
-        <Route path="/endpoint" element={<Endpoint />}></Route>
+
+        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/signin/:role" element={<Signin />}></Route>
+        <Route path="/signup/:role" element={<Signup />}></Route>
+        <Route path="/dashboard/:role" element={<Dashboard />}></Route>
+       
         <Route path="/endpoint" element={<Endpoint />}></Route>
         <Route path="/quizlist" element={<SortQuizzes />}></Route>
         <Route path="/tutorlist" element={<SortTutors />}></Route>
@@ -61,10 +58,10 @@ const RoutePages = () => {
         <Route path="/question/:ques_id" element={<SingleQuestion />}></Route>
         <Route path="/students/:student_id" element={<SingleStudent />}></Route>
 
-        <Route path="/home" element={<HomePage />}></Route>
-        <Route path="/signin/:role" element={<Signin />}></Route>
-        <Route path="/signup/:role" element={<Signup />}></Route>
-        <Route path="/dashboard/:role" element={<Dashboard />}></Route>
+   
+
+
+
       </Routes>
     </div>
   );

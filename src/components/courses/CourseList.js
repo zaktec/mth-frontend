@@ -3,13 +3,19 @@ import { getCoursesApi } from '../../api/axios'
 import { Link } from "react-router-dom";
 import PostCourse from "./PostCourse";
 import CourseCSS from "../../css/course.module.css";
+import { verifyAuth } from "../../helpers";
 
 function CourseList(props) {
   const [coursesList, setCoursesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
-
   useEffect(() => {
+    const token = verifyAuth();
+    console.log('------------->', token);
+   }, []);
+
+  
+ /*  useEffect(() => {
     getCoursesApi(props.sortBy).then((coursesFromApi) => {
       console.log(coursesFromApi);
       setCoursesList(coursesFromApi);
@@ -17,12 +23,14 @@ function CourseList(props) {
     });
   }, [props.sortBy]);
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return <p>Loading....</p>; */
 
   return (
     <main className={CourseCSS.CourseListPage}>
 
-      <h1 className={CourseCSS.CourseList__h1}> CourseList </h1>
+      <p>odjkjddkj</p>
+
+      {/* <h1 className={CourseCSS.CourseList__h1}> CourseList </h1>
       
       <PostCourse
             setCourseList={setCoursesList}/>
@@ -40,7 +48,7 @@ function CourseList(props) {
             </Link>
           );
         })}
-      </ul>
+      </ul> */}
     </main>
   );
 }

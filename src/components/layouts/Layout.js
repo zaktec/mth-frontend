@@ -11,7 +11,6 @@ const Layout = () =>{
         <main className="App">
             <Outlet />
             <Header />
-            <Nav />
             <Home />
             <Footer year={new Date().getFullYear()} />
           
