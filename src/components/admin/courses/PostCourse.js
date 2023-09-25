@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { postCourseApi } from "../../api/axios";
-import CourseCSS from "../../css/course.module.css";
+import { postCourseApi } from "../../../api/axios";
+
+
 
 function PostCourse(props) {
   const { setCourseList } = props;
@@ -22,6 +23,7 @@ function PostCourse(props) {
     };
    
     // newObject.course_image = 0;
+  
 
    postCourseApi(newObject).then((response)=>{
     setCourseList((currentValue) => {

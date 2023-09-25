@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { getLessonApi } from "../../api/axios";
+import { getLessonApi } from "../../../api/axios";
 import { Link } from "react-router-dom";
 import PostLesson from "./PostLesson";
 import LessonCSS from "../../css/lesson.module.css";

@@ -51,7 +51,7 @@ const Signin = () => {
             </div>
 
             <div className='form__content'>
-              <input onChange={(name) => handleChange(name)} type='text' name='username' placeholder='Username' className='form__input' />
+              <input onChange={(name) => handleChange(name)} type='text' name='username' placeholder='Username' autocomplete="on" className='form__input' />
               <input onChange={(name) => handleChange(name)}  type='password' name='password' placeholder='Password' className='form__input' />
               
               <div className='form-error'>{ state.error }</div>
@@ -60,7 +60,7 @@ const Signin = () => {
               </button>
               
               <div className='form__links'><a className='form__link' href='./'>Forgot your password ?</a></div>
-              <div className='form__links'>Don't have account ? <a className='form__link' href='/signup/student'>Signup Student</a> | <a className='form__link' href='/signup/tutor'>Signup Tutor</a></div>
+              <div className='form__links'>Don't have account ? <a className='form__link' href='/signup/student'>Signup Student</a> | <a className='form__link' href='/signup/tutor'>Signup Tutor</a>  | <a className='form__link' href='/signup/admin'>Signup Admin</a></div>
             </div>
         </div>
     </div>

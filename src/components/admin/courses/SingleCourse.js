@@ -19,6 +19,7 @@ function SingleCourse() {
   }, [course_id]);
 
   return (
+    
     <main className={CourseCSS.SingleCoursePage}>
       <h1>Single Course Page</h1>
       <ul className={CourseCSS.CourseList}>

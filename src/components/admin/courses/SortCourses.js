@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import "../../css/App.css";
-import CourseList from "./CourseList";
-import CourseCSS from "../../css/course.module.css";
+import React, { useState, useEffect } from "react";
+import CourseList from "../courses/CourseList";
+import CourseCSS from "../../../css/course.module.css"
+import { verifyAuth } from "../../../helpers";
 
 const SortCourses = () => {
   const [sortBy, setSortBy] = useState("course_id");
+  const [token, setToken] = useState();
+ 
+ 
+
+  useEffect(() => {
+    /* verifyRole(role); */
+    const token =  verifyAuth();
+    setToken(token);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -16,6 +25,7 @@ const SortCourses = () => {
   };
 
   return (
+
     <main className={CourseCSS.SortCoursePage}>
       <div>
         <h1> Sort Courses List </h1>
@@ -33,7 +43,7 @@ const SortCourses = () => {
         </form>
         <p>Click the "Submit" button .</p>
       </div>
-      <CourseList sortBy={sortBy} />
+      { <CourseList token = {token} sortBy={sortBy} /> }
     </main>
   );
 };

@@ -15,7 +15,9 @@ const Navbar = (props) => {
   console.log("jkdjdkdjjdk", props);
   return (
     <>
-      { props?.page === "home" || props?.page === "signin"|| props?.page === "signup" ?  (
+      {props?.page === "home" ||
+      props?.page === "signin" ||
+      props?.page === "signup" ? (
         <nav className="navbar-unique">
           <div className="menu">
             <a className="logo" href="/">
@@ -31,16 +33,15 @@ const Navbar = (props) => {
               <FontAwesomeIcon icon={faClipboardCheck} /> About Us
             </a>
             <a href="/">
-              <FontAwesomeIcon icon={faGraduationCap} /> Students
+              <FontAwesomeIcon icon={faGraduationCap} /> Services
             </a>
             <a href="/">
-              <FontAwesomeIcon icon={faCog} /> Settings
+              <FontAwesomeIcon icon={faCog} /> Blog
             </a>
             <a href="/">
               <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
             </a>
           </div>
-
           <div className="auth">
             {props?.page === "dashboard" ? (
               <div className="profile-picture">
@@ -55,47 +56,135 @@ const Navbar = (props) => {
                 {" "}
                 <span className="auth-signin">Signup</span>{" "}
                 <a href="/signup/student"> Student </a> |{" "}
-                <a href="/signup/tutor"> Tutor </a>{" "}
+                <a href="/signup/tutor"> Tutor </a> |{" "}
+                <a href="/signup/admin"> Admin </a>{" "}
               </span>
             ) : props?.page === "home" || props?.page === "signup" ? (
               <span>
                 {" "}
                 <span className="auth-signin">Signin</span>{" "}
                 <a href="/signin/student"> Student </a> |{" "}
-                <a href="/signin/tutor"> Tutor </a>{" "}
+                <a href="/signin/tutor"> Tutor </a> |{" "}
+                <a href="/signin/admin"> Admin </a>{" "}
               </span>
             ) : null}
           </div>
         </nav>
-      ) : props?.page === "dashboard-student" ?  (
+      ) : props?.page === "dashboard-admin" ? (
         <nav className="navbar-unique">
           <div className="menu">
-            <a className="logo" href="/">
+            <a className="logo" href="/home">
               MTH
             </a>
-            <a href="/">
+            <a href="/tutorhome">
               <FontAwesomeIcon icon={faHome} /> Home
             </a>
             <a href="/courselist">
               <FontAwesomeIcon icon={faBook} /> Courses
             </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faClipboardCheck} /> About Us
+            <a href="/topics">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Topics
             </a>
-            <a href="/">
+            <a href="/students">
               <FontAwesomeIcon icon={faGraduationCap} /> Students
             </a>
-            <a href="/">
+            <a href="/tutors">
+              <FontAwesomeIcon icon={faUserMd} /> Tutors
+            </a>
+            <a href="/lesson">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
+            </a>
+            <a href="/quizzes">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
+            </a>
+            <a href="/questions">
+              <FontAwesomeIcon icon={faQuestionCircle} /> Questions
+            </a>
+            <a href="/setting">
               <FontAwesomeIcon icon={faCog} /> Settings
             </a>
-            <a href="/">
+            <a href="/contactus">
               <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
             </a>
           </div>
         </nav>
-      )
-      : null
-      }
+      ) : props?.page === "dashboard-tutor" ? (
+        <nav className="navbar-unique">
+          <div className="menu">
+            <a className="logo" href="/home">
+              MTH
+            </a>
+            <a href="/dashboard/tutor">
+              <FontAwesomeIcon icon={faHome} /> DashBoard
+            </a>
+            <a href="/tutorprofile/tutor">
+              <FontAwesomeIcon icon={faBook} /> Profile
+            </a>
+            <a href="/topics">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Topics
+            </a>
+            <a href="/students">
+              <FontAwesomeIcon icon={faGraduationCap} /> Students
+            </a>
+            <a href="/tutors">
+              <FontAwesomeIcon icon={faUserMd} /> Tutors
+            </a>
+            <a href="/lesson">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
+            </a>
+            <a href="/quizzes">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
+            </a>
+            <a href="/questions">
+              <FontAwesomeIcon icon={faQuestionCircle} /> Questions
+            </a>
+            <a href="/setting">
+              <FontAwesomeIcon icon={faCog} /> Settings
+            </a>
+            <a href="/contactus">
+              <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
+            </a>
+          </div>
+        </nav>
+      ) : props?.page === "dashboard-student" ? (
+        <nav className="navbar-unique">
+          <div className="menu">
+            <a className="logo" href="/home">
+              MTH
+            </a>
+            <a href="/tutorhome">
+              <FontAwesomeIcon icon={faHome} /> Student Home 
+            </a>
+            <a href="/courses">
+              <FontAwesomeIcon icon={faBook} /> MyCourses
+            </a>
+            <a href="/topics">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Profile
+            </a>
+            <a href="/students">
+              <FontAwesomeIcon icon={faGraduationCap} /> Students
+            </a>
+            <a href="/tutors">
+              <FontAwesomeIcon icon={faUserMd} /> Tutors
+            </a>
+            <a href="/lesson">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
+            </a>
+            <a href="/quizzes">
+              <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
+            </a>
+            <a href="/questions">
+              <FontAwesomeIcon icon={faQuestionCircle} /> Questions
+            </a>
+            <a href="/setting">
+              <FontAwesomeIcon icon={faCog} /> Settings
+            </a>
+            <a href="/contactus">
+              <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
+            </a>
+          </div>
+        </nav>
+      ) : null}
     </>
   );
 };

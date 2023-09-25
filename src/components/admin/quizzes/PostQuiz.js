@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postQuizApi } from "../../api/axios";
+import { postQuizApi } from "../../../api/axios";
 import QuizCSS from "../../css/quiz.module.css";
 
 

@@ -1,4 +1,4 @@
-const verifyAuth = () => {
+const verifyAuth =  () => {
     try {
       const data = localStorage.getItem('data');
       if (data) {
