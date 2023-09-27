@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
 import CourseList from "../courses/CourseList";
 import CourseCSS from "../../../css/course.module.css"
+
 import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
 
 const SortCourses = () => {
-  const [sortBy, setSortBy] = useState("course_id");
-  const [token, setToken] = useState();
- 
- 
+  const [state, setState] = useState({ data: [], isLoading: true, token: null, sortBy: 'course_id' });
 
   useEffect(() => {
-    /* verifyRole(role); */
     const token =  verifyAuth();
-    setToken(token);
+    setState((prevState) => ({...prevState, token: token?.token }));
+    const getCoursesApi = async (token, sortBy) => {  
+      await authAPIsRequests.getCoursesApi(token?.token, sortBy)
+        .then((response) => {
+          return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getCoursesApi(token, state?.sortBy)
   }, []);
 
   const handleSubmit = (event) => {
@@ -21,12 +30,12 @@ const SortCourses = () => {
 
   const handleChange = (event) => {
     console.log(event.target.value);
-    setSortBy(event.target.value);
+    return setState((prevState) => ({...prevState, sortBy: event.target.value }));
   };
 
   return (
 
-    <main className={CourseCSS.SortCoursePage}>
+    <div className={CourseCSS.SortCoursePage}>
       <div>
         <h1> Sort Courses List </h1>
         <p> Choose a column to sort the course list </p>
@@ -43,8 +52,8 @@ const SortCourses = () => {
         </form>
         <p>Click the "Submit" button .</p>
       </div>
-      { <CourseList token = {token} sortBy={sortBy} /> }
-    </main>
+      { <CourseList token= {state?.token} data= { state?.data } isLoading= {state?.isLoading}  sortBy={state?.sortBy}/> }
+    </div>
   );
 };
 

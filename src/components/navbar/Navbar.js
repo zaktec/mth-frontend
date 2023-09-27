@@ -12,7 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = (props) => {
-  console.log("jkdjdkdjjdk", props);
+  console.log('---------->', props);
+
   return (
     <>
       {props?.page === "home" ||
@@ -45,27 +46,24 @@ const Navbar = (props) => {
           <div className="auth">
             {props?.page === "dashboard" ? (
               <div className="profile-picture">
-                {" "}
                 <img
                   src="https://avatars.githubusercontent.com/u/38179232?v=4"
                   alt="profile"
-                />{" "}
+                />
               </div>
             ) : props?.page === "signin" ? (
               <span>
-                {" "}
-                <span className="auth-signin">Signup</span>{" "}
-                <a href="/signup/student"> Student </a> |{" "}
-                <a href="/signup/tutor"> Tutor </a> |{" "}
-                <a href="/signup/admin"> Admin </a>{" "}
+                <span className="auth-signin">Signup</span>
+                <a href="/signup/student"> Student </a>
+                <a href="/signup/tutor"> Tutor </a>
+                <a href="/signup/admin"> Admin </a>
               </span>
             ) : props?.page === "home" || props?.page === "signup" ? (
               <span>
-                {" "}
-                <span className="auth-signin">Signin</span>{" "}
-                <a href="/signin/student"> Student </a> |{" "}
-                <a href="/signin/tutor"> Tutor </a> |{" "}
-                <a href="/signin/admin"> Admin </a>{" "}
+                <span className="auth-signin">Signin</span>
+                <a href="/signin/student"> Student </a>
+                <a href="/signin/tutor"> Tutor </a>
+                <a href="/signin/admin"> Admin </a>
               </span>
             ) : null}
           </div>

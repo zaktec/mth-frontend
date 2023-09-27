@@ -1,28 +1,23 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { deleteCourseApi } from "../../api/axios";
-import CourseCSS from "../../css/course.module.css";
+import { authAPIsRequests } from "../../../api/APIsRequests";
 
 
-function DeleteCourse(props) {
-  const navigate = useNavigate();
-  const deleteCourseButton = () => {
-    console.log(props.course_id);
-   
-    deleteCourseApi(props.course_id).then((course) =>
+const DeleteCourse = (props) => {
+  const handleDeleteCourse = async (key, token, course_id) => {
+    key.preventDefault();
 
-    {
-      //props.setCourse(course);
-      navigate('/courselist')
-    //  getCoursesApi(props.course_id).then((course) => {
-    //    
+    await authAPIsRequests.deleteCourseApi(token, course_id)
+    .then((response) => {
+      window.location.replace(`/courselist`);
+    })
+    .catch((error) => {
+      console.log(error);
     });
-  };
+  }
 
   return (
     <div>
-      <button onClick={() => deleteCourseButton()}>Delete Course</button>
-      
+      <button onClick={(key) => handleDeleteCourse(key, props?.token, props?.course_id)} >Delete Course</button>
     </div>
   );
 }

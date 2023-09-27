@@ -23,6 +23,7 @@ export const authAPIsRequests = {
 
       return await axios.post(variables.TUTOR_SIGNUP_API, body);
     }
+
     if (role === 'tutor') {
       const body = {
         tutor_username: data.username,
@@ -56,22 +57,45 @@ export const authAPIsRequests = {
       return await axios.post(variables.STUDENT_SIGNUP_API, body);
     }
   },
-/* 
-getTutorApi: async (sortBy) => {
-    console.log(sortBy)
-    return await axios
-      .get(variables.GET_ALLTUTOR_API, {
-        params: { sort_by: sortBy },
-      })
+
+  postCourseApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      course_code: body.course_code,
+      course_name: body.course_name,
+      course_desc: body.course_desc,
+      course_level: body.course_level,
+      course_image: body.course_image,
     }
-  
-},
- */
 
-getCourseApi: async (token, sortBy) => {
-  const configs = { headers: { Authorization: `Bearer ${token?.token}` }, params: { sort_by: sortBy }, };
-  return await axios
-    .get(variables.GET_ALLCOURSES_API, configs)
+    return await axios.post(`${variables.ALL_COURSES_API}`, data, configs);
+  },
+
+  getCoursesApi: async (token, sortBy) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` }, params: { sort_by: sortBy }, };
+    return await axios.get(variables.ALL_COURSES_API, configs);
+  },
+
+  getCourseApi: async (token, course_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.ALL_COURSES_API}/${course_id}`, configs);
+  },
+
+  deleteCourseApi: async (token, course_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(`${variables.ALL_COURSES_API}/${course_id}`, configs);
+  },
+
+  editCourseApi: async (token, course_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      course_code: body.course_code,
+      course_name: body.course_name,
+      course_desc: body.course_desc,
+      course_level: body.course_level,
+      course_image: body.course_image,
+    }
+
+    return await axios.patch(`${variables.ALL_COURSES_API}/${course_id}`, data, configs);
   }
-
 }

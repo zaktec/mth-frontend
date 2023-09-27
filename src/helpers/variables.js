@@ -10,4 +10,4 @@ export const TUTOR_SIGNUP_API= `${SERVER_URL}/tutorsignin`;
 export const STUDENT_SIGNUP_API= `${SERVER_URL}/studentsignin`; 
 
 export const GET_ALLTUTOR_API= `${SERVER_URL}/tutors`; 
-export const GET_ALLCOURSES_API= `${SERVER_URL}/api/courses`; 
+export const ALL_COURSES_API= `${SERVER_URL}/api/courses`;
