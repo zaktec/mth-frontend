@@ -73,7 +73,7 @@ export const getAdminHomepageApi = () => {
 export const getCoursesApi = (sortBy) => {
   console.log(sortBy)
   return mthApi
-    .get(`/courses`, {
+    .get(`/api/courses`, {
       params: { sort_by: sortBy },
     })
     .then(({ data }) => {

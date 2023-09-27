@@ -1,0 +1,74 @@
+@import './size.scss';
+@import './colors.scss';
+
+.navbar-unique {
+  height: 70px;
+  display: flex;
+  margin-bottom: 50px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $defaultColor;
+
+  .menu {
+    margin-left: 30px;
+    .logo {
+      font-size: 1.5em;
+      font-weight: 900;
+      margin-right: 30px;
+      padding: 10px 30px;
+      border: 2px solid $grayColor;
+      border-radius: 1px 80px 1px 80px;
+    }
+  }
+
+  a {
+    margin: 2px;
+    font-size: 14px;
+    padding: 2px 4px;
+    color: $grayColor;
+    text-decoration: none;
+  }
+
+  a:hover{
+    color: $whiteColor;
+  }
+
+  .auth {
+    color: $grayColor;
+    margin-right: 30px;
+
+    .auth-signin {
+      font-weight: 600;
+      padding: 3px 5px;
+      border-radius: 5px;
+      color: $defaultColor;
+      background: $whiteColor;
+      border: 2px solid $grayColor;
+    }
+
+    .profile-picture {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      overflow: hidden;
+      margin: 00px 20px;
+      position: relative;
+      border-radius: 50%;
+      background: $whiteColor;
+      box-shadow: 00px 00px 10px 00px $grayColor;
+  
+      img {
+        top: 50%;
+        width: auto;
+        height: auto;
+        font-size: 15px;
+        max-width: 100%;
+        font-weight: 900;
+        position: absolute;
+        color: $defaultColor;
+        transform:translate(-50%, -50%);
+      }
+    }
+  }
+}
+
