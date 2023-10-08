@@ -1,29 +1,30 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { deleteLessonApi } from "../../api/axios";
+import { authAPIsRequests } from "../../../api/APIsRequests";
 
-
-function DeleteLesson(props) {
-  const navigate = useNavigate();
-  const deleteLessonButton = () => {
-    console.log(props.lesson_id);
-   
-    deleteLessonApi(props.lesson_id).then(() =>
-
-    {
-      //props.setCourse(course);
-      navigate('/lessonlist')
-    //  getCoursesApi(props.course_id).then((course) => {
-    //    
-    });
+const DeleteLesson = (props) => {
+  const handleDeleteLesson = async (key, token, lesson_id) => {
+    key.preventDefault();
+    await authAPIsRequests
+      .deleteLessonApi(token, lesson_id)
+      .then((response) => {
+        window.location.replace(`/lessonlist`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
     <div>
-      <button onClick={() => deleteLessonButton()}>Delete Lesson</button>
-      
+      <button
+        onClick={(key) =>
+          handleDeleteLesson(key, props?.token, props?.lesson_id)
+        }
+      >
+        Delete Lesson
+      </button>
     </div>
   );
-}
+};
 
 export default DeleteLesson;

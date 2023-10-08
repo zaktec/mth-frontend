@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "../App.scss";
-// import "../css/App.css"
+ import "../css/App.css"
 
 /* import Endpoint from "./Endpoint";
 
@@ -29,6 +29,8 @@ import Dashboard from "./dashboard/Dashboard";
 import TutorProfile from "./dashboard/tutordashboard/TutorProfile";
 import SortCourses from "./admin/courses/SortCourses";
 import SingleCourse from "./admin/courses/SingleCourse";
+import SortLessons from "./admin/lessons/SortLessons";
+import SingleLesson from "./admin/lessons/SingleLesson";
 
 const RoutePages = () => {
   return (
@@ -45,7 +47,10 @@ const RoutePages = () => {
         <Route path="/dashboard/:role" element={<Dashboard />}></Route>
         <Route path="/courselist" element={<SortCourses />}></Route>
         <Route path="/courses/:course_id" element={<SingleCourse />}></Route>
-
+        <Route path="/lessonlist" element={<SortLessons />}></Route>
+        <Route path="/lessons/:lesson_id" element={<SingleLesson />}></Route>
+  
+        
 
 
         

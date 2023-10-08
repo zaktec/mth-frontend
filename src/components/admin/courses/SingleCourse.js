@@ -5,6 +5,7 @@ import DeleteCourse from "./DeleteCourse";
 import { verifyAuth } from "../../../helpers";
 import CourseCSS from '../../../css/course.module.css';
 import { authAPIsRequests } from "../../../api/APIsRequests";
+import Navbar from "../../navbar/Navbar";
 
 
 const SingleCourse = () => {
@@ -33,6 +34,7 @@ const SingleCourse = () => {
   return (
     
     <div className={CourseCSS.SingleCoursePage}>
+      <Navbar page='dashboard-admin' />
       <h1>Single Course Page</h1>
       <ul className={CourseCSS.CourseList}>
         <li className={CourseCSS.CourseList__card}>

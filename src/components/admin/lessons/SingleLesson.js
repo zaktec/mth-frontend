@@ -1,63 +1,86 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleLessonApi } from "../../api/axios";
 import DeleteLesson from "./DeleteLesson";
-import EditLesson from "./EditLesson";
-import LessonCSS from "../../css/lesson.module.css";
+ import EditLesson from "./EditLesson"; 
+import LessonCSS from "../../../css/lesson.module.css";
+import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Navbar from "../../navbar/Navbar";
 
-
-function SingleLesson() {
+const SingleLesson = () => {
   const { lesson_id } = useParams();
-  const [lesson, setLesson] = useState([]);
+  const [state, setState] = useState({
+    data: {},
+    isLoading: true,
+    token: null,
+  });
 
   useEffect(() => {
-    
-    getSingleLessonApi(lesson_id).then((res) => {
-      setLesson(res);
-    });
-  }, [lesson_id]);
- 
+    const token = verifyAuth();
+    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const getLessonApi = async (token, lesson_id) => {
+      await authAPIsRequests
+        .getLessonApi(token?.token, lesson_id)
+        .then((response) => {
+          return setState((prevState) => ({
+            ...prevState,
+            data: response?.data?.data,
+            isLoading: false,
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getLessonApi(token, lesson_id);
+  }, []);
+
+  if (state?.isLoading) return <p>Loading...</p>;
 
   return (
     <main className={LessonCSS.SingleLessonPage}>
+      <Navbar page='dashboard-admin' />
+    
       <h1> Single Lesson page </h1>
       <ul className={LessonCSS.Lesson__List}>
         <li className={LessonCSS.LessonList__card}>
-        <p>
-            <b>Lesson ID :</b> {lesson.lesson_id}
+          <p>
+            <b>Lesson ID :</b> {state?.data?.lesson_id}
           </p>
           <p>
-            <b>Lesson Name :</b> {lesson.lesson_name}
+            <b>Lesson Name :</b> {state?.data?.lesson_name}
           </p>
           <p>
-            <b>Lesson Code :</b> {lesson.lesson_code}
+            <b>Lesson Code :</b> {state?.data?.lesson_code}
           </p>
           <p>
-            <b>Lesson Description :</b> {lesson.lesson_desc}
+            <b>Lesson Description :</b> {state?.data?.lesson_desc}
           </p>
 
           <p>
-            <b>Lesson Worksheet :</b> {lesson.lesson_ws}
+            <b>Lesson Topic :</b> {state?.data?.lesson_topic}
           </p>
 
           <p>
-            <b>Lesson Body :</b> {lesson.lesson_body}
+            <b>Lesson Body :</b> {state?.data?.lesson_body}
           </p>
           <p>
-            <b>Lesson Topic Id :</b> {lesson.lesson_topic_id}
+            <b>Lesson Topic Id :</b> {state?.data?.lesson_topic_fk_id}
           </p>
-
-          <DeleteLesson
-            lesson_id={lesson.lesson_id}
-            setLessonName={setLesson}
-          />
-         
-           <EditLesson lesson = {lesson} /> 
         </li>
       </ul>
+      <div style={{ margin: "20px 20px" }}>
+        <DeleteLesson token={state?.token} lesson_id={state?.data?.lesson_id} />{" "}
+      </div>
+
+     <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <EditLesson token={state?.token} lesson={state?.data} />
+      </div> 
     </main>
   );
-}
+};
 
 export default SingleLesson;

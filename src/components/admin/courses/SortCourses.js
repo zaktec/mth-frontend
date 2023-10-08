@@ -4,6 +4,7 @@ import CourseCSS from "../../../css/course.module.css"
 
 import { verifyAuth } from "../../../helpers";
 import { authAPIsRequests } from "../../../api/APIsRequests";
+import Navbar from "../../navbar/Navbar";
 
 const SortCourses = () => {
   const [state, setState] = useState({ data: [], isLoading: true, token: null, sortBy: 'course_id' });
@@ -22,7 +23,7 @@ const SortCourses = () => {
     };
 
     getCoursesApi(token, state?.sortBy)
-  }, []);
+  }, [state.sortBy]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,8 +35,10 @@ const SortCourses = () => {
   };
 
   return (
+  
 
     <div className={CourseCSS.SortCoursePage}>
+      <Navbar page='dashboard-admin' />
       <div>
         <h1> Sort Courses List </h1>
         <p> Choose a column to sort the course list </p>

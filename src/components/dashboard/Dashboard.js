@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from "../navbar/Navbar";
 import { verifyAuth, verifyRole } from '../../helpers';
+import AdminProfile from './admindashboard/AdminProfile';
 
 const Dashboard = () => {
   const { role } = useParams();
+  const [state, setState] = useState({ authData: {  } });
 
   useEffect(() => {
     verifyRole(role);
-   const token = verifyAuth();
-   console.log('------------->', token);
+    const authData = verifyAuth();
+    setState((prevState) => ({...prevState, authData}));
   }, [role]);
 
   return (
@@ -28,7 +30,9 @@ const Dashboard = () => {
       : role === "admin" ? 
         <div className='dashboard-unique'> 
           <Navbar page='dashboard-admin' />
-          Admin Dashboard 
+          Admin Dashboardssssssss
+          <AdminProfile authData= { state?.authData } />
+          
         </div>
       : null
     }

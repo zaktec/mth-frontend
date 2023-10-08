@@ -74,7 +74,7 @@ const Navbar = (props) => {
             <a className="logo" href="/home">
               MTH
             </a>
-            <a href="/tutorhome">
+            <a href="/dashboard/admin">
               <FontAwesomeIcon icon={faHome} /> Home
             </a>
             <a href="/courselist">
@@ -89,7 +89,7 @@ const Navbar = (props) => {
             <a href="/tutors">
               <FontAwesomeIcon icon={faUserMd} /> Tutors
             </a>
-            <a href="/lesson">
+            <a href="/lessonlist">
               <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
             </a>
             <a href="/quizzes">

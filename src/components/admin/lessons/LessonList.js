@@ -3,43 +3,27 @@ import { useEffect, useState } from "react";
 import { getLessonApi } from "../../../api/axios";
 import { Link } from "react-router-dom";
 import PostLesson from "./PostLesson";
-import LessonCSS from "../../css/lesson.module.css";
+import LessonCSS from "../../../css/lesson.module.css";
 
 // import Search from "../Search";
 
-function LessonList(props) {
-  const [lessonList, setLessonList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  // const [searchTerm, setSearchTerm] = useState("");
-
-  // const { SortBy } =props
-
-  useEffect(() => {
-    getLessonApi(props.sortBy).then((lessonsFromApi) => {
-      console.log(lessonsFromApi);
-      setLessonList(lessonsFromApi);
-      setIsLoading(false);
-    });
-  }, [props.sortBy]);
-
-  if (isLoading) return <p>Loading....</p>;
+const LessonList = (props) => {
+  if (props?.isLoading) return <p>Loading....</p>;
 
   return (
     <main className={LessonCSS.LessonListPage}>
-      {/* <Search setSearchTerm={setSearchTerm} /> */}
-      <PostLesson setLessonList={setLessonList} />
-
       <h1 className={LessonCSS.LessonList__h1}> Lesson List </h1>
 
+      <PostLesson token={props?.token} />
       <ul className={LessonCSS.Lesson__List}>
-        {lessonList.map((lesson) => {
+        {props?.data.map((lesson) => {
           return (
             <Link key={lesson.lesson_id} to={`/lessons/${lesson.lesson_id}`}>
-              <li className="LessonList__card">
-                <p>
+              <li className={LessonCSS.LessonList__card}>
+                <p style={{ margin: "10px auto" }}>
                   <b>Lesson Name: </b> {lesson.lesson_name}
                 </p>
-                <p>
+                <p style={{ margin: "10px auto" }}>
                   <b>Lesson Code: </b>
                   {lesson.lesson_code}
                 </p>
@@ -51,6 +35,6 @@ function LessonList(props) {
       </ul>
     </main>
   );
-}
+};
 
 export default LessonList;

@@ -1,104 +1,154 @@
-import React, { useState } from "react";
-import { patchLessonApi } from "../../api/axios";
-import LessonCSS from "../../css/lesson.module.css";
+import React, { useEffect, useState } from "react";
+import LessonCSS from "../../../css/lesson.module.css";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Loading from "../../loading/Loading";
+import Input from "../../form/input";
 
-function EditLesson(props) {
-  const { lesson } = props;
-  const [displayPost, setPostDisplay] = useState(false);
-  const [newLessonName, setNewLessonName] = useState("");
-  const [newLessonWorksheet, setNewLessonWorksheet] = useState("");
-  const [newCode, setNewCode] = useState("");
-  const [newLessonBody, setNewLessonBody] = useState("");
-  const [newLessonDescription, setNewLessonDescription] = useState("");
-  const [newLessonTopicId, setnewLessonTopicId] = useState("");
+const EditLesson = (props) => {
+  const [state, setState] = useState({
+    error: null,
+    message: null,
+    loading: false,
+    displayForm: false,
+    buttonStatus: false,
+  });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newObject = {
-      lesson_name: newLessonName === "" ? lesson.lesson_name : newLessonName,
-      lesson_code: newCode === "" ? lesson.lesson_code : newCode,
-      lesson_desc: newLessonDescription === "" ? lesson.lesson_desc : newLessonDescription,
-      lesson_ws: newLessonWorksheet === "" ? lesson.lesson_ws : newLessonWorksheet,
-      lesson_body: newLessonBody === "" ? lesson.lesson_body : newLessonBody,
-      lesson_topic_id: newLessonTopicId === "" ? lesson.lesson_topic_id : newLessonTopicId,
-    };
+  useEffect(() => {
+    for (let objKey in props?.lesson)
+      setState((prevState) => ({
+        ...prevState,
+        [objKey]: props?.lesson[objKey],
+      }));
+  }, [props?.lesson]);
 
-    patchLessonApi(lesson.lesson_id,newObject).then((response) => {
-      console.log(response);
+  const handleChange = (key) => {
+    key.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      [key.target.name]: key.target.value,
+    }));
+  };
+  const handleSubmit = async (key, token, lesson_id) => {
+    key.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
+
+    await authAPIsRequests
+      .editLessonApi(token, lesson_id, state)
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          message: "lesson updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/lessons/${lesson_id}`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          error: error?.error?.response?.data?.message,
+          buttonStatus: false,
+          loading: false,
+        }));
       });
+  };
+  const handleDisplayForm = async (key) => {
+    key.preventDefault();
+    if (state.displayForm === true)
+      return setState((prevState) => ({ ...prevState, displayForm: false }));
+    if (state.displayForm === false)
+      return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
 
   return (
     <div className={LessonCSS.EditLessonPage}>
-      <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            console.log(currentValue);
-            return !currentValue;
-          })
-        }
-      >
-        Edit Lesson
-      </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Your lesson Name </p>
-              <input
-                name="newLessonName"
-                placeholder={lesson.lesson_name}
-                onChange={(event) => setNewLessonName(event.target.value)}
-                value={newLessonName}
-              />
-              <p>Please Insert Your lesson Code </p>
-              <input
-                name="newCode"
-                placeholder={lesson.lesson_code} 
-                onChange={(event) => setNewCode(event.target.value)}
-                value={newCode}
-              />
-              <p>Please Insert Your lesson Description </p>
-              <input
-                name="newlessonDescription"
-                placeholder={lesson.lesson_desc}
-                onChange={(event) =>
-                  setNewLessonDescription(event.target.value)
-                }
-                value={newLessonDescription}
-              />
-              <p>Please Insert Your lesson Worksheet </p>
-              <input
-                name="newlessonWorksheet"
-                placeholder={lesson.lesson_ws}
-                onChange={(event) => setNewLessonWorksheet(event.target.value)}
-                value={newLessonWorksheet}
-              />
-              <p>Please Insert Your lesson body </p>
-              <input
-                name="newlessonWorksheet"
-                placeholder={lesson.lesson_body}
-                onChange={(event) => setNewLessonBody(event.target.value)}
-                value={newLessonBody}
-              />
-
-              <p>Please Insert Your lesson topic id </p>
-              <input type="number"
-                 min="1" max="15"
-                name="newLessonTopicId"
-                placeholder={lesson.lesson_topic_id}
-                onChange={(event) => setnewLessonTopicId(event.target.value)}
-                value={newLessonTopicId}
-              />
-            </label>
-            <p></p>
-            <button>Update</button>
-          </form>
-        </div>
+      {state?.displayForm === true ? (
+        <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
       ) : (
-        <div></div>
+        <button onClick={(key) => handleDisplayForm(key)}>Edit Lesson </button>
+      )}
+      {state.displayForm === true && (
+        <div>
+          <Input
+            fieldname="Please Insert Your lesson Name"
+            type="text"
+            name="lesson_name"
+            value={state?.lesson_name}
+            handleChange={handleChange}
+          />
+          <p style={{ margin: "10px 00px" }}>Please Insert Your lesson Code </p>
+          <input
+            type="text"
+            name="lesson_code"
+            value={state?.lesson_code}
+            onChange={(name) => handleChange(name)}
+          />
+
+          <p>Please Insert Your lesson topic </p>
+          <input
+            type="text"
+            name="lesson_topic"
+            value={state?.lesson_topic}
+            onChange={(name) => handleChange(name)}
+          />
+          <p style={{ margin: "10px 00px" }}>
+            Please Insert Your lesson Description{" "}
+          </p>
+          <input
+            type="text"
+            name="lessson_desc"
+            value={state?.lesson_desc}
+            onChange={(name) => handleChange(name)}
+          />
+
+          <p>Please Insert Your lesson body </p>
+          <input
+            type="text"
+            name="lesson_body"
+            value={state?.lesson_body}
+            onChange={(name) => handleChange(name)}
+          />
+
+          <p>Please Insert Your lesson topic id </p>
+          <input
+            type="number"
+            min="1"
+            max="15"
+            name="lesson_topic_fk_id"
+            value={state?.lesson_topic_fk_id}
+            onChange={(name) => handleChange(name)}
+          />
+
+          <p>Please Insert Your grade </p>
+          <input
+            type="number"
+            min="1"
+            max="15"
+            name="lesson_grade"
+            value={state?.lesson_grade}
+            onChange={(name) => handleChange(name)}
+          />
+          <div>{state?.error !== null ? state?.error : state?.message} </div>
+          <div style={{ margin: "10px 00px" }}>
+            <button
+              disabled={state.buttonStatus}
+              onClick={(key) =>
+                handleSubmit(key, props?.token, props?.lesson?.lesson_id)
+              }
+              type="submit"
+            >
+              {state.loading === true ? <Loading /> : "Update"}
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
-}
+};
 export default EditLesson;
