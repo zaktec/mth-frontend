@@ -2,8 +2,8 @@ import React from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 
 const DeleteLesson = (props) => {
-  const handleDeleteLesson = async (key, token, lesson_id) => {
-    key.preventDefault();
+  const handleDeleteLesson = async (event, token, lesson_id) => {
+    event.preventDefault();
     await authAPIsRequests
       .deleteLessonApi(token, lesson_id)
       .then((response) => {

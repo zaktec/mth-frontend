@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import CourseList from "../courses/CourseList";
+import Navbar from "../../navbar/Navbar";
 import { verifyAuth } from "../../../helpers";
 import { authAPIsRequests } from "../../../api/APIsRequests";
-import Navbar from "../../navbar/Navbar";
+import AdminList from "./AdminList";
 
-const SortCourses = () => {
+const SortAdmins = () => {
   const [state, setState] = useState({
     data: [],
     isLoading: true,
     token: null,
-    sortBy: "course_id",
+    sortBy: "admin_id",
   });
 
   useEffect(() => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
-    const getCoursesApi = async (token, sortBy) => {
+    const getAdminsApi = async (token, sortBy) => {
       await authAPIsRequests
-        .getCoursesApi(token?.token, sortBy)
+        .getAdminsApi(token?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -30,7 +30,7 @@ const SortCourses = () => {
         });
     };
 
-    getCoursesApi(token, state?.sortBy);
+    getAdminsApi(token, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
@@ -46,18 +46,18 @@ const SortCourses = () => {
   };
 
   return (
-    <div className="SortMainPage">
+    <div className={"SortMainPage"}>
       <Navbar page="dashboard-admin" />
       <div>
-        <h1> Sort Courses List </h1>
-        <p> Choose a column to sort the course list </p>
+        <h1> Sort Admin List </h1>
+        <p> Choose a column to sort the article list </p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="categories">Choose a category</label>
           <select name="categories" id="categories" onChange={handleChange}>
-            <option value="course_id">All</option>
-            <option value="course_name">CourseName</option>
-            <option value="course_code">CourseCode</option>
-            <option value="course_level">CourseLevel</option>
+            <option value="admin_id">All</option>
+            <option value="admin_firstname">FirstName</option>
+            <option value="admin_lastname">LastName</option>
+            <option value="admin_active">Active</option>
           </select>
           <br></br>
           <input type="submit" value="Submit" />
@@ -65,7 +65,7 @@ const SortCourses = () => {
         <p>Click the "Submit" button .</p>
       </div>
       {
-        <CourseList
+        <AdminList
           token={state?.token}
           data={state?.data}
           isLoading={state?.isLoading}
@@ -76,4 +76,4 @@ const SortCourses = () => {
   );
 };
 
-export default SortCourses;
+export default SortAdmins;

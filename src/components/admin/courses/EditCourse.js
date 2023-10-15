@@ -1,7 +1,7 @@
 import Loading from "../../loading/Loading";
 import React, { useEffect, useState } from "react";
-import CourseCSS from "../../../css/course.module.css";
 import { authAPIsRequests } from "../../../api/APIsRequests";
+import Input from "../../form/input";
 
 const EditCourse = (props) => {
   const [state, setState] = useState({
@@ -28,8 +28,8 @@ const EditCourse = (props) => {
     }));
   };
 
-  const handleSubmit = async (key, token, course_id) => {
-    key.preventDefault();
+  const handleSubmit = async (event, token, course_id) => {
+    event.preventDefault();
     setState((prevState) => ({
       ...prevState,
       buttonStatus: true,
@@ -40,7 +40,13 @@ const EditCourse = (props) => {
     await authAPIsRequests
       .editCourseApi(token, course_id, state)
       .then((response) => {
-        window.location.replace(`/courses/${course_id}`);
+        setState((prevState) => ({
+          ...prevState,
+          message: "course updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/courses/${course_id}`);
+        }, 2000);
       })
       .catch((error) => {
         return setState((prevState) => ({
@@ -52,8 +58,8 @@ const EditCourse = (props) => {
       });
   };
 
-  const handleDisplayForm = async (key) => {
-    key.preventDefault();
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
     if (state.displayForm === true)
       return setState((prevState) => ({ ...prevState, displayForm: false }));
     if (state.displayForm === false)
@@ -61,7 +67,7 @@ const EditCourse = (props) => {
   };
 
   return (
-    <div className={CourseCSS.EditCoursePage}>
+    <div className="EditMainPage">
       {state?.displayForm === true ? (
         <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
       ) : (
@@ -70,48 +76,43 @@ const EditCourse = (props) => {
 
       {state.displayForm === true && (
         <div>
-          <p style={{ margin: "10px 00px" }}>Please Insert Your course Code </p>
-          <input
+          <Input
+            fieldname="Please Insert Your course Code"
             type="text"
             name="course_code"
             value={state?.course_code}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
-          <p style={{ margin: "10px 00px" }}>Please Insert Your course Name </p>
-          <input
+
+          <Input
+            fieldname="Please Insert Your course Name"
             type="text"
             name="course_name"
             value={state?.course_name}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
-          <p style={{ margin: "10px 00px" }}>
-            Please Insert Your Course Description{" "}
-          </p>
-          <input
+          <Input
+            fieldname="Please Insert Your Course Description"
             type="text"
             name="course_desc"
             value={state?.course_desc}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
-          <p style={{ margin: "10px 00px" }}>
-            Please Insert Your Course Level{" "}
-          </p>
-          <input
+          <Input
+            fieldname="Please Insert Your Course Level"
             type="text"
             name="course_level"
             value={state?.course_level}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
-          <p style={{ margin: "10px 00px" }}>
-            Please Insert Your Course Image{" "}
-          </p>
-          <input
+          <Input
+            fieldname="Please Insert Your Course Image"
             type="text"
             name="course_image"
             value={state?.course_image}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
-
+          <div>{state?.error !== null ? state?.error : state?.message}</div>
           <div style={{ margin: "10px 00px" }}>
             <button
               disabled={state.buttonStatus}

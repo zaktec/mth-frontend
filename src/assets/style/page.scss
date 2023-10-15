@@ -1,0 +1,97 @@
+.MainListPage {
+  border: 1px solid black;
+}
+.PostMainPage {
+  border: 1px solid black;
+}
+
+.SortMainPage {
+  border: 1px solid black;
+  
+}
+.EditMainPage {
+  border: 10px solid black;
+}
+.SingleMainPage {
+  border: 10px solid black;
+}
+.Main__List {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  list-style-type: none;
+}
+.MainList__card {
+  border: 5px solid black;
+  margin: 1em;
+  padding: 1em;
+}
+.MainList__h1 {
+  font-size: 2em;
+}
+
+.form__content {
+  padding: 30px;
+  background: $whiteColor;
+
+  .form__input {
+      width: 100%;
+      padding: 10px;
+      outline: none;
+      font-size: 1em;
+      margin: 20px auto;
+      border-radius: 5px;
+      background: $whiteColor;
+      border: 2px solid $grayColor;
+      transition: border-color 0.5s;
+  }
+
+  .form__input:focus {
+      border-color: $defaultColor;
+  }
+
+  .form__input::placeholder {
+      color: $grayColor;
+  }
+
+  .form-error {
+      font-weight: 600;
+      text-align: center;
+      color: $errorColor;
+  }
+
+  .form-response {
+      font-weight: 600;
+      text-align: center;
+      color: $defaultColor;
+  }
+
+  .form__button {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      color: $whiteColor;
+      background: $defaultColor;
+  }
+
+  .form__button:active {
+      background: $grayColor;
+  }
+
+  .form__links {
+      margin-top: 15px;
+      text-align: center;
+
+      .form__link {
+          font-size: 0.9em;
+          color: $linkColor;
+          text-decoration: none;
+      }
+  }
+}

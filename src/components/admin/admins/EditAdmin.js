@@ -3,7 +3,7 @@ import { authAPIsRequests } from "../../../api/APIsRequests";
 import Loading from "../../loading/Loading";
 import Input from "../../form/input";
 
-const EditStudent = (props) => {
+const EditAdmin = (props) => {
   const [state, setState] = useState({
     error: null,
     message: null,
@@ -13,12 +13,12 @@ const EditStudent = (props) => {
   });
 
   useEffect(() => {
-    for (let objKey in props?.student)
+    for (let objKey in props?.admin)
       setState((prevState) => ({
         ...prevState,
-        [objKey]: props?.student[objKey],
+        [objKey]: props?.admin[objKey],
       }));
-  }, [props?.student]);
+  }, [props?.admin]);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -28,7 +28,7 @@ const EditStudent = (props) => {
       [event.target.name]: event.target.value,
     }));
   };
-  const handleSubmit = async (event, token, student_id) => {
+  const handleSubmit = async (event, token, admin_id) => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
@@ -38,14 +38,14 @@ const EditStudent = (props) => {
     }));
 
     await authAPIsRequests
-      .editLessonApi(token, student_id, state)
+      .editLessonApi(token, admin_id, state)
       .then((response) => {
         setState((prevState) => ({
           ...prevState,
-          message: "student updated successfully",
+          message: "Admin updated successfully",
         }));
         setTimeout(() => {
-          window.location.replace(`/students/${student_id}`);
+          window.location.replace(`/admins/${admin_id}`);
         }, 2000);
       })
       .catch((error) => {
@@ -70,60 +70,60 @@ const EditStudent = (props) => {
       {state?.displayForm === true ? (
         <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
       ) : (
-        <button onClick={(key) => handleDisplayForm(key)}>Edit student </button>
+        <button onClick={(key) => handleDisplayForm(key)}>Edit Admin </button>
       )}
       {state.displayForm === true && (
         <div>
           <Input
             fieldname="Please Insert Your username"
             type="text"
-            name="student_username"
-            value={state?.student_username}
+            name="admin_username"
+            value={state?.admin_username}
             handleChange={handleChange}
           />
           <Input
             fieldname="Insert Your First Name"
             type="text"
-            name="student_firstname"
-            value={state?.student_firstname}
+            name="admin_firstname"
+            value={state?.admin_firstname}
             handleChange={handleChange}
           />
           <Input
             fieldname="Please Insert Your Last Name"
             type="text"
-            name="student_lastname"
-            value={state?.student_lastname}
+            name="admin_lastname"
+            value={state?.admin_lastname}
             handleChange={handleChange}
           />
 
           <Input
             fieldname="Please Insert Your Email"
             type="text"
-            name="student_email"
-            value={state?.student_email}
+            name="admin_email"
+            value={state?.admin_email}
             handleChange={handleChange}
           />
 
           <Input
             fieldname="Please Insert Your Password"
-            type="text"
-            name="student_password"
-            value={state?.student_password}
+            type="password"
+            name="admin_password"
+            value={state?.admin_password}
             handleChange={handleChange}
           />
 
           <fieldset>
-            <legend>Is Student Active</legend>
+            <legend>Is Admin Active</legend>
             <div>
               <input
                 type="checkbox"
-                name="newStudentActive"
+                name="newAdminActive"
                 //value="true"
               />
               <label htmlFor="true">True</label>
               <input
                 type="checkbox"
-                name="newStudentActive"
+                name="newAdminActive"
                 //value="false"
               />
               <label htmlFor="false">False</label>
@@ -131,75 +131,13 @@ const EditStudent = (props) => {
           </fieldset>
 
           <Input
-            fieldname="Please Insert Your Grade"
-            type="number"
-            name="student_grade"
-            value={state?.student_grade}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Grade"
-            type="number"
-            name="student_grade"
-            value={state?.student_grade}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Target grade"
-            type="number"
-            name="student_targetgrade"
-            value={state?.target_grade}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Target grade"
-            type="number"
-            name="student_targetgrade"
-            value={state?.target_grade}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Progressbar"
-            type="number"
-            name="student_progressbar"
-            value={state?.student_progressbar}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Student Notes"
+            fieldname="Please Insert Your Admin Image"
             type="text"
-            name="student_notes"
-            value={state?.student_notes}
+            name="admin_image"
+            value={state?.admin_image}
             handleChange={handleChange}
           />
-          <Input
-            fieldname="Please Insert Your Student Image"
-            type="text"
-            name="student_image"
-            value={state?.student_image}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Message Count"
-            type="number"
-            name="student_msg_count"
-            value={state?.student_msg_count}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Message Input"
-            type="text"
-            name="student_msg_input"
-            value={state?.student_msg_input}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Message Output"
-            type="text"
-            name="student_msg_input"
-            value={state?.student_msg_input}
-            handleChange={handleChange}
-          />
+
           <div>{state?.error !== null ? state?.error : state?.message} </div>
           <div style={{ margin: "10px 00px" }}>
             <button
@@ -207,8 +145,7 @@ const EditStudent = (props) => {
               onClick={(key) =>
                 handleSubmit(key, props?.token, props?.lesson?.lesson_id)
               }
-              type="submit"
-            >
+              type="submit">
               {state.loading === true ? <Loading /> : "Update"}
             </button>
           </div>
@@ -218,4 +155,4 @@ const EditStudent = (props) => {
   );
 };
 
-export default EditStudent;
+export default EditAdmin;

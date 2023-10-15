@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import LessonCSS from "../../../css/lesson.module.css";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Loading from "../../loading/Loading";
 import Input from "../../form/input";
@@ -21,12 +20,12 @@ const EditLesson = (props) => {
       }));
   }, [props?.lesson]);
 
-  const handleChange = (key) => {
-    key.preventDefault();
+  const handleChange = (event) => {
+    event.preventDefault();
     setState((prevState) => ({
       ...prevState,
       error: null,
-      [key.target.name]: key.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
   const handleSubmit = async (key, token, lesson_id) => {
@@ -67,7 +66,7 @@ const EditLesson = (props) => {
   };
 
   return (
-    <div className={LessonCSS.EditLessonPage}>
+    <div className="EditMainPage">
       {state?.displayForm === true ? (
         <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
       ) : (
@@ -82,58 +81,53 @@ const EditLesson = (props) => {
             value={state?.lesson_name}
             handleChange={handleChange}
           />
-          <p style={{ margin: "10px 00px" }}>Please Insert Your lesson Code </p>
-          <input
+          <Input
+            fieldname="Please Insert Your lesson Code "
             type="text"
             name="lesson_code"
             value={state?.lesson_code}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
-
-          <p>Please Insert Your lesson topic </p>
-          <input
+          <Input
+            fieldname="Please Insert Your lesson topic"
             type="text"
             name="lesson_topic"
             value={state?.lesson_topic}
-            onChange={(name) => handleChange(name)}
-          />
-          <p style={{ margin: "10px 00px" }}>
-            Please Insert Your lesson Description{" "}
-          </p>
-          <input
-            type="text"
-            name="lessson_desc"
-            value={state?.lesson_desc}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
 
-          <p>Please Insert Your lesson body </p>
-          <input
+          <Input
+            fieldname="Please Insert Your lesson Description"
+            type="text"
+            name="lesson_desc"
+            value={state?.lesson_desc}
+            handleChange={handleChange}
+          />
+
+          <Input
+            fieldname="Please Insert Your lesson body"
             type="text"
             name="lesson_body"
             value={state?.lesson_body}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
 
-          <p>Please Insert Your lesson topic id </p>
-          <input
+          <Input
+            fieldname="Please Insert Your lesson topic id"
             type="number"
-            min="1"
-            max="15"
             name="lesson_topic_fk_id"
             value={state?.lesson_topic_fk_id}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
 
-          <p>Please Insert Your grade </p>
-          <input
+          <Input
+            fieldname="Please Insert Your grade"
             type="number"
-            min="1"
-            max="15"
             name="lesson_grade"
             value={state?.lesson_grade}
-            onChange={(name) => handleChange(name)}
+            handleChange={handleChange}
           />
+
           <div>{state?.error !== null ? state?.error : state?.message} </div>
           <div style={{ margin: "10px 00px" }}>
             <button

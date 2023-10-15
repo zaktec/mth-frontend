@@ -1,13 +1,13 @@
 import React from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 
-const DeleteStudent = (props) => {
-  const handleDeleteStudent = async (event, token, student_id) => {
+const DeleteAdmin = (props) => {
+  const handleDeleteAdmin = async (event, token, admin_id) => {
     event.preventDefault();
     await authAPIsRequests
-      .deleteLessonApi(token, student_id)
+      .deleteAdminApi(token, admin_id)
       .then((response) => {
-        window.location.replace(`/studentlist`);
+        window.location.replace(`/adminlist`);
       })
       .catch((error) => {
         console.log(error);
@@ -18,9 +18,9 @@ const DeleteStudent = (props) => {
     <div>
       <button
         onClick={(event) =>
-          handleDeleteStudent(event, props?.token, props?.student_id)
-        }>Delete Student</button>
+          handleDeleteAdmin(event, props?.token, props?.admin_id)
+        }>Delete Admin</button>
     </div>
   );
 };
-export default DeleteStudent;
+export default DeleteAdmin;

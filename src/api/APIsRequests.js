@@ -61,6 +61,8 @@ export const authAPIsRequests = {
     }
   },
 
+  ////  Lesson Api
+
   postLessonApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -100,10 +102,9 @@ export const authAPIsRequests = {
     );
   },
 
-  editLessonApi: async ( token, lesson_id, body) => {
-    const configs = { headers: {Authorization: `BEARER ${token}`}};
+  editLessonApi: async (token, lesson_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
-
       lesson_topic: body.lesson_topic,
       lesson_name: body.lesson_name,
       lesson_code: body.lesson_code,
@@ -112,12 +113,13 @@ export const authAPIsRequests = {
       lesson_body: body.lesson_body,
       lesson_topic_fk_id: body.lesson_topic_fk_id,
     };
-  return await axios.patch(
-    `${variables.ALL_LESSONS_API}/${lesson_id}`,
-    data,
-    configs
-  )
+    return await axios.patch(
+      `${variables.ALL_LESSONS_API}/${lesson_id}`,
+      data,
+      configs
+    );
   },
+  ////  Course Api
 
   postCourseApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
@@ -167,6 +169,138 @@ export const authAPIsRequests = {
 
     return await axios.patch(
       `${variables.ALL_COURSES_API}/${course_id}`,
+      data,
+      configs
+    );
+  },
+
+  ////  Student Api
+  postStudentApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      student_username: body.student_username,
+      student_firstname: body.student_firstname,
+      student_lastname: body.student_lastname,
+      student_email: body.student_email,
+      student_password: body.student_password,
+      student_active: body.student_active,
+      student_grade: body.student_grade,
+      student_targetgrade: body.student_targetgrade,
+      student_progressbar: body.student_progressbar,
+      student_notes: body.student_notes,
+      student_image: body.student_image,
+      student_msg_count: body.student_msg_count,
+      student_msg_input: body.student_msg_input,
+      student_msg_output: body.student_msg_output,
+      student_course_fk_id: body.student_course_fk_id,
+      student_tutor_fk_id: body.student_tutor_fk_id,
+    };
+
+    return await axios.post(`${variables.ALL_STUDENTS_API}`, data, configs);
+  },
+
+  getStudentsApi: async (token, sortBy) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+      params: { sort_by: sortBy },
+    };
+    return await axios.get(variables.ALL_STUDENTS_API, config);
+  },
+
+  getStudentApi: async (token, student_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(
+      `${variables.ALL_STUDENTS_API}/${student_id}`,
+      configs
+    );
+  },
+
+  deleteStudentApi: async (token, student_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(
+      `${variables.ALL_LESSONS_API}/${student_id}`,
+      configs
+    );
+  },
+
+  editStudentApi: async (token, student_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      student_username: body.student_username,
+      student_firstname: body.student_firstname,
+      student_lastname: body.student_lastname,
+      student_email: body.student_email,
+      student_password: body.student_password,
+      student_active: body.student_active,
+      student_grade: body.student_grade,
+      student_targetgrade: body.student_targetgrade,
+      student_progressbar: body.student_progressbar,
+      student_notes: body.student_notes,
+      student_image: body.student_image,
+      student_msg_count: body.student_msg_count,
+      student_msg_input: body.student_msg_input,
+      student_msg_output: body.student_msg_output,
+      student_course_fk_id: body.student_course_fk_id,
+      student_tutor_fk_id: body.student_tutor_fk_id,
+    };
+    return await axios.patch(
+      `${variables.ALL_STUDENTS_API}/${student_id}`,
+      data,
+      configs
+    );
+  },
+
+  ////  Admin Api
+
+  postAdminApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      admin_username: body.admin_username,
+      admin_firstname: body.admin_firstname,
+      admin_lastname: body.admin_lastname,
+      admin_email: body.admin_email,
+      admin_password: body.admin_password,
+      admin_active: body.admin_active,
+      admin_image: body.admin_image,
+    };
+
+    return await axios.post(`${variables.ALL_ADMINS_API}`, data, configs);
+  },
+
+  getAdminsApi: async (token, sortBy) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+      params: { sort_by: sortBy },
+    };
+    return await axios.get(variables.ALL_ADMINS_API, config);
+  },
+
+  getAdminApi: async (token, admin_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.ALL_ADMINS_API}/${admin_id}`, configs);
+  },
+
+  deleteAdminApi: async (token, admin_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(
+      `${variables.ALL_ADMINS_API}/${admin_id}`,
+      configs
+    );
+  },
+
+  editAdminApi: async (token, admin_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      admin_username: body.admin_username,
+      admin_firstname: body.admin_firstname,
+      admin_lastname: body.admin_lastname,
+      admin_email: body.admin_email,
+      admin_password: body.admin_password,
+      admin_active: body.admin_active,
+      admin_image: body.admin_image,
+    };
+    return await axios.patch(
+      `${variables.ALL_ADMINS_API}/${admin_id}`,
       data,
       configs
     );

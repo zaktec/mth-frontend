@@ -1,34 +1,34 @@
+import Loading from "../../loading/Loading";
 import React, { useState } from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
-import Loading from "../../loading/Loading";
 import Input from "../../form/input";
 
-const PostLesson = (props) => {
+const PostAdmin = (props) => {
   const [state, setState] = useState({
-    lesson_topic: '',
-    lesson_name: '',
-    lesson_code: '',
-    lesson_desc: '',
-    lesson_grade: 0,
-    lesson_body: '',
-    lesson_topic_fk_id: 0,
+    admin_username: "",
+    admin_firstname: "",
+    admin_lastname: "",
+    admin_email: "",
+    admin_password: "",
+    admin_active: "TRUE",
+    admin_image: "",
     error: null,
     loading: false,
     displayForm: false,
     buttonStatus: false,
   });
 
-  const handleChange = (key) => {
-    key.preventDefault();
+  const handleChange = (event) => {
+    event.preventDefault();
     setState((prevState) => ({
       ...prevState,
       error: null,
-      [key.target.name]: key.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
 
-  const handleSubmit = async (key, token) => {
-    key.preventDefault();
+  const handleSubmit = async (event, token) => {
+    event.preventDefault();
     setState((prevState) => ({
       ...prevState,
       buttonStatus: true,
@@ -36,15 +36,15 @@ const PostLesson = (props) => {
       error: null,
     }));
     await authAPIsRequests
-      .postLessonApi(token, state)
+      .postadminApi(token, state)
       .then((response) => {
         setState((prevState) => ({
           ...prevState,
-          message: "lesson posted successfully",
+          message: "admin posted successfully",
         }));
         setTimeout(() => {
-        window.location.replace(`/lessonlist`);
-      }, 3000);
+          window.location.replace(`/adminlist`);
+        }, 2000);
       })
       .catch((error) => {
         return setState((prevState) => ({
@@ -55,8 +55,9 @@ const PostLesson = (props) => {
         }));
       });
   };
-  const handleDisplayForm = async (key) => {
-    key.preventDefault();
+
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
     if (state.displayForm === true)
       return setState((prevState) => ({ ...prevState, displayForm: false }));
     if (state.displayForm === false)
@@ -66,68 +67,82 @@ const PostLesson = (props) => {
   return (
     <div className="PostMainPage">
       {state?.displayForm === true ? (
-        <button onClick={(key) => handleDisplayForm(key)}>
-          {" "}
-          No Add Lesson
+        <button onClick={(event) => handleDisplayForm(event)}>
+          No Add admin
         </button>
       ) : (
-        <button onClick={(key) => handleDisplayForm(key)}>Add Lesson</button>
+        <button onClick={(event) => handleDisplayForm(event)}>
+          {" "}
+          Add admin{" "}
+        </button>
       )}
       {state.displayForm === true && (
         <div>
-          <Input
-            fieldname="Please Insert Your lesson Name"
+           <Input
+            fieldname="Please Insert Your username"
             type="text"
-            name="lesson_name"
-            value={state?.lesson_name}
+            name="admin_username"
+            value={state?.admin_username}
             handleChange={handleChange}
           />
           <Input
-            fieldname="Please Insert Your lesson Code "
+            fieldname="Insert Your First Name"
             type="text"
-            name="lesson_code"
-            value={state?.lesson_code}
+            name="admin_firstname"
+            value={state?.admin_firstname}
             handleChange={handleChange}
           />
           <Input
-            fieldname="Please Insert Your lesson topic"
+            fieldname="Please Insert Your Last Name"
             type="text"
-            name="lesson_topic"
-            value={state?.lesson_topic}
+            name="admin_lastname"
+            value={state?.admin_lastname}
             handleChange={handleChange}
           />
 
           <Input
-            fieldname="Please Insert Your lesson Description"
+            fieldname="Please Insert Your Email"
             type="text"
-            name="lesson_desc"
-            value={state?.lesson_desc}
+            name="admin_email"
+            value={state?.admin_email}
             handleChange={handleChange}
           />
 
           <Input
-            fieldname="Please Insert Your lesson body"
+            fieldname="Please Insert Your Password"
+            type="password"
+            name="admin_password"
+            value={state?.admin_password}
+            handleChange={handleChange}
+          />
+
+          <fieldset>
+            <legend>Is Admin Active</legend>
+            <div>
+              <input
+                type="checkbox"
+                name="newAdminActive"
+                //value="true"
+              />
+              <label htmlFor="true">True</label>
+              <input
+                type="checkbox"
+                name="newAdminActive"
+                //value="false"
+              />
+              <label htmlFor="false">False</label>
+            </div>
+          </fieldset>
+
+          <Input
+            fieldname="Please Insert Your Admin Image"
             type="text"
-            name="lesson_body"
-            value={state?.lesson_body}
+            name="admin_image"
+            value={state?.admin_image}
             handleChange={handleChange}
           />
+        
 
-          <Input
-            fieldname="Please Insert Your lesson topic id"
-            type="number"
-            name="lesson_topic_fk_id"
-            value={state?.lesson_topic_fk_id}
-            handleChange={handleChange}
-          />
-
-          <Input
-            fieldname="Please Insert Your grade"
-            type="number"
-            name="lesson_grade"
-            value={state?.lesson_grade}
-            handleChange={handleChange}
-          />
           <div>{state?.error !== null ? state?.error : state?.message}</div>
           <div style={{ margin: "10px 00px" }}>
             <button
@@ -143,4 +158,5 @@ const PostLesson = (props) => {
     </div>
   );
 };
-export default PostLesson;
+
+export default PostAdmin;

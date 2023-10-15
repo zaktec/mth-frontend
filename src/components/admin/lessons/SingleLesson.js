@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DeleteLesson from "./DeleteLesson";
  import EditLesson from "./EditLesson"; 
-import LessonCSS from "../../../css/lesson.module.css";
 import { verifyAuth } from "../../../helpers";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
@@ -40,12 +39,12 @@ const SingleLesson = () => {
   if (state?.isLoading) return <p>Loading...</p>;
 
   return (
-    <main className={LessonCSS.SingleLessonPage}>
+    <main className="SingleMainPage">
       <Navbar page='dashboard-admin' />
     
       <h1> Single Lesson page </h1>
-      <ul className={LessonCSS.Lesson__List}>
-        <li className={LessonCSS.LessonList__card}>
+      <ul className="Main__List">
+        <li className="MainList__card">
           <p>
             <b>Lesson ID :</b> {state?.data?.lesson_id}
           </p>

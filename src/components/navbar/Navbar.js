@@ -83,7 +83,10 @@ const Navbar = (props) => {
             <a href="/topics">
               <FontAwesomeIcon icon={faClipboardCheck} /> Topics
             </a>
-            <a href="/students">
+            <a href="/adminlist">
+              <FontAwesomeIcon icon={faGraduationCap} /> Admins
+            </a>
+            <a href="/studentlist">
               <FontAwesomeIcon icon={faGraduationCap} /> Students
             </a>
             <a href="/tutors">

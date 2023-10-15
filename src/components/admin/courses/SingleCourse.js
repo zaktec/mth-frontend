@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import EditCourse from "./EditCourse";
 import DeleteCourse from "./DeleteCourse";
 import { verifyAuth } from "../../../helpers";
-import CourseCSS from '../../../css/course.module.css';
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 
@@ -33,11 +32,11 @@ const SingleCourse = () => {
 
   return (
     
-    <div className={CourseCSS.SingleCoursePage}>
+    <div className="SingleMainPage">
       <Navbar page='dashboard-admin' />
       <h1>Single Course Page</h1>
-      <ul className={CourseCSS.CourseList}>
-        <li className={CourseCSS.CourseList__card}>
+      <ul className="MainListPage">
+        <li className="MainList__card">
           <p> <b>Course Name: </b> {state?.data?.course_name} </p>
           <p> <b>Course Description: </b> {state?.data?.course_desc} </p>
           <p> <b>Course ID: </b> {state?.data?.course_id} </p>

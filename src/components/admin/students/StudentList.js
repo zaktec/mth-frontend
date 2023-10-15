@@ -1,41 +1,25 @@
 import React from "react";
-import "../../css/App.css";
-import { useEffect, useState } from "react";
-import { getStudentsApi } from "../../api/axios";
 import { Link } from "react-router-dom";
-import PostStudent from "./PostStudent";
-import StudentCSS from "../../css/student.module.css";
+ import PostStudent from "./PostStudent"; 
 
 const StudentList = (props) => {
+  if (props?.isLoading) return <p>Loading....</p>
   console.log(props);
-  const [isLoading, setIsLoading] = useState(true);
-  const [studentList, setStudentList] = useState([]);
-
-  useEffect(() => {
-    getStudentsApi(props.sortBy).then((studentsFromApi) => {
-      setStudentList(studentsFromApi);
-      console.log(studentsFromApi);
-      setIsLoading(false);
-    });
-  }, [props.sortBy]);
-  // console.log("Studnetlist>>",studentList)
-  // console.log(studentList.student_id)
-
-  if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className={StudentCSS.StudentListPage}>
-      <h2>Students</h2>
-      <ul className={StudentCSS.StudentList}>
-        <PostStudent setStudentList={setStudentList} />
+    <div className={"MainListPage"}>
+      <h2 className="MainList__h1">Students</h2>
+     
+       <PostStudent token = {props?.token} /> 
 
-        {studentList.map((student) => {
+        <ul className={"Main__List"}>
+        {props?.data.map((student) => {
           return (
             <Link
               key={student.student_id}
               to={`/students/${student.student_id}`}
             >
-              <li key={student.student_id} className={StudentCSS.StudentList__card}>
+              <li key={student.student_id} className={"MainList__card"}>
                 <p>
                   <b>Student ID :</b> {student.student_id}
                 </p>
@@ -57,7 +41,7 @@ const StudentList = (props) => {
           );
         })}
       </ul>
-    </main>
+    </div>
   );
 };
 

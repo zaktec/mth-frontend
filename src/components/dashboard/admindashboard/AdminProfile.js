@@ -9,7 +9,8 @@ const AdminProfile = (props) => {
   
  
   return (
-    <div>
+  
+    <div className="CourseListPage">
       
       Edit Profile{" "}
     </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import LessonList from "./LessonList";
-import LessonCSS from "../../../css/lesson.module.css";
 import { verifyAuth } from "../../../helpers";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
@@ -43,7 +42,7 @@ const SortLessons = () => {
   };
 
   return (
-    <main className={LessonCSS.SortLessonPage}>
+    <main className="SortMainPage">
       <Navbar page='dashboard-admin' />
       <div>
         <h1> Sort Lesson List </h1>
