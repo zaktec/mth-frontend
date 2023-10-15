@@ -11,7 +11,6 @@ const SingleCourse = () => {
   const { course_id } = useParams();
   const [state, setState] = useState({ data: {}, isLoading: true, token: null });
 
-
   useEffect(() => {
     const token =  verifyAuth();
     setState((prevState) => ({...prevState, token: token?.token }));
@@ -26,12 +25,11 @@ const SingleCourse = () => {
     };
 
     getCourseApi(token, course_id);
-  }, []);
+  }, [course_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
-    
     <div className="SingleMainPage">
       <Navbar page='dashboard-admin' />
       <h1>Single Course Page</h1>

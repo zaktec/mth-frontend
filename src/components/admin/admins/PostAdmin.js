@@ -4,13 +4,15 @@ import { authAPIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
 
 const PostAdmin = (props) => {
+  const [isAdminActiveTrue, setIsAdminActiveTrue] = useState(false);
+  const [isAdminActiveFalse, setIsAdminActiveFalse] = useState(false);
   const [state, setState] = useState({
     admin_username: "",
     admin_firstname: "",
     admin_lastname: "",
     admin_email: "",
     admin_password: "",
-    admin_active: "TRUE",
+    admin_active: false,
     admin_image: "",
     error: null,
     loading: false,
@@ -20,21 +22,34 @@ const PostAdmin = (props) => {
 
   const handleChange = (event) => {
     event.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      error: null,
-      [event.target.name]: event.target.value,
-    }));
+    setState((prevState) => ({ ...prevState, error: null, [event.target.name]: event.target.value }));
+  };
+
+  const handleIsAdminActiveTrue = () => {
+    if(isAdminActiveFalse === false) {
+      setIsAdminActiveTrue(!isAdminActiveTrue);
+      setState((prevState) => ({ ...prevState, admin_active: true }));
+    }
+  };
+
+  const handleIsAdminActiveFalse = () => {
+    if(isAdminActiveTrue === false) {
+      setIsAdminActiveFalse(!isAdminActiveFalse);
+      setState((prevState) => ({ ...prevState, admin_active: false }));
+    }
   };
 
   const handleSubmit = async (event, token) => {
     event.preventDefault();
+    console.log('BODY - REQUEST', state);
+
     setState((prevState) => ({
       ...prevState,
       buttonStatus: true,
       loading: true,
       error: null,
     }));
+
     await authAPIsRequests
       .postadminApi(token, state)
       .then((response) => {
@@ -71,10 +86,7 @@ const PostAdmin = (props) => {
           No Add admin
         </button>
       ) : (
-        <button onClick={(event) => handleDisplayForm(event)}>
-          {" "}
-          Add admin{" "}
-        </button>
+        <button onClick={(event) => handleDisplayForm(event)}> Add admin </button>
       )}
       {state.displayForm === true && (
         <div>
@@ -115,24 +127,27 @@ const PostAdmin = (props) => {
             value={state?.admin_password}
             handleChange={handleChange}
           />
+          
+          <div>
+            <p style={{ margin: "10px 00px" }}> Is Admin Active </p>
+            <label>
+              <input
+                type="checkbox"
+                checked={isAdminActiveTrue}
+                onChange={handleIsAdminActiveTrue}
+              />
+              True
+            </label>
 
-          <fieldset>
-            <legend>Is Admin Active</legend>
-            <div>
+            <label>
               <input
                 type="checkbox"
-                name="newAdminActive"
-                //value="true"
+                checked={isAdminActiveFalse}
+                onChange={handleIsAdminActiveFalse}
               />
-              <label htmlFor="true">True</label>
-              <input
-                type="checkbox"
-                name="newAdminActive"
-                //value="false"
-              />
-              <label htmlFor="false">False</label>
-            </div>
-          </fieldset>
+              False
+            </label>
+          </div>
 
           <Input
             fieldname="Please Insert Your Admin Image"

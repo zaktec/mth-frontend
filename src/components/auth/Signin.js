@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 
 import Navbar from '../navbar/Navbar';
 import Loading from '../loading/Loading';
-import { validateSignin, verifyRole } from '../../helpers';
 import { authAPIsRequests } from '../../api/APIsRequests';
+import { validateSignin, verifyRole, verifyDeviceId } from '../../helpers';
 
 const Signin = () => {
   const { role } = useParams();
@@ -19,6 +19,7 @@ const Signin = () => {
 
   useEffect(() => {
     verifyRole(role);
+    verifyDeviceId();
   }, [role]);
 
   const handleChange = (key) => {
@@ -32,7 +33,8 @@ const Signin = () => {
     if (error !== null) return setState((prevState) => ({...prevState, error }));
     setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
 
-    await authAPIsRequests.signinStudentTutorRequest(role, { username: state.username, password: state.password })
+
+    await authAPIsRequests.signinStudentTutorAdminRequest(role, { username: state.username, password: state.password, deviceId: localStorage.getItem('deviceId') })
     .then(response => {
       localStorage.setItem('data', JSON.stringify(response?.data));
       window.location.replace(`/dashboard/${role}`);

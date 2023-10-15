@@ -1,9 +1,8 @@
 import axios from "axios";
 import { variables } from "../helpers";
-import { config } from "@fortawesome/fontawesome-svg-core";
 
 export const authAPIsRequests = {
-  signinStudentTutorRequest: async (role, data) => {
+  signinStudentTutorAdminRequest: async (role, data) => {
     if (role === "tutor")
       return await axios.post(variables.TUTOR_SIGNIN_API, data);
     if (role === "student")
@@ -12,7 +11,12 @@ export const authAPIsRequests = {
       return await axios.post(variables.ADMIN_SIGNIN_API, data);
   },
 
-  signupStudentTutorRequest: async (role, data) => {
+  singoutAdminRequest: async (token) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(variables.ADMIN_LOGOUT_API, configs);
+  },
+
+  signupStudentTutorAdminRequest: async (role, data) => {
     if (role === "admin") {
       const body = {
         admin_username: data.username,
@@ -62,7 +66,6 @@ export const authAPIsRequests = {
   },
 
   ////  Lesson Api
-
   postLessonApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -119,8 +122,8 @@ export const authAPIsRequests = {
       configs
     );
   },
-  ////  Course Api
 
+  ////  Course Api
   postCourseApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -133,6 +136,7 @@ export const authAPIsRequests = {
 
     return await axios.post(`${variables.ALL_COURSES_API}`, data, configs);
   },
+
   getCoursesApi: async (token, sortBy) => {
     const configs = {
       headers: { Authorization: `BEARER ${token}` },
@@ -251,7 +255,6 @@ export const authAPIsRequests = {
   },
 
   ////  Admin Api
-
   postAdminApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {

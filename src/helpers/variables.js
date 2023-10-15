@@ -1,7 +1,9 @@
 export const SERVER_URL='http://localhost:3009';
 
 
-export const ADMIN_SIGNIN_API= `${SERVER_URL}/adminlogin`; 
+export const ADMIN_SIGNIN_API= `${SERVER_URL}/adminlogin`;
+export const ADMIN_LOGOUT_API= `${SERVER_URL}/adminlogout`;
+
 export const TUTOR_SIGNIN_API= `${SERVER_URL}/tutorlogin`; 
 export const STUDENT_SIGNIN_API= `${SERVER_URL}/studentlogin`;
 

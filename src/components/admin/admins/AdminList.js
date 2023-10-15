@@ -4,7 +4,6 @@ import PostAdmin from "./PostAdmin";
 
 const AdminList = (props) => {
   if (props?.isLoading) return <p>Loading....</p>;
-  console.log(props);
 
   return (
     <div className={"MainListPage"}>

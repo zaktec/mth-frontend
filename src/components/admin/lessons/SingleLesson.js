@@ -34,14 +34,13 @@ const SingleLesson = () => {
     };
 
     getLessonApi(token, lesson_id);
-  }, []);
+  }, [lesson_id]);
 
   if (state?.isLoading) return <p>Loading...</p>;
 
   return (
     <main className="SingleMainPage">
       <Navbar page='dashboard-admin' />
-    
       <h1> Single Lesson page </h1>
       <ul className="Main__List">
         <li className="MainList__card">
@@ -75,7 +74,6 @@ const SingleLesson = () => {
       </div>
 
      <div style={{ margin: "20px 20px" }}>
-        {" "}
         <EditLesson token={state?.token} lesson={state?.data} />
       </div> 
     </main>

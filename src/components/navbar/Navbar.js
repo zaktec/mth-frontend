@@ -1,18 +1,33 @@
-import React from "react";
+import React, { useState } from 'react';
+import { authAPIsRequests } from '../../api/APIsRequests';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faBook,
-  faQuestionCircle,
-  faCog,
-  faPhoneSquare,
-  faGraduationCap,
-  faUserMd,
-  faClipboardCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faBook, faQuestionCircle, faCog, faPhoneSquare, faGraduationCap, faUserMd, faClipboardCheck, } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = (props) => {
-  console.log('---------->', props);
+  const [state, setState] = useState({    
+    error: null,
+    loading: false,
+    buttonStatus: false,
+  });
+
+  const handleLogoutAdmin = async (key) => {
+    key.preventDefault();
+    setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
+
+    await authAPIsRequests.singoutAdminRequest(props?.authData?.token)
+    .then(response => {
+      localStorage.removeItem('data');
+      window.location.replace('/');
+    })
+    .catch(error => {
+      return setState((prevState) => ({
+        ...prevState,
+        loading: false,
+        buttonStatus: false,
+        error: error?.response?.data?.message,
+      }));
+    });
+  }
 
   return (
     <>
@@ -107,6 +122,11 @@ const Navbar = (props) => {
             <a href="/contactus">
               <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
             </a>
+          </div>
+          <div className="auth">
+            <span className="auth-signin" >
+              <button disabled={state.buttonStatus} onClick={(key) => handleLogoutAdmin(key)} >Logout</button>
+            </span>
           </div>
         </nav>
       ) : props?.page === "dashboard-tutor" ? (

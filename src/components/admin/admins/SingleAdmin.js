@@ -34,7 +34,7 @@ const SingleAdmin = () => {
     };
 
     getAdminApi(token, admin_id);
-  }, []);
+  }, [admin_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 

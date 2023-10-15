@@ -1,11 +1,11 @@
 import React from "react";
+import EditStudent from "./EditStudent";
+import Navbar from "../../navbar/Navbar";
+import DeleteStudent from "./DeleteStudent";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { verifyAuth } from "../../../helpers";
 import { authAPIsRequests } from "../../../api/APIsRequests";
-import DeleteStudent from "./DeleteStudent";
-import EditStudent from "./EditStudent"; 
-import Navbar from "../../navbar/Navbar";
 
 const SingleStudent = () =>{
   const { student_id } = useParams();
@@ -34,7 +34,7 @@ const SingleStudent = () =>{
     };
 
     getStudentApi(token, student_id);
-  }, []);
+  }, [student_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 

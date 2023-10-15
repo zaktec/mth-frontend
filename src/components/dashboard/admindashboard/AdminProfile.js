@@ -1,18 +1,9 @@
-import React, { useEffect, } from "react";
+import React from "react";
 
-const AdminProfile = (props) => {
-  useEffect(() => {
-    const { id, token } = props?.authData
-    console.log("-------------++++++>", id, token,);
-  }, [props?.authData]);
-
-  
- 
+const AdminProfile = (props) => { 
   return (
-  
     <div className="CourseListPage">
-      
-      Edit Profile{" "}
+      Edit Profile
     </div>
   );
 };

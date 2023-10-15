@@ -39,11 +39,18 @@
 
     .auth-signin {
       font-weight: 600;
-      padding: 3px 5px;
+      padding: 10px 5px;
       border-radius: 5px;
       color: $defaultColor;
       background: $whiteColor;
       border: 2px solid $grayColor;
+
+      button {
+        cursor: pointer;
+        font-weight: 900;
+        padding: 3px 5px;
+        background: transparent;
+      }
     }
 
     .profile-picture {
