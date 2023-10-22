@@ -11,24 +11,26 @@ const Navbar = (props) => {
     buttonStatus: false,
   });
 
-  const handleLogoutAdmin = async (key) => {
-    key.preventDefault();
-    const authData = verifyAuth();
-    setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
+  const handleLogout = async (key, role) => {
+    if (role === 'admin') {
+      key.preventDefault();
+      const authData = verifyAuth();
+      setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
 
-    await authAPIsRequests.singoutAdminRequest(authData?.token)
-    .then(response => {
-      localStorage.removeItem('data');
-      window.location.replace('/');
-    })
-    .catch(error => {
-      return setState((prevState) => ({
-        ...prevState,
-        loading: false,
-        buttonStatus: false,
-        error: error?.response?.data?.message || error?.response?.data?.error,
-      }));
-    });
+      await authAPIsRequests.singoutAdminRequest(authData?.token)
+      .then(response => {
+        localStorage.removeItem('data');
+        window.location.replace('/');
+      })
+      .catch(error => {
+        return setState((prevState) => ({
+          ...prevState,
+          loading: false,
+          buttonStatus: false,
+          error: error?.response?.data?.message || error?.response?.data?.error,
+        }));
+      });
+    }
   }
 
   return (
@@ -127,7 +129,7 @@ const Navbar = (props) => {
           </div>
           <div className="auth">
             <span className="auth-signin" >
-              <button disabled={state.buttonStatus} onClick={(key) => handleLogoutAdmin(key)} >Logout</button>
+              <button disabled={state.buttonStatus} onClick={(key) => handleLogout(key, 'admin')} >Logout</button>
             </span>
           </div>
         </nav>
