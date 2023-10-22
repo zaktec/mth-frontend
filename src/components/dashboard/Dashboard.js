@@ -29,6 +29,7 @@ const Dashboard = () => {
         </div>
       : role === "admin" ? 
         <div className='dashboard-unique'> 
+        
           <Navbar authData= { state?.authData } page='dashboard-admin' />
           Admin Dashboard
           <AdminProfile authData= { state?.authData } />

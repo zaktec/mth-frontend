@@ -10,14 +10,16 @@ const SortCourses = () => {
     isLoading: true,
     token: null,
     sortBy: "course_id",
+    authData: {  }
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
-    const getCoursesApi = async (token, sortBy) => {
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, token: authData?.token }));
+    setState((prevState) => ({...prevState, authData }));
+    const getCoursesApi = async (authData, sortBy) => {
       await authAPIsRequests
-        .getCoursesApi(token?.token, sortBy)
+        .getCoursesApi(authData?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -30,7 +32,7 @@ const SortCourses = () => {
         });
     };
 
-    getCoursesApi(token, state?.sortBy);
+    getCoursesApi(authData, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
@@ -47,7 +49,8 @@ const SortCourses = () => {
 
   return (
     <div className="SortMainPage">
-      <Navbar page="dashboard-admin" />
+      <Navbar authData= { state?.authData } page='dashboard-admin' />
+
       <div>
         <h1> Sort Courses List </h1>
         <p> Choose a column to sort the course list </p>
@@ -66,7 +69,7 @@ const SortCourses = () => {
       </div>
       {
         <CourseList
-          token={state?.token}
+          token={state?.authData}
           data={state?.data}
           isLoading={state?.isLoading}
           sortBy={state?.sortBy}

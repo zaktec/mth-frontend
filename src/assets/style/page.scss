@@ -32,6 +32,18 @@
   font-size: 2em;
 }
 
+.form__input {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  font-size: 1em;
+  margin: 20px auto;
+  border-radius: 5px;
+  background: $whiteColor;
+  border: 2px solid $grayColor;
+  transition: border-color 0.5s;
+}
+
 .form__content {
   padding: 30px;
   background: $whiteColor;

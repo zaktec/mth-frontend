@@ -48,6 +48,7 @@ const RoutePages = () => {
 
 
          {/*  Authorisation Route  */}
+         
         <Route path="/dashboard/:role" element={<Dashboard />}></Route>
         <Route path="/courselist" element={<SortCourses />}></Route>
         <Route path="/courses/:course_id" element={<SingleCourse />}></Route>
