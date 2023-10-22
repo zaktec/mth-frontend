@@ -39,7 +39,7 @@ const Signup = () => {
       return setState((prevState) => ({...prevState, response: 'Account Created Successfully. Click Signin Below', buttonStatus: false, loading: false }));
     })
     .catch(error => {
-        return setState((prevState) => ({...prevState, error: error?.response?.data?.message, buttonStatus: false, loading: false }));
+        return setState((prevState) => ({...prevState, error: error?.response?.data?.message || error?.response?.data?.error, buttonStatus: false, loading: false }));
     });
   }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { verifyAuth } from '../../helpers';
 import { authAPIsRequests } from '../../api/APIsRequests';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faBook, faQuestionCircle, faCog, faPhoneSquare, faGraduationCap, faUserMd, faClipboardCheck, } from "@fortawesome/free-solid-svg-icons";
@@ -12,9 +13,10 @@ const Navbar = (props) => {
 
   const handleLogoutAdmin = async (key) => {
     key.preventDefault();
+    const authData = verifyAuth();
     setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
 
-    await authAPIsRequests.singoutAdminRequest(props?.authData?.token)
+    await authAPIsRequests.singoutAdminRequest(authData?.token)
     .then(response => {
       localStorage.removeItem('data');
       window.location.replace('/');
@@ -24,7 +26,7 @@ const Navbar = (props) => {
         ...prevState,
         loading: false,
         buttonStatus: false,
-        error: error?.response?.data?.message,
+        error: error?.response?.data?.message || error?.response?.data?.error,
       }));
     });
   }

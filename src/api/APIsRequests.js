@@ -258,13 +258,13 @@ export const authAPIsRequests = {
   postAdminApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
+      admin_email: body.admin_email,
+      admin_active: body.admin_active,
+      admin_password: body.admin_password,
+      admin_lastname: body.admin_lastname,
       admin_username: body.admin_username,
       admin_firstname: body.admin_firstname,
-      admin_lastname: body.admin_lastname,
-      admin_email: body.admin_email,
-      admin_password: body.admin_password,
-      admin_active: body.admin_active,
-      admin_image: body.admin_image,
+      admin_image: JSON.stringify(body.admin_image),
     };
 
     return await axios.post(`${variables.ALL_ADMINS_API}`, data, configs);

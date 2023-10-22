@@ -58,7 +58,7 @@ const PostStudent = (props) => {
       .catch((error) => {
         return setState((prevState) => ({
           ...prevState,
-          error: error?.response?.data?.message,
+          error: error?.response?.data?.message || error?.response?.data?.error,
           buttonStatus: false,
           loading: false,
         }));

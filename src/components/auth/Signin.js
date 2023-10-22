@@ -40,7 +40,7 @@ const Signin = () => {
       window.location.replace(`/dashboard/${role}`);
     })
     .catch(error => {
-        return setState((prevState) => ({...prevState, error: error?.response?.data?.message, buttonStatus: false, loading: false }));
+        return setState((prevState) => ({...prevState, error: error?.response?.data?.message || error?.response?.data?.error, buttonStatus: false, loading: false }));
     });
   }
 

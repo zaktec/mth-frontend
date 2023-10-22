@@ -48,9 +48,9 @@ const PostCourse = (props) => {
       .catch((error) => {
         return setState((prevState) => ({
           ...prevState,
-          error: error?.response?.data?.message,
-          buttonStatus: false,
           loading: false,
+          buttonStatus: false,
+          error: error?.response?.data?.message || error?.response?.data?.error,
         }));
       });
   };

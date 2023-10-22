@@ -7,10 +7,10 @@ import Navbar from "../../navbar/Navbar";
 const SortCourses = () => {
   const [state, setState] = useState({
     data: [],
-    isLoading: true,
     token: null,
+    authData: {  },
+    isLoading: true,
     sortBy: "course_id",
-    authData: {  }
   });
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const SortCourses = () => {
 
   return (
     <div className="SortMainPage">
-      <Navbar authData= { state?.authData } page='dashboard-admin' />
+      <Navbar page='dashboard-admin' />
 
       <div>
         <h1> Sort Courses List </h1>
@@ -69,10 +69,10 @@ const SortCourses = () => {
       </div>
       {
         <CourseList
-          token={state?.authData}
           data={state?.data}
-          isLoading={state?.isLoading}
           sortBy={state?.sortBy}
+          token={state?.authData}
+          isLoading={state?.isLoading}
         />
       }
     </div>
