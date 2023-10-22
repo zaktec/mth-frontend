@@ -95,3 +95,106 @@
       }
   }
 }
+
+.form-container {
+  padding: 00px 10px 10px 10px;
+  background: $whiteColor;
+  color: $defaultColor;
+  margin: 50px auto;
+  min-height: 200px;
+  width: 80%;
+
+  .form-header {
+      margin: 00px;
+      padding: 10px;
+      border-bottom: 3px solid $grayColor;
+      
+      .head {
+          color: $blackColor;
+          font-size: 20px;
+          font-weight: 900;
+          display: inline-block;
+          text-transform: uppercase;
+      }
+  }
+  
+  .sections-container {
+      display: flex;
+      margin: auto;
+      width: 100%;
+
+      .section-one {
+          width: 30%;
+          position: relative;
+          
+          .profile-picture {
+              box-shadow: 00px 00px 10px 00px $grayColor;
+              background: $whiteColor;
+              border-radius: 50%;
+              position: relative;
+              overflow: hidden;
+              cursor: pointer;
+              height: 120px;
+              width: 120px;
+          
+              img {
+                  transform:translate(-0%, -50%);
+                  position: absolute;
+                  color: $defaultColor;
+                  font-weight: 900;
+                  font-size: 15px;
+                  max-width: 100%;
+                  height: auto;
+                  width: auto;
+                  top: 50%;
+              }
+          }
+      }
+
+      .section-two {
+          width: 100%;
+          position: relative;
+          box-shadow: 00px 00px 10px 00px $grayColor;
+          
+          .form-fields {
+              margin: auto;
+              
+              .attribute-container {
+                  padding: 30px;
+                  background-color: $whiteColor;
+                  border: 1px solid $whiteColor;
+
+                  .input-field {                    
+                    width: 96%;
+                    padding: 10px;
+                    outline: none;
+                    font-size: 1em;
+                    border-radius: 5px;
+                    background: $grayColor;
+                    border: 2px solid $grayColor;
+                    transition: border-color 0.5s;
+                  }
+
+                  button {
+                      width: 98%;
+                      border: none;
+                      padding: 09px;
+                      outline: none;
+                      cursor: pointer;
+                      font-size: 15px;
+                      font-weight: 900;
+                      margin: 20px auto;
+                      color: $whiteColor;
+                      background: $defaultColor;
+                  }
+
+                  .result-container {
+                    font-weight: 900;
+                    text-align: center;
+                    color: $greenColor;
+                  }
+              }
+          }
+      }
+  }
+}
