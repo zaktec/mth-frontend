@@ -3,9 +3,9 @@ const verifyAuth =  () => {
       const data = localStorage.getItem('data');
       if (data) {
         const unstringfyData = JSON.parse(data);
-        const { id, token } = unstringfyData;
+        const { user, token } = unstringfyData;
         if (!token || token === undefined) window.location.replace('/');
-        if (token) return { id, token };
+        if (token) return { user, token };
       }
   
       window.location.replace('/');

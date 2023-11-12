@@ -15,10 +15,12 @@ export const authAPIsRequests = {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(variables.ADMIN_LOGOUT_API, configs);
   },
+
   singoutTutorRequest: async (token) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(variables.TUTOR_LOGOUT_API, configs);
   },
+
   singoutStudentRequest: async (token) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(variables.STUDENT_LOGOUT_API, configs);
@@ -541,5 +543,5 @@ export const authAPIsRequests = {
     );
 
 
-    }
+  }
 };

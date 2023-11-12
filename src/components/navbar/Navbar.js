@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { verifyAuth } from "../../helpers";
+import { shortData } from "../../helpers";
 import { authAPIsRequests } from "../../api/APIsRequests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,7 +22,6 @@ const Navbar = (props) => {
 
   const handleLogout = async (key, role) => {
     key.preventDefault();
-    const authData = verifyAuth();
     setState((prevState) => ({
       ...prevState,
       buttonStatus: true,
@@ -31,7 +30,7 @@ const Navbar = (props) => {
     }));
     if (role === "admin") {
       await authAPIsRequests
-        .singoutAdminRequest(authData?.token)
+        .singoutAdminRequest(props?.authData?.token)
         .then((response) => {
           localStorage.removeItem("data");
           window.location.replace("/");
@@ -48,7 +47,7 @@ const Navbar = (props) => {
     }
     if (role === "tutor") {
       await authAPIsRequests
-        .singoutTutorRequest(authData?.token)
+        .singoutTutorRequest(props?.authData?.token)
         .then((response) => {
           localStorage.removeItem("data");
           window.location.replace("/");
@@ -65,7 +64,7 @@ const Navbar = (props) => {
     }
     if (role === "student") {
       await authAPIsRequests
-        .singoutStudentRequest(authData?.token)
+        .singoutStudentRequest(props?.authData?.token)
         .then((response) => {
           localStorage.removeItem("data");
           window.location.replace("/");
@@ -278,7 +277,7 @@ const Navbar = (props) => {
                 disabled={state.buttonStatus}
                 onClick={(key) => handleLogout(key, "student")}
               >
-                Logout
+                Logout, {shortData(props?.authData?.user?.student_username, 5)}
               </button>
             </span>
           </div>
