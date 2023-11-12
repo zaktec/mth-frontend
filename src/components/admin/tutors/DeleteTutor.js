@@ -1,24 +1,26 @@
 import React from "react";
-import {  deleteTopicApi } from '../../api/axios';
-import { useNavigate } from "react-router-dom";
-import TutorCSS from "../../css/tutor.module.css";
+import { authAPIsRequests } from "../../../api/APIsRequests";
 
-function DeleteTutor(props) {
-  const navigate = useNavigate();
-  const deleteTopicButton = () => {
-    console.log(props.topic_id);
-    deleteTopicApi(props.topic_id).then(() => {
-      navigate('/tutorlist')
-      // getTopicsApi(props.topic_id).then((topics) => {
-      //   props.setTopic(topics);
-      // });
-    });
+const DeleteTutor = (props) => {
+  const handleDeleteTutor = async (event, token, tutor_id) => {
+    event.preventDefault();
+    await authAPIsRequests
+      .deleteTutorApi(token, tutor_id)
+      .then((response) => {
+        window.location.replace(`/tutorlist`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    <div className={TutorCSS.DeleteTutorPage}>
-      <button onClick={() => deleteTopicButton()}>Delete Topic</button>
+    <div>
+      <button
+        onClick={(event) =>
+          handleDeleteTutor(event, props?.token, props?.tutor_id)
+        }>Delete Tutor</button>
     </div>
   );
-}
+      }
 export default DeleteTutor;

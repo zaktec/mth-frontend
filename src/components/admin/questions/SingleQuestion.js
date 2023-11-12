@@ -1,92 +1,111 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleQuestionApi } from "../../api/axios";
 import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
-import QuestionCSS from "../../css/question.module.css";
+import Navbar from "../../navbar/Navbar";
+import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
 
-
-function SingleQuestion() {
-  const { ques_id } = useParams();
-  const [question, setQuestion] = useState([]);
+const SingleQuestion = (props) => {
+  const { question_id } = useParams();
+  const [state, setState] = useState({
+    data: {},
+    isLoading: true,
+    token: null,
+  });
 
   useEffect(() => {
-    
-    getSingleQuestionApi(ques_id).then((res) => {
-      setQuestion(res);
-      console.log("single",res)
-    });
-  }, [ques_id]);
- 
+    const token = verifyAuth();
+    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const getQuestionApi = async (token, question_id) => {
+      await authAPIsRequests
+        .getQuestionApi(token?.token, question_id)
+        .then((response) => {
+          return setState((prevState) => ({
+            ...prevState,
+            data: response?.data?.data,
+            isLoading: false,
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getQuestionApi(token, question_id);
+  }, [question_id]);
+
+  if (state?.isLoading) return <p>Loading....</p>;
 
   return (
-    <main className={QuestionCSS.SingleQuestionPage}>
+    <div className="SingleMainPage">
+      <Navbar page="dashboard-admin" />
       <h1> Single Question page </h1>
-      <ul className={QuestionCSS.Question__List}>
-        <li className={QuestionCSS.LessonList__card}>
-        <p>
-            <b>Question ID :</b> {question.ques_id}
+      <ul className="MainListPage">
+        <li className="MainList__card">
+          <p>
+            <b>Question ID :</b> {state?.data?.question_id}
           </p>
           <p>
-            <b>Question Body :</b> {question.ques_body}
+            <b>Question Body :</b> {state?.data?.question_body}
           </p>
           <p>
-            <b>Question Image :</b> {question.ques_image}
+            <b>Question Image :</b> {state?.data?.question_image}
           </p>
           <p>
-            <b>Question Grade :</b> {question.ques_grade}
+            <b>Question Grade :</b> {state?.data?.question_grade}
           </p>
           <p>
-            <b>Question Mark :</b> {question.ques_mark}
+            <b>Question Mark :</b> {state?.data?.question_mark}
           </p>
           <p>
-            <b>Question 1 Answer :</b> {question.ques1_ans}
+            <b>Question 1 Answer :</b> {state?.data?.ques1_ans}
           </p>
           <p>
-            <b>Question 2 Answer :</b> {question.ques2_ans}
+            <b>Question 2 Answer :</b> {state?.data?.ques2_ans}
           </p>
           <p>
-            <b>Question 3 Answer :</b> {question.ques3_ans}
+            <b>Question 3 Answer :</b> {state?.data?.ques3_ans}
           </p>
           <p>
-            <b>Question Answer Explained :</b> {question.ques_ans_explain}
+            <b>Question Answer Explained :</b> {state?.data?.ques_ans_explain}
           </p>
           <p>
-            <b>Question Answer Mark:</b> {question.ques_ans_mark}
+            <b>Question Answer Mark:</b> {state?.data?.ques_ans_mark}
           </p>
           <p>
-            <b>Question Answer Image :</b> {question.ques_ans_image}
+            <b>Question Answer Image :</b> {state?.data?.ques_ans_image}
           </p>
           <p>
-            <b>Question Answer Correct:</b> {question.ques2_ans}
+            <b>Question Answer Correct:</b> {state?.data?.ques2_ans}
           </p>
-          
-            <b>Question symbol before :</b> {question.ques_ans_sym_b}
-            <p>
-            <b>Question symbol answer :</b> {question.sym_a}
-          </p>
-          
+          <b>Question symbol before :</b> {state?.data?.ques_ans_sym_b}
           <p>
-            <b>Question quiz id :</b> {question.ques_quiz_id}
+            <b>Question symbol answer :</b> {state?.data?.sym_a}
           </p>
-             
           <p>
-            <b>Question lesson id :</b> {question.ques_lesson_id}
+            <b>Question quiz id :</b> {state?.data?.ques_quiz_id}
           </p>
-
-
-          <DeleteQuestion
-            question_id={question.ques_id}
-            setQuestion={setQuestion}
-          /> 
-
-         <EditQuestion question={question}/>
-        
+          <p>
+            <b>Question lesson id :</b> {state?.data?.ques_lesson_id}
+          </p>
         </li>
       </ul>
-    </main>
+
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <DeleteQuestion
+          token={state?.token}
+          question_id={state?.data?.question_id}
+        />{" "}
+      </div>
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <EditQuestion token={state?.token} question={state?.data} />{" "}
+      </div>
+    </div>
   );
-}
+};
 
 export default SingleQuestion;

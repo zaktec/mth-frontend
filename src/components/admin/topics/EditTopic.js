@@ -1,112 +1,148 @@
-import React, { useState } from "react";
-import { patchTopicApi } from "../../api/axios";
-import TopicCSS from "../../css/question.module.css";
+import Loading from "../../loading/Loading";
+import React, { useEffect, useState } from "react";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Input from "../../form/input";
 
-function EditTopic(props) {
-  const { topic } = props;
-  const [displayPost, setPostDisplay] = useState(false);
-  const [newTopicName, setnewTopicName] = useState("");
-  const [newCode, setNewCode] = useState("");
-  const [newTopicIndex, setNewTopicIndex] = useState("");
-  const [newCourseId, setNewCourseId] = useState("");
-  const [newTopicDescription, setNewTopicDescription] = useState("");
-  const [newTopicId, setNewTopicId] = useState("");
 
-  const handleSubmit = (event) => {
+const EditTopic = (props) => {
+  const [state, setState] = useState({
+    error: null,
+    loading: false,
+    displayForm: false,
+    buttonStatus: false,
+  });
+
+  useEffect(() => {
+    for (let objKey in props?.course)
+      setState((prevState) => ({
+        ...prevState,
+        [objKey]: props?.course[objKey],
+      }));
+  }, [props?.course]);
+
+  const handleChange = (event) => {
     event.preventDefault();
-    console.log(topic)
-    const newObject = {
-      topic_name: newTopicName === "" ? topic.topic_name:newTopicName,
-      topic_code: newCode=== "" ? topic.topic_code:newCode,
-      topic_desc: newTopicDescription === "" ? topic.topic_desc:newTopicDescription,
-      topic_index: newTopicIndex=== "" ? topic.topic_index:newTopicIndex,
-      topic_course_id: newCourseId=== "" ? topic.topic_course_id:newTopicName,
-      topic_id: newTopicId=== "" ? topic.topic_id:newTopicId,
-    };
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
-    // newObject.course_image = 0;
+  const handleSubmit = async (event, token, course_id) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
 
-    patchTopicApi(topic.topic_id, newObject).then((response) => {
-      console.log(response);
-    });
+    await authAPIsRequests
+      .editCourseApi(token, course_id, state)
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          message: "course updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/courses/${course_id}`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          error: error?.response?.data?.message || error?.response?.data?.error,
+          buttonStatus: false,
+          loading: false,
+        }));
+      });
+  };
+
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
+    if (state.displayForm === true)
+      return setState((prevState) => ({ ...prevState, displayForm: false }));
+    if (state.displayForm === false)
+      return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
   return (
-    <div className= {TopicCSS.EditTopicPage}>
-      <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            return !currentValue;
-          })
-        }
-      >
-        Edit Topic
-      </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Your topic Name </p>
-              <input
-                name="newTopicName"
-                placeholder={topic.topic_name}
-                onChange={(event) => setnewTopicName(event.target.value)}
-                value={newTopicName}
+    <div className="PostMainPage">
+    {state?.displayForm === true ? (
+      <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
+    ) : (
+      <button onClick={(key) => handleDisplayForm(key)}>Edit Topic</button>
+    )}
+    {state.displayForm === true && (
+       <div className="form-container">
+       <div className="form-header">
+         <div className="head">INSERT TOPIC</div>
+       </div>
+       <div className="form-container">
+         <div className="sections-container">
+           <section className="section-two">
+             <form className="form-fields">
+               <div className="attribute-container">
+              <Input
+                fieldname="Please Insert Your topic Name"
+                type="text"
+                name="topic_name"
+                value={state?.topic_name}
+                handleChange={handleChange}
               />
-              <p>Please Insert Your topic Code </p>
-              <input
-                name="newCode"
-                placeholder={topic.topic_code}
-                onChange={(event) => setNewCode(event.target.value)}
-                value={newCode}
+
+              <Input
+                fieldname="Please Insert Your topic Code "
+                type="text"
+                name="topic_code"
+                value={state?.topic_code}
+                handleChange={handleChange}
               />
-              <p>Please Insert Your Topic Description </p>
-              <input
-                name="newTopicDescription"
-                placeholder={topic.topic_desc}
-                onChange={(event) => setNewTopicDescription(event.target.value)}
-                value={newTopicDescription}
+              <Input
+                fieldname="Please Insert Your topic Desc"
+                type="text"
+                name="topic_desc"
+                value={state?.topic_desc}
+                handleChange={handleChange}
               />
-              <p>Please Insert Your Topic Index </p>
-              <input
+
+              <Input
+                fieldname="Please Insert Your topic level"
+                type="text"
+                name="topic_level"
+                value={state?.topic_level}
+                handleChange={handleChange}
+              />
+
+              <Input
+                fieldname="Please Insert Your course id"
                 type="number"
-                min="1"
-                max="15"
-                name="newTopicIndex"
-                placeholder={topic.topic_index}
-                onChange={(event) => setNewTopicIndex(event.target.value)}
-                value={newTopicIndex}
+                name="lesson_body"
+                value={state?.topic_course_fk_id}
+                handleChange={handleChange}
               />
-              <p>Please Insert Your Course ID </p>
-              <input
-                type="number"
-                min="1"
-                max="15"
-                name="newCourseId"
-                placeholder={topic.topic_course_id}
-                onChange={(event) => setNewCourseId(event.target.value)}
-                value={newCourseId}
-              />
-              <p>Please Insert Your Topic ID </p>
-              <input
-                type="number"
-                min="1"
-                max="15"
-                name="newTopicID"
-                placeholder={topic.topic_id}
-                onChange={(event) => setNewTopicId(event.target.value)}
-                value={newTopicId}
-              />
-            </label>
-            <p></p>
-            <button>Update</button>
-          </form>
+
+              <div>
+                {state?.error !== null ? state?.error : state?.message}
+              </div>
+              <div style={{ margin: "10px 00px" }}>
+                <button
+                  disabled={state.buttonStatus}
+                  onClick={(key) => handleSubmit(key, props?.token)}
+                  type="submit"
+                >
+                  {state.loading === true ? <Loading /> : "Save"}
+                  </button>
+                    </div>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
         </div>
-      ) : (
-        <div></div>
       )}
     </div>
   );
-}
-
+};
 
 export default EditTopic

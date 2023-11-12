@@ -72,7 +72,7 @@ const SingleAdmin = () => {
         {" "}
         <DeleteAdmin
           token={state?.token}
-          admin_id={state?.data?.course_id}
+          admin_id={state?.data?.admin_id}
         />{" "}
       </div>
       <div style={{ margin: "20px 20px" }}>

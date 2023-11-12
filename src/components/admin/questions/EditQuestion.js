@@ -1,140 +1,198 @@
-import React, { useState } from "react";
-import { patchQuestionApi } from "../../api/axios";
-import QuestionCSS from "../../css/question.module.css";
+import React, { useState, useEffect } from "react";
+import Loading from "../../loading/Loading";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Input from "../../form/input";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
 
-function EditQuestion(props) {
-  const { question } = props;
-  const [displayPost, setPostDisplay] = useState(false);
-  const [newQuestionCalc, setnewQuestionCalc] = useState(false);
-  const [newQuestionBody, setnewQuestionBody] = useState("");
-  const [newQ1Answer, setnewQ1Answer] = useState("");
-  const [newQuestionGrade, setnewQuestionGrade] = useState("");
-  const [newQuestionLessonId, setnewQuestionLessonId] = useState("");
-  const [newQuestionMark, setnewQuestionMark] = useState("");
-  const [newQuestionExplaination, setnewQuestionExplaination] = useState("");
 
-  const handleSubmit = (event) => {
+const EditQuestion = (props) => {
+  const [state, setState] = useState({
+    error: null,
+    loading: false,
+    displayForm: false,
+    buttonStatus: false,
+  });
+
+  useEffect(() => {
+    for (let objKey in props?.question)
+      setState((prevState) => ({
+        ...prevState,
+        [objKey]: props?.question[objKey],
+      }));
+  }, [props?.question]);
+
+  const handleChange = (event) => {
     event.preventDefault();
-    const newObject = {
-      ques_body: newQuestionBody === "" ? question.ques_body : newQuestionBody,
-      ques1_ans: newQ1Answer === "" ? question.ques1_ans : newQ1Answer,
-      ques_mark: newQuestionMark === "" ? question.ques_mark : newQuestionMark,
-      ques_grade: newQuestionGrade === "" ? question.ques_grade : newQuestionGrade,
-      ques_lesson_id: newQuestionLessonId === "" ? question.ques_lesson_id : newQuestionLessonId,
-      ques_calc: newQuestionCalc === "" ? question.ques_calc : newQuestionCalc,
-      ques_ans_explain: newQuestionExplaination === "" ? question.ques_ans_explain : newQuestionExplaination,
-    };
-
-    // newObject.course_image = 0;
-
-    patchQuestionApi(question.ques_id,newObject).then((response) => {
-      
-    });
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      [event.target.name]: event.target.value,
+    }));
   };
+
+  const handleSubmit = async (event, token, question_id) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
+
+    await authAPIsRequests
+      .editQuestionApi(token, question_id, state)
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          message: "question updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/questions/${question_id}`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          error: error?.response?.data?.message || error?.response?.data?.error,
+          buttonStatus: false,
+          loading: false,
+        }));
+      });
+  };
+
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
+    if (state.displayForm === true)
+      return setState((prevState) => ({ ...prevState, displayForm: false }));
+    if (state.displayForm === false)
+      return setState((prevState) => ({ ...prevState, displayForm: true }));
+  };
+
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      question_image: picture[picture.length - 1],
+    }));
+  };
+  let profilePicturePreview = null;
+  if (state?.coourse_image) {
+    if (state?.admin_image.name) {
+      const getDocName = state?.question_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.admin_image);
+      }
+    }
+  }
   return (
-    <div className={QuestionCSS.EditQuestionPage}>
-      <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            return !currentValue;
-          })
-        }
-      >
-        Edit Question
+    <div className="PostMainPage">
+    {state?.displayForm === true ? (
+      <button onClick={(event) => handleDisplayForm(event)}>
+        {" "}
+        No Edit question{" "}
       </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Your question body </p>
-              <input
-                type= "text"
-                name="newQuestionBody"
-                placeholder={question.ques_body}
-                onChange={(event) => setnewQuestionBody(event.target.value)}
-                value={newQuestionBody}
-              />
-              <p>Please Insert Your Question 1 Answer</p>
-              <input
-                name="newQ1Answer"
-                placeholder={question.ques1_ans} 
-                onChange={(event) => setnewQ1Answer(event.target.value)}
-                value={newQ1Answer}
-              />
-              <p>Please Insert Your Question mark </p>
-              <input type="number"
-                 min="1" max="5"
-                name="newQuestionMark"
-                placeholder={question.ques_mark} 
-                onChange={(event) => setnewQuestionMark(event.target.value)}
-                value={newQuestionMark}
-              />
-              <p>Please Insert Your Question Grade </p>
-              <input type="number"
-                 min="1" max="9"
-                name="newQuestionGrade"
-                placeholder={question.ques_grade}
-                onChange={(event) => setnewQuestionGrade(event.target.value)}
-                value={newQuestionGrade}
-              />
-              <p>Please Insert Your Lesson Id </p>
-              <input type="number"
-                 min="1" max="5"
-                name="newQuestionLessonId"
-                placeholder={question.ques_lesson_id}
-                onChange={(event) => setnewQuestionLessonId(event.target.value)}
-                value={newQuestionLessonId}
-              />
-              <p>Please Insert Your Quiz Id </p>
-              <input type="number"
-                 min="1" max="5"
-                name="newQuestionLessonId"
-                placeholder="Id"
-                onChange={(event) => setnewQuestionLessonId(event.target.value)}
-                value={newQuestionLessonId}
-              />
-              <fieldset>
-                <legend>Choose your calculator</legend>
-                <div>
-                  <input
-                    type="checkbox"
-                    name="newQuestionCalc"
-                    //value="true"
-                    onChange={(event) => setnewQuestionCalc(true)}
-                    value={newQuestionCalc}
-                  />
-                  <label htmlFor="true">True</label>
-                  <input
-                    type="checkbox"
-                    name="newQuestionCalc"
-                    //value="false"
-                    onChange={(event) => setnewQuestionCalc(true)}
-                    value={newQuestionCalc}
-                  />
-                  <label htmlFor="false">False</label>
-                </div>
-              </fieldset>
+    ) : (
+      <button onClick={(event) => handleDisplayForm(event)}> Edit question </button>
+    )}
 
+    {state.displayForm === true && (
+       <div className="form-container">
+       <div className="form-header">
+         <div className="head">EDIT QUESTION</div>
+       </div>
 
-              <p>Please Insert Your explanation </p>
-              <input
-                name="newQuestionExplaination"
-                placeholder="Question Explnation"
-                onChange={(event) => setnewQuestionExplaination(event.target.value)}
-                value={newQuestionExplaination}
-              />
+       <JoinPattern />
 
+       <div className="form-container">
+         <div className="sections-container">
+           <section className="section-one">
+             <div className="profile-picture">
+               {" "}
+               <img
+                 src={profilePicturePreview || Avatar}
+                 alt="profile"
+               />{" "}
+             </div>
+             <ImageUploader
+               fileContainerStyle={{
+                 marginTop: "50px",
+                 height: "50px",
+                 width: "200px",
+                 float: "left",
+               }}
+               buttonStyles={{ backgroundColor: "#808080", color: "#ffff" }}
+               imgExtension={[".jpg", ".png"]}
+               buttonText="Upload Picture"
+               maxFileSize={100000000}
+               onChange={onDrop}
+               withLabel={false}
+               withIcon
+             />
+           </section>
 
-            </label>
-            <p></p>
-            <button>Update</button>
-          </form>
+           <section className="section-two">
+             <form className="form-fields">
+               <div className="attribute-container">
+      
+        <Input
+          fieldname="Please Insert Your question Code"
+          type="text"
+          name="question_code"
+          value={state?.question_code}
+          handleChange={handleChange}
+        />
+
+        <Input
+          fieldname="Please Insert Your question Name"
+          type="text"
+          name="question_name"
+          value={state?.question_name}
+          handleChange={handleChange}
+        />
+        <Input
+          fieldname="Please Insert Your question Description"
+          type="text"
+          name="question_desc"
+          value={state?.question_desc}
+          handleChange={handleChange}
+        />
+        <Input
+          fieldname="Please Insert Your question Level"
+          type="text"
+          name="question_level"
+          value={state?.question_level}
+          handleChange={handleChange}
+        />
+
+       
+         <div className="result-container">
+        {state?.error !== null ? state?.error : state?.message}
         </div>
-      ) : (
-        <div></div>
-      )}
-    </div>
-  );
-}
+          <button
+            disabled={state.buttonStatus}
+            onClick={(key) => handleSubmit(key, props?.token)}
+            type="button"
+          >
+            {state.loading === true ? <Loading /> : "Save"}
+          </button>
+          </div>
+              </form>
+            </section>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+);
+};
 
 export default EditQuestion;

@@ -1,52 +1,34 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { getQuestionApi } from '../../../api/axios'
 import { Link } from "react-router-dom";
 import PostQuestion from "./PostQuestion";
-import QuestionCSS from "../../css/question.module.css";
+
 
 // import Search from "../Search";
 
-function QuestionList(props) {
-  const [questionList, setQuestionList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  // const [searchTerm, setSearchTerm] = useState("");
+const QuestionList = (props) => {
+  if (props?.isLoading) return <p>Loading....</p>;
 
-
-  useEffect(() => {
-    getQuestionApi(props.sortBy).then((questionFromApi) => {
-      console.log(questionFromApi);
-      setQuestionList(questionFromApi);
-      setIsLoading(false);
-    });
-  }, [props.sortBy]);
-
-  if (isLoading) return <p>Loading....</p>;
 
   return (
-    <main className={QuestionCSS.QuestionListPage}>
-  {/* <Search setSearchTerm={setSearchTerm} /> */}
-     
+ <div className="MainListPage">
+      <h1 className="MainList__h1"> QuestionList </h1>
 
-      <h1 className={QuestionCSS.QuestionList__h1}> QuestionsList </h1>
-      
-      <PostQuestion setQuestionList={ setQuestionList}/> 
+      <PostQuestion token= {props?.token} />
 
-
-      <ul className={QuestionCSS.Question__List}>
-        {questionList.map((question) => {
+      <ul className="Main__List">
+        {props?.data.map((question) => {
           return (
-            <Link key={question.ques_id} to={`/question/${question.ques_id}`}>
-              <li className={QuestionCSS.QuestionList__card}>
-                <p><b>Question Id: </b> {question.ques_id}</p>
-                <p><b>Question Code: </b>{question.ques_body}</p>
+            <Link key={question.question_id} to={`/questions/${question.question_id}`}>
+               <li className="MainList__card">
+                <p><b>Question Id: </b> {question.question_id}</p>
+                <p><b>Question Code: </b>{question.question_body}</p>
                 <button> Click for more detail</button>
               </li>
             </Link>
           );
         })}
       </ul>
-    </main>
+    </div>
   );
 }
 

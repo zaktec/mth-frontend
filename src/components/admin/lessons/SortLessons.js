@@ -34,7 +34,7 @@ const SortLessons = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  };
+  }; 
 
   const handleChange = (event) => {
     console.log(event.target.value);
@@ -55,7 +55,7 @@ const SortLessons = () => {
             <option value="lesson_code">LessonCode</option>
             <option value="lesson_topic_id">LessonTopicID</option>
           </select>
-        </form>
+        </form><br/>
       </div>
        <LessonList token= {state?.token} data= { state?.data } isLoading= {state?.isLoading}  sortBy={state?.sortBy}/> 
     </main>

@@ -1,40 +1,25 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { getTopicsApi } from "../../api/axios";
 import { Link } from "react-router-dom";
 import PostTopic from "./PostTopic";
-import TopicCSS from "../../css/topic.module.css";
 
-function TopicList(props) {
-  const [topicsList, setTopicList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  // const [searchTerm, setSearchTerm] = useState("");
-  //const { SortBy } = props.sortBy
 
-  //console.log(">>>",SortBy)
 
-  useEffect(() => {
-    getTopicsApi(props.sortBy).then((topicsFromApi) => {
-      console.log(topicsFromApi);
-      setTopicList(topicsFromApi);
-      setIsLoading(false);
-    });
-  }, [props.sortBy]);
-
-  if (isLoading) return <p>Loading....</p>;
-
+const TopicList = (props) =>  {
+  if (props?.isLoading) return <p>Loading....</p>;
+ 
+console.log(props)
   return (
-    <main className={TopicCSS.TopicListPage}>
-      {/* <Search setSearchTerm={setSearchTerm} /> */}
-      <h1 className={TopicCSS.TopicList__h1}> TopicList </h1>
-      <PostTopic
-            setTopicList={setTopicList}/>
+    <div className="MainListPage">
+    <h1 className="MainList__h1"> TopicList </h1>
 
-      <ul className={TopicCSS.TopicList}>
-        {topicsList.map((topic) => {
+    {   <PostTopic
+            setTopicListtoken= {props?.token}/> }
+
+<ul className="Main__List">
+      {props?.data.map((topic) => {
           return (
             <Link key={topic.topic_id} to={`/topics/${topic.topic_id}`}>
-              <li className={TopicCSS.TopicList__card}>
+               <li className="MainList__card">
                 <p>
                   <b>Topic Name: </b> {topic.topic_name}
                 </p>
@@ -48,7 +33,7 @@ function TopicList(props) {
           );
         })}
       </ul>
-    </main>
+    </div>
   );
 }
 export default TopicList;

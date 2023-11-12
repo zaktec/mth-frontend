@@ -1,59 +1,80 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleTutorApi } from "../../api/axios";
 import EditTutor from "./EditTutor";
 import DeleteTutor from "./DeleteTutor";
-import TutorCSS from "../../css/tutor.module.css";
+import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Navbar from "../../navbar/Navbar";
 
-function SingleTutor() {
+const SingleTutor = () => {
   const { tutor_id } = useParams();
-  const [tutor, setTutor] = useState({});
+  const [state, setState] = useState({
+    data: {},
+    isLoading: true,
+    token: null,
+  });
 
   useEffect(() => {
-    getSingleTutorApi(tutor_id).then((tutorsFromApi) => {
-      console.log(tutorsFromApi);
-      setTutor(tutorsFromApi);
-    });
+    const token = verifyAuth();
+    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const getTutorApi = async (token, tutor_id) => {
+      await authAPIsRequests
+        .getTutorApi(token?.token, tutor_id)
+        .then((response) => {
+          return setState((prevState) => ({
+            ...prevState,
+            data: response?.data?.data,
+            isLoading: false,
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getTutorApi(token, tutor_id);
   }, [tutor_id]);
 
+  if (state?.isLoading) return <p>Loading....</p>;
+
   return (
-    <main className= {TutorCSS.SingleTutorPage}>
+    <div className="SingleMainPage">
+      <Navbar page="dashboard-admin" />
       <h1>Single Tutor Page</h1>
-      <ul className={TutorCSS.TutorList}>
-        <li className= {TutorCSS.TutorList__card}>
+      <ul className="MainListPage">
+        <li className="List__card">
           <p>
-            <b>Tutor Name: </b> {tutor.tutor_firstname}
+            <b>Tutor Name: </b> {state?.data?.tutor_firstname}
           </p>
           <p>
             <b>Tutor Last Name: </b>
-            {tutor.tutor_lastname}
+            {state?.data?.tutor_lastname}
           </p>
           <p>
             <b>Tutor ID: </b>
-            {tutor.tutor_id}
+            {state?.data?.tutor_id}
           </p>
           <p>
             <b>Tutor Code: </b>
-            {tutor.tutor_email}
+            {state?.data?.tutor_email}
           </p>
           <p>
             <b>Tutor Password</b>
-            {tutor.tutor_password}
+            {state?.data?.tutor_password}
           </p>
           <img
             className="ListImage"
-            src={tutor.tutor_image}
-            alt={tutor.tutor_firstname}
+            src={state?.data?.tutor_image}
+            alt={state?.data?.tutor_firstname}
           />
-
-          <DeleteTutor tutor_id={tutor.tutor_id} setTutor={setTutor} />
-
-          <EditTutor tutor={tutor} />
-        </li>
+</li>
       </ul>
-    </main>
+          
+      <div style={{ margin: '20px 20px' }}> <DeleteTutor token= {state?.token} course_id={state?.data?.tutor_id} /> </div>
+      <div style={{ margin: '20px 20px' }}> <EditTutor token= {state?.token} tutor={state?.data} /> </div>
+    </div>
   );
-}
+};
 
 export default SingleTutor;

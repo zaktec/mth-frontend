@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Loading from "../../loading/Loading";
 import Input from "../../form/input";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
 
 const EditAdmin = (props) => {
+  const [isAdminActiveTrue, setIsAdminActiveTrue] = useState(false);
+  const [isAdminActiveFalse, setIsAdminActiveFalse] = useState(false);
   const [state, setState] = useState({
     error: null,
     message: null,
@@ -28,6 +33,21 @@ const EditAdmin = (props) => {
       [event.target.name]: event.target.value,
     }));
   };
+
+  const handleIsAdminActiveTrue = () => {
+    if (isAdminActiveFalse === false) {
+      setIsAdminActiveTrue(!isAdminActiveTrue);
+      setState((prevState) => ({ ...prevState, admin_active: true }));
+    }
+  };
+
+  const handleIsAdminActiveFalse = () => {
+    if (isAdminActiveTrue === false) {
+      setIsAdminActiveFalse(!isAdminActiveFalse);
+      setState((prevState) => ({ ...prevState, admin_active: false }));
+    }
+  };
+
   const handleSubmit = async (event, token, admin_id) => {
     event.preventDefault();
     setState((prevState) => ({
@@ -38,7 +58,7 @@ const EditAdmin = (props) => {
     }));
 
     await authAPIsRequests
-      .editLessonApi(token, admin_id, state)
+      .editAdminApi(token, admin_id, state)
       .then((response) => {
         setState((prevState) => ({
           ...prevState,
@@ -51,7 +71,9 @@ const EditAdmin = (props) => {
       .catch((error) => {
         return setState((prevState) => ({
           ...prevState,
-          error: error?.error?.response?.data?.message || error?.response?.data?.error,
+          error:
+            error?.error?.response?.data?.message ||
+            error?.response?.data?.error,
           buttonStatus: false,
           loading: false,
         }));
@@ -65,6 +87,29 @@ const EditAdmin = (props) => {
       return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
 
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      admin_image: picture[picture.length - 1],
+    }));
+  };
+  let profilePicturePreview = null;
+  if (state?.admin_image) {
+    if (state?.admin_image.name) {
+      const getDocName = state?.admin_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.admin_image);
+      }
+    }
+  }
   return (
     <div className="EditMainPage">
       {state?.displayForm === true ? (
@@ -73,81 +118,125 @@ const EditAdmin = (props) => {
         <button onClick={(key) => handleDisplayForm(key)}>Edit Admin </button>
       )}
       {state.displayForm === true && (
-        <div>
-          <Input
-            fieldname="Please Insert Your username"
-            type="text"
-            name="admin_username"
-            value={state?.admin_username}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Insert Your First Name"
-            type="text"
-            name="admin_firstname"
-            value={state?.admin_firstname}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Last Name"
-            type="text"
-            name="admin_lastname"
-            value={state?.admin_lastname}
-            handleChange={handleChange}
-          />
+        <div className="form-container">
+          <div className="form-header">
+            <div className="head">Edit ADMIN</div>
+          </div>
 
-          <Input
-            fieldname="Please Insert Your Email"
-            type="text"
-            name="admin_email"
-            value={state?.admin_email}
-            handleChange={handleChange}
-          />
+          <JoinPattern />
 
-          <Input
-            fieldname="Please Insert Your Password"
-            type="password"
-            name="admin_password"
-            value={state?.admin_password}
-            handleChange={handleChange}
-          />
+          <div className="form-container">
+            <div className="sections-container">
+              1
+              <div className="sections-container">
+                <section className="section-one">
+                  <div className="profile-picture">
+                    {" "}
+                    <img
+                      src={profilePicturePreview || Avatar}
+                      alt="profile"
+                    />{" "}
+                  </div>
+                  <ImageUploader
+                    fileContainerStyle={{
+                      marginTop: "50px",
+                      height: "50px",
+                      width: "200px",
+                      float: "left",
+                    }}
+                    buttonStyles={{
+                      backgroundColor: "#808080",
+                      color: "#ffff",
+                    }}
+                    imgExtension={[".jpg", ".png"]}
+                    buttonText="Upload Picture"
+                    maxFileSize={100000000}
+                    onChange={onDrop}
+                    withLabel={false}
+                    withIcon
+                  />
+                </section>
+                <section className="section-two">
+                  <form className="form-fields">
+                    <div className="attribute-container">
+                      <Input
+                        fieldname="Please Insert Your username"
+                        type="text"
+                        name="admin_username"
+                        value={state?.admin_username}
+                        handleChange={handleChange}
+                      />
+                      <Input
+                        fieldname="Insert Your First Name"
+                        type="text"
+                        name="admin_firstname"
+                        value={state?.admin_firstname}
+                        handleChange={handleChange}
+                      />
+                      <Input
+                        fieldname="Please Insert Your Last Name"
+                        type="text"
+                        name="admin_lastname"
+                        value={state?.admin_lastname}
+                        handleChange={handleChange}
+                      />
 
-          <fieldset>
-            <legend>Is Admin Active</legend>
-            <div>
-              <input
-                type="checkbox"
-                name="newAdminActive"
-                //value="true"
-              />
-              <label htmlFor="true">True</label>
-              <input
-                type="checkbox"
-                name="newAdminActive"
-                //value="false"
-              />
-              <label htmlFor="false">False</label>
+                      <Input
+                        fieldname="Please Insert Your Email"
+                        type="text"
+                        name="admin_email"
+                        value={state?.admin_email}
+                        handleChange={handleChange}
+                      />
+
+                      <Input
+                        fieldname="Please Insert Your Password"
+                        type="password"
+                        name="admin_password"
+                        value={state?.admin_password}
+                        handleChange={handleChange}
+                      />
+
+                      <div>
+                        <p style={{ margin: "10px 00px" }}> Is Admin Active </p>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={isAdminActiveTrue}
+                            onChange={handleIsAdminActiveTrue}
+                          />
+                          True
+                        </label>
+
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={isAdminActiveFalse}
+                            onChange={handleIsAdminActiveFalse}
+                          />
+                          False
+                        </label>
+                      </div>
+
+                      <div className="result-container">
+                        {state?.error !== null ? state?.error : state?.message}</div>
+                      <button
+                        disabled={state.buttonStatus}
+                        type="button"
+                        onClick={(key) =>
+                          handleSubmit(
+                            key,
+                            props?.token,
+                            props?.admin?.admin_id
+                          )
+                        }>
+                        {state.loading === true ? <Loading /> : "Update"}
+                      </button>
+                    </div>
+                  </form>
+                </section>
+              </div>
             </div>
-          </fieldset>
-
-          <Input
-            fieldname="Please Insert Your Admin Image"
-            type="text"
-            name="admin_image"
-            value={state?.admin_image}
-            handleChange={handleChange}
-          />
-
-          <div>{state?.error !== null ? state?.error : state?.message} </div>
-          <div style={{ margin: "10px 00px" }}>
-            <button
-              disabled={state.buttonStatus}
-              onClick={(key) =>
-                handleSubmit(key, props?.token, props?.lesson?.lesson_id)
-              }
-              type="submit">
-              {state.loading === true ? <Loading /> : "Update"}
-            </button>
           </div>
         </div>
       )}

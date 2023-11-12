@@ -60,9 +60,9 @@ const SortAdmins = () => {
             <option value="admin_active">Active</option>
           </select>
           <br></br>
-          <input type="submit" value="Submit" />
+        {/*   <input type="submit" value="Submit" /> */}
         </form>
-        <p>Click the "Submit" button .</p>
+      {/*   <p>Click the "Submit" button .</p> */}
       </div>
       {
         <AdminList

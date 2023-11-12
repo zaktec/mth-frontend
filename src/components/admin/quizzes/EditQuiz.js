@@ -1,77 +1,168 @@
-import React, { useState } from "react";
-import { patchQuizApi } from "../../api/axios";
-import QuizCSS from "../../css/quiz.module.css";
+import Loading from "../../loading/Loading";
+import React, { useEffect, useState } from "react";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Input from "../../form/input";
 
-function EditQuiz(props) {
-  const { quiz } = props;
-  const [displayPost, setPostDisplay] = useState(false);
-  const [newQuizName, setnewQuizName] = useState("");
-  const [newQuizCode, setnewQuizCode] = useState("");
- 
-  const [newQuestionMark, setnewQuestionMark] = useState("");
-  const [newQuizType, setnewQuizType] = useState("");
+const EditQuiz = (props) => {
+  const [state, setState] = useState({
+    error: null,
+    loading: false,
+    displayForm: false,
+    buttonStatus: false,
+  });
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    for (let objKey in props?.quiz)
+      setState((prevState) => ({
+        ...prevState,
+        [objKey]: props?.quiz[objKey],
+      }));
+  }, [props?.quiz]);
+
+  const handleChange = (event) => {
     event.preventDefault();
-    const newObject = {
-      quiz_name: newQuizName === "" ? quiz.quiz_name : newQuizName,
-      quiz_code: newQuizCode === "" ? quiz.quiz_code: newQuizCode,
-      quiz_type: newQuizType === "" ? quiz.quiz_type: newQuizType,
-    };
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
-    // newObject.course_image = 0;
+  const handleSubmit = async (event, token, quiz_id) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
 
-    patchQuizApi(quiz.quiz_id,newObject).then((response) => {
-    
-    });
+    await authAPIsRequests
+      .editQuizApi(token, quiz_id, state)
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          message: "quiz updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/cquizzes/${quiz_id}`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          error: error?.response?.data?.message || error?.response?.data?.error,
+          buttonStatus: false,
+          loading: false,
+        }));
+      });
+  };
+
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
+    if (state.displayForm === true)
+      return setState((prevState) => ({ ...prevState, displayForm: false }));
+    if (state.displayForm === false)
+      return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
   return (
-    <div className={QuizCSS.EditQuizPage}>
-      <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            return !currentValue;
-          })
-        }
-      >
-        Edit Quiz
-      </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Quiz Name </p>
-              <input
-                name="newQuizName"
-                placeholder= {quiz.quiz_name} 
-                onChange={(event) => setnewQuizName(event.target.value)}
-                value={newQuizName}
-              />
-              <p>Please Insert Your Quiz Code</p>
-              <input
-                name="newQuizCode"
-                placeholder= {quiz.quiz_code}
-                onChange={(event) => setnewQuizCode(event.target.value)}
-                value={newQuizCode}
-              />
-              <p>Please Insert Your Quiz Type </p>
-              <input type="number"
-                 min="1" max="5"
-                name="newQuestionMark"
-                placeholder={quiz.quiz_type}
-                onChange={(event) => setnewQuestionMark(event.target.value)}
-                value={newQuestionMark}
-              />
-            </label>
-            <p></p>
-            <button>Update</button>
-          </form>
-        </div>
+    <div className="PostMainPage">
+      {state?.displayForm === true ? (
+        <button onClick={(key) => handleDisplayForm(key)}> No Add Quiz</button>
       ) : (
-        <div></div>
+        <button onClick={(key) => handleDisplayForm(key)}>Add Quiz</button>
+      )}
+      {state.displayForm === true && (
+        <div className="form-container">
+          <div className="form-header">
+            <div className="head">INSERT QUIZ</div>
+          </div>
+          <div className="form-container">
+            <div className="sections-container">
+              <section className="section-two">
+                <form className="form-fields">
+                  <div className="attribute-container">
+                    <Input
+                      fieldname="Please Insert Your quiz Name"
+                      type="text"
+                      name="quiz_name"
+                      value={state?.quiz_name}
+                      handleChange={handleChange}
+                    />
+
+                    <Input
+                      fieldname="Please Insert Your quiz Code "
+                      type="text"
+                      name="quiz_code"
+                      value={state?.quiz_code}
+                      handleChange={handleChange}
+                    />
+                    <Input
+                      fieldname="Please Insert Your quiz Desc"
+                      type="text"
+                      name="quiz_desc"
+                      value={state?.quiz_desc}
+                      handleChange={handleChange}
+                    />
+
+                    <Input
+                      fieldname="Please Insert Your quiz level"
+                      type="text"
+                      name="topic_level"
+                      value={state?.topic_level}
+                      handleChange={handleChange}
+                    />
+                    <Input
+                      fieldname="Do quiz need calculator"
+                      type="boolean"
+                      name="quiz_cal"
+                      value={state?.quiz_calc}
+                      handleChange={handleChange}
+                    />
+
+                    <Input
+                      fieldname="Please Insert Your course id"
+                      type="number"
+                      name="quiz_course_fk_id"
+                      value={state?.quiz_course_fk_id}
+                      handleChange={handleChange}
+                    />
+                    <Input
+                      fieldname="Please Insert Your lesson id"
+                      type="number"
+                      name="quiz_lesson_fk_id"
+                      value={state?.quiz_lesson_fk_id}
+                      handleChange={handleChange}
+                    />
+                    <Input
+                      fieldname="Please Insert Your topic id"
+                      type="number"
+                      name="quiz_topic_fk_id"
+                      value={state?.quiz_topic_fk_id}
+                      handleChange={handleChange}
+                    />
+
+                    <div>
+                      {state?.error !== null ? state?.error : state?.message}
+                    </div>
+                    <div style={{ margin: "10px 00px" }}>
+                      <button
+                        disabled={state.buttonStatus}
+                        onClick={(key) => handleSubmit(key, props?.token)}
+                        type="submit"
+                      >
+                        {state.loading === true ? <Loading /> : "Save"}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
-}
+};
 
 export default EditQuiz;

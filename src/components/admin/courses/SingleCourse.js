@@ -36,7 +36,7 @@ const SingleCourse = () => {
       <ul className="MainListPage">
         <li className="MainList__card">
           <p> <b>Course Name: </b> {state?.data?.course_name} </p>
-          <p> <b>Course Description: </b> {state?.data?.course_desc} </p>
+          <p> <b>Course Descriutorption: </b> {state?.data?.course_desc} </p>
           <p> <b>Course ID: </b> {state?.data?.course_id} </p>
           <p> <b>Course Code: </b> {state?.data?.course_code} </p>
           <p> <b>Course Level:</b> {state?.data?.course_level} </p>
