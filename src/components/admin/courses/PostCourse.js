@@ -2,14 +2,19 @@ import Loading from "../../loading/Loading";
 import React, { useState } from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
 
 const PostCourse = (props) => {
+  
   const [state, setState] = useState({
     course_name: "",
     course_code: "",
     course_desc: "",
     course_level: "",
     course_image: "",
+
     error: null,
     loading: false,
     displayForm: false,
@@ -24,6 +29,8 @@ const PostCourse = (props) => {
       [event.target.name]: event.target.value,
     }));
   };
+
+
 
   const handleSubmit = async (event, token) => {
     event.preventDefault();
@@ -62,6 +69,30 @@ const PostCourse = (props) => {
     if (state.displayForm === false)
       return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      course_image: picture[picture.length - 1],
+    }));
+  };
+
+  let profilePicturePreview = null;
+  if (state?.course_image) {
+    if (state?.course_image.name) {
+      const getDocName = state?.course_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.course_image);
+      }
+    }
+  }
 
   return (
     <div className="PostMainPage">
@@ -75,7 +106,44 @@ const PostCourse = (props) => {
       )}
 
       {state.displayForm === true && (
-        <div>
+         <div className="form-container">
+         <div className="form-header">
+           <div className="head">INSERT ADMIN</div>
+         </div>
+
+         <JoinPattern />
+
+         <div className="form-container">
+           <div className="sections-container">
+             <section className="section-one">
+               <div className="profile-picture">
+                 {" "}
+                 <img
+                   src={profilePicturePreview || Avatar}
+                   alt="profile"
+                 />{" "}
+               </div>
+               <ImageUploader
+                 fileContainerStyle={{
+                   marginTop: "50px",
+                   height: "50px",
+                   width: "200px",
+                   float: "left",
+                 }}
+                 buttonStyles={{ backgroundColor: "#808080", color: "#ffff" }}
+                 imgExtension={[".jpg", ".png"]}
+                 buttonText="Upload Picture"
+                 maxFileSize={100000000}
+                 onChange={onDrop}
+                 withLabel={false}
+                 withIcon
+               />
+             </section>
+
+             <section className="section-two">
+               <form className="form-fields">
+                 <div className="attribute-container">
+        
           <Input
             fieldname="Please Insert Your course Code"
             type="text"
@@ -105,22 +173,22 @@ const PostCourse = (props) => {
             value={state?.course_level}
             handleChange={handleChange}
           />
-          <Input
-            fieldname="Please Insert Your Course Image"
-            type="text"
-            name="course_image"
-            value={state?.course_image}
-            handleChange={handleChange}
-          />
-          <div>{state?.error !== null ? state?.error : state?.message}</div>
-          <div style={{ margin: "10px 00px" }}>
+
+         
+           <div className="result-container">
+          {state?.error !== null ? state?.error : state?.message}
+          </div>
             <button
               disabled={state.buttonStatus}
               onClick={(key) => handleSubmit(key, props?.token)}
-              type="submit"
+              type="button"
             >
               {state.loading === true ? <Loading /> : "Save"}
             </button>
+            </div>
+                </form>
+              </section>
+            </div>
           </div>
         </div>
       )}

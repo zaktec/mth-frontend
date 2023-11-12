@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Loading from "../../loading/Loading";
 import Input from "../../form/input";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
 
 const EditStudent = (props) => {
+  const [isStudentActiveTrue, setIsStudentActiveTrue] = useState(false);
+  const [isStudentActiveFalse, setIsStudentActiveFalse] = useState(false);
   const [state, setState] = useState({
     error: null,
     message: null,
@@ -28,6 +33,22 @@ const EditStudent = (props) => {
       [event.target.name]: event.target.value,
     }));
   };
+
+  const handleIsStudentActiveTrue = () => {
+    if (isStudentActiveFalse === false) {
+      setIsStudentActiveTrue(!isStudentActiveTrue);
+      setState((prevState) => ({ ...prevState, student_active: true }));
+    }
+  };
+
+  const handleIsStudentActiveFalse = () => {
+    if (isStudentActiveTrue === false) {
+      setIsStudentActiveFalse(!isStudentActiveFalse);
+      setState((prevState) => ({ ...prevState, student_active: false }));
+    }
+  };
+
+
   const handleSubmit = async (event, token, student_id) => {
     event.preventDefault();
     setState((prevState) => ({
@@ -65,6 +86,31 @@ const EditStudent = (props) => {
       return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
 
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      student_image: picture[picture.length - 1],
+    }));
+  };
+
+  let profilePicturePreview = null;
+  if (state?.student_image) {
+    if (state?.student_image.name) {
+      const getDocName = state?.student_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.student_image);
+      }
+    }
+  }
+
   return (
     <div className="EditMainPage">
       {state?.displayForm === true ? (
@@ -73,7 +119,45 @@ const EditStudent = (props) => {
         <button onClick={(key) => handleDisplayForm(key)}>Edit student </button>
       )}
       {state.displayForm === true && (
-        <div>
+
+<div className="form-container">
+<div className="form-header">
+  <div className="head">INSERT STUDENT</div>
+</div>
+
+<JoinPattern />
+
+<div className="form-container">
+  <div className="sections-container">
+    <section className="section-one">
+      <div className="profile-picture">
+        {" "}
+        <img
+          src={profilePicturePreview || Avatar}
+          alt="profile"
+        />{" "}
+      </div>
+      <ImageUploader
+        fileContainerStyle={{
+          marginTop: "50px",
+          height: "50px",
+          width: "200px",
+          float: "left",
+        }}
+        buttonStyles={{ backgroundColor: "#808080", color: "#ffff" }}
+        imgExtension={[".jpg", ".png"]}
+        buttonText="Upload Picture"
+        maxFileSize={100000000}
+        onChange={onDrop}
+        withLabel={false}
+        withIcon
+      />
+    </section>
+
+    <section className="section-two">
+      <form className="form-fields">
+        <div className="attribute-container">
+        
           <Input
             fieldname="Please Insert Your username"
             type="text"
@@ -112,23 +196,27 @@ const EditStudent = (props) => {
             handleChange={handleChange}
           />
 
-          <fieldset>
-            <legend>Is Student Active</legend>
-            <div>
-              <input
-                type="checkbox"
-                name="newStudentActive"
-                //value="true"
-              />
-              <label htmlFor="true">True</label>
-              <input
-                type="checkbox"
-                name="newStudentActive"
-                //value="false"
-              />
-              <label htmlFor="false">False</label>
-            </div>
-          </fieldset>
+        
+<div>
+                      <p style={{ margin: "10px 00px" }}> Is Student Active </p>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isStudentActiveTrue}
+                          onChange={handleIsStudentActiveTrue}
+                        />
+                        True
+                      </label>
+
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isStudentActiveFalse}
+                          onChange={handleIsStudentActiveFalse}
+                        />
+                        False
+                      </label>
+                    </div>
 
           <Input
             fieldname="Please Insert Your Grade"
@@ -200,8 +288,9 @@ const EditStudent = (props) => {
             value={state?.student_msg_input}
             handleChange={handleChange}
           />
-          <div>{state?.error !== null ? state?.error : state?.message} </div>
-          <div style={{ margin: "10px 00px" }}>
+          <div className="result-container">
+            {state?.error !== null ? state?.error : state?.message} </div>
+         
             <button
               disabled={state.buttonStatus}
               onClick={(key) =>
@@ -210,7 +299,11 @@ const EditStudent = (props) => {
               type="submit"
             >
               {state.loading === true ? <Loading /> : "Update"}
-            </button>
+              </button>
+                  </div>
+                </form>
+              </section>
+            </div>
           </div>
         </div>
       )}

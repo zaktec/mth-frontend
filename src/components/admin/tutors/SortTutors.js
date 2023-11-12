@@ -1,10 +1,39 @@
-import React, { useState } from "react";
-import "../../css/App.css";
+import React, { useState, useEffect } from "react";
 import TutorList from "./TutorList";
-import TutorCSS from "../../css/tutor.module.css";
+import Navbar from "../../navbar/Navbar";
+import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+
 
 const SortTutors = () => {
-  const [sortBy, setSortBy] = useState("tutor_id");
+  const [state, setState] = useState({
+    data: [],
+    isLoading: true,
+    token: null,
+    sortBy: "tutor_id",
+  });
+
+  useEffect(() => {
+    const token = verifyAuth();
+    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const getTutorsApi = async (token, sortBy) => {
+      await authAPIsRequests
+        .getTutorsApi(token?.token, sortBy)
+        .then((response) => {
+          return setState((prevState) => ({
+            ...prevState,
+            data: response?.data?.data,
+            isLoading: false,      
+          }));      
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getTutorsApi(token, state?.sortBy);
+  }, [state.sortBy]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,11 +41,15 @@ const SortTutors = () => {
 
   const handleChange = (event) => {
     console.log(event.target.value);
-    setSortBy(event.target.value);
+    return setState((prevState) => ({
+      ...prevState,
+      sortBy: event.target.value,
+    }));
   };
-
+  
   return (
-    <main className={TutorCSS.SortTutorPage}>
+    <div className={"SortMainPage"}>
+      <Navbar page="dashboard-admin" />
       <div>
         <h1> Sort Tutor List </h1>
         <p> Choose a column to sort the Tutor list </p>
@@ -29,12 +62,20 @@ const SortTutors = () => {
             <option value="tutor_active">Active</option>
           </select>
           <br></br>
-          <input type="submit" value="Submit" />
+          {/*    <input type="submit" value="Submit" /> */}
         </form>
-        <p>Click the "Submit" button .</p>
+        {/*  <p>Click the "Submit" button .</p> */}
       </div>
-      <TutorList sortBy={sortBy} />
-    </main>
+      { console.log("testssss",state.data)}
+       {
+      <TutorList
+        token={state?.token}
+        data={state?.data}
+        isLoading={state?.isLoading}
+        sortBy={state?.sortBy}
+      />
+      } 
+    </div>
   );
 };
 

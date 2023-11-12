@@ -1,38 +1,35 @@
+import React from 'react';
 import Navbar from "../navbar/Navbar";
+import { verifyAuth } from '../../helpers';
 import { useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import { verifyAuth, verifyRole } from '../../helpers';
 import AdminProfile from './admindashboard/AdminProfile';
+import StudentProfile from "./studentdashboard/StudentProfile";
+import TutorProfile from "./tutordashboard/TutorProfile";
 
 const Dashboard = () => {
   const { role } = useParams();
-  const [state, setState] = useState({ authData: {  } });
-
-  useEffect(() => {
-    verifyRole(role);
-    const authData = verifyAuth();
-    setState((prevState) => ({...prevState, authData}));
-  }, [role]);
+  const authData = verifyAuth();
 
   return (
     <>
     {
       role === "student" ? 
         <div className='dashboard-unique'> 
-          <Navbar page='dashboard-student' />
+          <Navbar authData= { authData } page='dashboard-student' />
           Student Dashboard 
+          <StudentProfile authData= { authData } /> 
         </div>
       : role === "tutor" ?
         <div className='dashboard-unique'> 
-          <Navbar page='dashboard-tutor' />
+          <Navbar authData= { authData } page='dashboard-tutor' />
           Tutor Dashboard 
+          <TutorProfile authData= { authData } />
         </div>
       : role === "admin" ? 
         <div className='dashboard-unique'> 
-        
-          <Navbar page='dashboard-admin' />
-            Admin Dashboard
-          <AdminProfile authData= { state?.authData } />
+          <Navbar authData= { authData } page='dashboard-admin' />
+          Admin Dashboard
+          <AdminProfile authData= { authData } />
         </div>
       : null
     }

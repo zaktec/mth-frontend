@@ -1,37 +1,85 @@
-import React, { useState } from 'react';
-import { verifyAuth } from '../../helpers';
-import { authAPIsRequests } from '../../api/APIsRequests';
+import React, { useState } from "react";
+import { shortData } from "../../helpers";
+import { authAPIsRequests } from "../../api/APIsRequests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faBook, faQuestionCircle, faCog, faPhoneSquare, faGraduationCap, faUserMd, faClipboardCheck, } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faBook,
+  faQuestionCircle,
+  faCog,
+  faPhoneSquare,
+  faGraduationCap,
+  faUserMd,
+  faClipboardCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = (props) => {
-  const [state, setState] = useState({    
+  const [state, setState] = useState({
     error: null,
     loading: false,
     buttonStatus: false,
   });
 
   const handleLogout = async (key, role) => {
-    if (role === 'admin') {
-      key.preventDefault();
-      const authData = verifyAuth();
-      setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
-
-      await authAPIsRequests.singoutAdminRequest(authData?.token)
-      .then(response => {
-        localStorage.removeItem('data');
-        window.location.replace('/');
-      })
-      .catch(error => {
-        return setState((prevState) => ({
-          ...prevState,
-          loading: false,
-          buttonStatus: false,
-          error: error?.response?.data?.message || error?.response?.data?.error,
-        }));
-      });
+    key.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
+    if (role === "admin") {
+      await authAPIsRequests
+        .singoutAdminRequest(props?.authData?.token)
+        .then((response) => {
+          localStorage.removeItem("data");
+          window.location.replace("/");
+        })
+        .catch((error) => {
+          return setState((prevState) => ({
+            ...prevState,
+            loading: false,
+            buttonStatus: false,
+            error:
+              error?.response?.data?.message || error?.response?.data?.error,
+          }));
+        });
     }
-  }
+    if (role === "tutor") {
+      await authAPIsRequests
+        .singoutTutorRequest(props?.authData?.token)
+        .then((response) => {
+          localStorage.removeItem("data");
+          window.location.replace("/");
+        })
+        .catch((error) => {
+          return setState((prevState) => ({
+            ...prevState,
+            loading: false,
+            buttonStatus: false,
+            error:
+              error?.response?.data?.message || error?.response?.data?.error,
+          }));
+        });
+    }
+    if (role === "student") {
+      await authAPIsRequests
+        .singoutStudentRequest(props?.authData?.token)
+        .then((response) => {
+          localStorage.removeItem("data");
+          window.location.replace("/");
+        })
+        .catch((error) => {
+          return setState((prevState) => ({
+            ...prevState,
+            loading: false,
+            buttonStatus: false,
+            error:
+              error?.response?.data?.message || error?.response?.data?.error,
+          }));
+        });
+    }
+  };
 
   return (
     <>
@@ -99,7 +147,7 @@ const Navbar = (props) => {
             <a href="/courselist">
               <FontAwesomeIcon icon={faBook} /> Courses
             </a>
-            <a href="/topics">
+            <a href="/topiclist">
               <FontAwesomeIcon icon={faClipboardCheck} /> Topics
             </a>
             <a href="/adminlist">
@@ -108,16 +156,16 @@ const Navbar = (props) => {
             <a href="/studentlist">
               <FontAwesomeIcon icon={faGraduationCap} /> Students
             </a>
-            <a href="/tutors">
+            <a href="/tutorlist">
               <FontAwesomeIcon icon={faUserMd} /> Tutors
             </a>
             <a href="/lessonlist">
               <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
             </a>
-            <a href="/quizzes">
+            <a href="/quizlist">
               <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
             </a>
-            <a href="/questions">
+            <a href="/questionlist">
               <FontAwesomeIcon icon={faQuestionCircle} /> Questions
             </a>
             <a href="/setting">
@@ -128,8 +176,13 @@ const Navbar = (props) => {
             </a>
           </div>
           <div className="auth">
-            <span className="auth-signin" >
-              <button disabled={state.buttonStatus} onClick={(key) => handleLogout(key, 'admin')} >Logout</button>
+            <span className="auth-signin">
+              <button
+                disabled={state.buttonStatus}
+                onClick={(key) => handleLogout(key, "admin")}
+              >
+                Logout
+              </button>
             </span>
           </div>
         </nav>
@@ -170,6 +223,16 @@ const Navbar = (props) => {
               <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
             </a>
           </div>
+          <div className="auth">
+            <span className="auth-signin">
+              <button
+                disabled={state.buttonStatus}
+                onClick={(key) => handleLogout(key, "tutor")}
+              >
+                Logout
+              </button>
+            </span>
+          </div>
         </nav>
       ) : props?.page === "dashboard-student" ? (
         <nav className="navbar-unique">
@@ -178,7 +241,7 @@ const Navbar = (props) => {
               MTH
             </a>
             <a href="/tutorhome">
-              <FontAwesomeIcon icon={faHome} /> Student Home 
+              <FontAwesomeIcon icon={faHome} /> Student Home
             </a>
             <a href="/courses">
               <FontAwesomeIcon icon={faBook} /> MyCourses
@@ -207,6 +270,16 @@ const Navbar = (props) => {
             <a href="/contactus">
               <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
             </a>
+          </div>
+          <div className="auth">
+            <span className="auth-signin">
+              <button
+                disabled={state.buttonStatus}
+                onClick={(key) => handleLogout(key, "student")}
+              >
+                Logout, {shortData(props?.authData?.user?.student_username, 5)}
+              </button>
+            </span>
           </div>
         </nav>
       ) : null}

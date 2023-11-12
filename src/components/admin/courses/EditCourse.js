@@ -2,6 +2,9 @@ import Loading from "../../loading/Loading";
 import React, { useEffect, useState } from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
 
 const EditCourse = (props) => {
   const [state, setState] = useState({
@@ -66,6 +69,30 @@ const EditCourse = (props) => {
       return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
 
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      course_image: picture[picture.length - 1],
+    }));
+  };
+  let profilePicturePreview = null;
+  if (state?.coourse_image) {
+    if (state?.admin_image.name) {
+      const getDocName = state?.course_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.admin_image);
+      }
+    }
+  }
+
   return (
     <div className="EditMainPage">
       {state?.displayForm === true ? (
@@ -75,54 +102,101 @@ const EditCourse = (props) => {
       )}
 
       {state.displayForm === true && (
-        <div>
-          <Input
-            fieldname="Please Insert Your course Code"
-            type="text"
-            name="course_code"
-            value={state?.course_code}
-            handleChange={handleChange}
-          />
+        <div className="form-container">
+          <div className="form-header">
+            <div className="head">Edit ADMIN</div>
+          </div>
 
-          <Input
-            fieldname="Please Insert Your course Name"
-            type="text"
-            name="course_name"
-            value={state?.course_name}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Course Description"
-            type="text"
-            name="course_desc"
-            value={state?.course_desc}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Course Level"
-            type="text"
-            name="course_level"
-            value={state?.course_level}
-            handleChange={handleChange}
-          />
-          <Input
-            fieldname="Please Insert Your Course Image"
-            type="text"
-            name="course_image"
-            value={state?.course_image}
-            handleChange={handleChange}
-          />
-          <div>{state?.error !== null ? state?.error : state?.message}</div>
-          <div style={{ margin: "10px 00px" }}>
-            <button
-              disabled={state.buttonStatus}
-              onClick={(key) =>
-                handleSubmit(key, props?.token, props?.course?.course_id)
-              }
-              type="submit"
-            >
-              {state.loading === true ? <Loading /> : "Update"}
-            </button>
+          <JoinPattern />
+
+          <div className="form-container">
+            <div className="sections-container">
+              1
+              <div className="sections-container">
+                <section className="section-one">
+                  <div className="profile-picture">
+                    {" "}
+                    <img
+                      src={profilePicturePreview || Avatar}
+                      alt="profile"
+                    />{" "}
+                  </div>
+                  <ImageUploader
+                    fileContainerStyle={{
+                      marginTop: "50px",
+                      height: "50px",
+                      width: "200px",
+                      float: "left",
+                    }}
+                    buttonStyles={{
+                      backgroundColor: "#808080",
+                      color: "#ffff",
+                    }}
+                    imgExtension={[".jpg", ".png"]}
+                    buttonText="Upload Picture"
+                    maxFileSize={100000000}
+                    onChange={onDrop}
+                    withLabel={false}
+                    withIcon
+                  />
+                </section>
+                <section className="section-two">
+                  <form className="form-fields">
+                    <div className="attribute-container">
+                      <div>
+                        <Input
+                          fieldname="Please Insert Your course Code"
+                          type="text"
+                          name="course_code"
+                          value={state?.course_code}
+                          handleChange={handleChange}
+                        />
+
+                        <Input
+                          fieldname="Please Insert Your course Name"
+                          type="text"
+                          name="course_name"
+                          value={state?.course_name}
+                          handleChange={handleChange}
+                        />
+                        <Input
+                          fieldname="Please Insert Your Course Description"
+                          type="text"
+                          name="course_desc"
+                          value={state?.course_desc}
+                          handleChange={handleChange}
+                        />
+                        <Input
+                          fieldname="Please Insert Your Course Level"
+                          type="text"
+                          name="course_level"
+                          value={state?.course_level}
+                          handleChange={handleChange}
+                        />
+                        <div className="result-container">
+                          {state?.error !== null
+                            ? state?.error
+                            : state?.message}
+                        </div>
+                        <button
+                          disabled={state.buttonStatus}
+                          type="button"
+                          onClick={(key) =>
+                            handleSubmit(
+                              key,
+                              props?.token,
+                              props?.course?.course_id
+                            )
+                          }
+                        >
+                          {state.loading === true ? <Loading /> : "Update"}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </section>
+              </div>
+            </div>
           </div>
         </div>
       )}

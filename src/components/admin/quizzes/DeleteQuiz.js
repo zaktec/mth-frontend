@@ -1,14 +1,13 @@
 import React from "react";
 import { authAPIsRequests } from "../../../api/APIsRequests";
 
-
-const DeleteQuestion = (props) => {
-  const handleDeleteQuestion = async (event, token, Question_id) => {
+const DeleteQuiz = (props) =>{
+  const handleDeleteQuiz = async (event, token, quiz_id) => {
     event.preventDefault();
     await authAPIsRequests
-      .deleteQuestionApi(token, Question_id)
+      .deleteQuizApi(token, quiz_id)
       .then((response) => {
-        window.location.replace(`/Questionlist`);
+        window.location.replace(`/quizlist`);
       })
       .catch((error) => {
         console.log(error);
@@ -19,13 +18,13 @@ const DeleteQuestion = (props) => {
     <div>
       <button
         onClick={(key) =>
-          handleDeleteQuestion(key, props?.token, props?.Question_id)
-        }
-      >
-        Delete Question
+          handleDeleteQuiz(key, props?.token, props?.quiz_id)
+        }>
+        Delete Quiz
       </button>
     </div>
   );
 };
 
-export default DeleteQuestion;
+
+export default DeleteQuiz;

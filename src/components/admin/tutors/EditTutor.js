@@ -1,119 +1,246 @@
-import React, { useState } from "react";
-import { patchTutorApi } from "../../api/axios";
-import TutorCSS from "../../css/tutor.module.css";
+import React, { useEffect, useState } from "react";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Loading from "../../loading/Loading";
+import Input from "../../form/input";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
 
-function EditTutor(props) {
-  const { tutor } = props;
-  const [displayPost, setPostDisplay] = useState(false);
-  const [newStudentActive, setnewStudentActive] = useState(false);
-  const [newFirstName, setnewFirstName] = useState("");
-  const [lastName, setlastName] = useState("");
-  const [newPassword, setnewPassword] = useState("");
-  const [newImage, setnewImage] = useState("");
+const EditTutor = (props) => {
+  console.log(props)
+  const [isTutorActiveTrue, setIsTutorActiveTrue] = useState(false);
+  const [isTutorActiveFalse, setIsTutorActiveFalse] = useState(false);
+  const [state, setState] = useState({
+    error: null,
+    message: null,
+    loading: false,
+    displayForm: false,
+    buttonStatus: false,
+  });
 
-  const [newEmail, setNewTopicDescription] = useState("");
+  useEffect(() => {
+    for (let objKey in props?.tutor)
+      setState((prevState) => ({
+        ...prevState,
+        [objKey]: props?.tutor[objKey],
+      }));
+  }, [props?.tutor]);
 
-  const handleSubmit = (event) => {
+  const handleChange = (event) => {
     event.preventDefault();
-    const newObject = {
-      tutor_firstname:
-        newFirstName === "" ? tutor.tutor_firstname : newFirstName,
-      tutor_lastname: lastName === "" ? tutor.tutor_lastname : lastName,
-      tutor_email: newEmail === "" ? tutor.tutor_email : newEmail,
-      tutor_password: newPassword === "" ? tutor.tutor_password : newPassword,
-      tutor_active:
-        newStudentActive === "" ? tutor.tutor_active : newStudentActive,
-      tutor_image: newImage === "" ? tutor.tutor_image : newImage,
-    };
-
-    // newObject.course_image = 0;
-
-    patchTutorApi(newObject).then((response) => {});
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      [event.target.name]: event.target.value,
+    }));
   };
-  return (
-    <div className={TutorCSS.EditTutorPage}>
-      <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            return !currentValue;
-          })
-        }
-      >
-        Edit Tutor
-      </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Your First Name </p>
-              <input
-                name="newFirstName"
-                placeholder={tutor.tutor_firstname}
-                onChange={(event) => setnewFirstName(event.target.value)}
-                value={newFirstName}
-              />
-              <p>Please Insert Your Last Name </p>
-              <input
-                name="lastName"
-                placeholder={tutor.tutor_lastname}
-                onChange={(event) => setlastName(event.target.value)}
-                value={lastName}
-              />
-              <p>Please Insert Your Email </p>
-              <input
-                name="newEmail"
-                placeholder={tutor.tutor_email}
-                onChange={(event) => setNewTopicDescription(event.target.value)}
-                value={newEmail}
-              />
-              <p>Please Insert Your Password </p>
-              <input
-                type="password"
-                name="newPassword"
-                placeholder={tutor.tutor_password}
-                onChange={(event) => setnewPassword(event.target.value)}
-                value={newPassword}
-              />
-              <fieldset>
-                <legend>Is Tutor Active</legend>
-                <div>
-                  <input
-                    type="checkbox"
-                    name="newStudentActive"
-                    //value="true"
-                    onChange={(event) => setnewStudentActive(true)}
-                    value={newStudentActive}
-                  />
-                  <label htmlFor="true">True</label>
-                  <input
-                    type="checkbox"
-                    name="newStudentActive"
-                    //value="false"
-                    onChange={(event) => setnewStudentActive(true)}
-                    value={newStudentActive}
-                  />
-                  <label htmlFor="false">False</label>
-                </div>
-              </fieldset>
 
-              <p>Please Insert Your tutor image path </p>
-              <input
-                type="text"
-                name="newImage"
-                placeholder={tutor.tutor_image}
-                onChange={(event) => setnewImage(event.target.value)}
-                value={newImage}
-              />
-            </label>
-            <p></p>
-            <button>Update</button>
-          </form>
-        </div>
+  const handleIsTutorActiveTrue = () => {
+    if (isTutorActiveFalse === false) {
+      setIsTutorActiveTrue(!isTutorActiveTrue);
+      setState((prevState) => ({ ...prevState, tutor_active: true }));
+    }
+  };
+
+  const handleIsTutorActiveFalse = () => {
+    if (isTutorActiveTrue === false) {
+      setIsTutorActiveFalse(!isTutorActiveFalse);
+      setState((prevState) => ({ ...prevState, tutor_active: false }));
+    }
+  };
+
+  const handleSubmit = async (event, token, tutor_id) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
+
+    await authAPIsRequests
+      .editTutorApi(token, tutor_id, state)
+      .then((response) => {
+        console.log(response)
+        setState((prevState) => ({
+          ...prevState,
+          message: "Tutor updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/tutor/${tutor_id}`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          error:
+            error?.error?.response?.data?.message ||
+            error?.response?.data?.error,
+          buttonStatus: false,
+          loading: false,
+        }));
+      });
+  };
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
+    if (state.displayForm === true)
+      return setState((prevState) => ({ ...prevState, displayForm: false }));
+    if (state.displayForm === false)
+      return setState((prevState) => ({ ...prevState, displayForm: true }));
+  };
+
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      tutor_image: picture[picture.length - 1],
+    }));
+  };
+
+  let profilePicturePreview = null;
+  if (state?.tutor_image) {
+    if (state?.tutor_image.name) {
+      const getDocName = state?.tutor_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.tutor_image);
+      }
+    }
+  }
+
+  return (
+    <div className="PostMainPage">
+      {state?.displayForm === true ? (
+        <button onClick={(event) => handleDisplayForm(event)}>No Edit</button>
       ) : (
-        <div></div>
+        <button onClick={(event) => handleDisplayForm(event)}>
+          Edit Tutor
+        </button>
+      )}
+
+      {state.displayForm === true && (
+        <div className="form-container">
+          <div className="form-header">
+            <div className="head">INSERT tutor</div>
+          </div>
+
+          <JoinPattern />
+
+          <div className="form-container">
+            <div className="sections-container">
+              <section className="section-one">
+                <div className="profile-picture">
+                  {" "}
+                  <img
+                    src={profilePicturePreview || Avatar}
+                    alt="profile"
+                  />{" "}
+                </div>
+                <ImageUploader
+                  fileContainerStyle={{
+                    marginTop: "50px",
+                    height: "50px",
+                    width: "200px",
+                    float: "left",
+                  }}
+                  buttonStyles={{ backgroundColor: "#808080", color: "#ffff" }}
+                  imgExtension={[".jpg", ".png"]}
+                  buttonText="Upload Picture"
+                  maxFileSize={100000000}
+                  onChange={onDrop}
+                  withLabel={false}
+                  withIcon
+                />
+              </section>
+
+              <section className="section-two">
+                <form className="form-fields">
+                  <div className="attribute-container">
+                    <Input
+                      type="text"
+                      name="tutor_username"
+                      handleChange={handleChange}
+                      value={state?.tutor_username}
+                      fieldname="Please Insert Your username"
+                    />
+                    <Input
+                      type="text"
+                      name="tutor_firstname"
+                      handleChange={handleChange}
+                      value={state?.tutor_firstname}
+                      fieldname="Insert Your First Name"
+                    />
+                    <Input
+                      type="text"
+                      name="tutor_lastname"
+                      handleChange={handleChange}
+                      value={state?.tutor_lastname}
+                      fieldname="Please Insert Your Last Name"
+                    />
+
+                    <Input
+                      type="text"
+                      name="tutor_email"
+                      value={state?.tutor_email}
+                      handleChange={handleChange}
+                      fieldname="Please Insert Your Email"
+                    />
+
+                    <Input
+                      type="password"
+                      name="tutor_password"
+                      handleChange={handleChange}
+                      value={state?.tutor_password}
+                      fieldname="Please Insert Your Password"
+                    />
+
+                    <div>
+                      <p style={{ margin: "10px 00px" }}> Is tutor Active </p>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isTutorActiveTrue}
+                          onChange={handleIsTutorActiveTrue}
+                        />
+                        True
+                      </label>
+
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isTutorActiveFalse}
+                          onChange={handleIsTutorActiveFalse}
+                        />
+                        False
+                      </label>
+                    </div>
+
+                    <div className="result-container">
+                      {state?.error !== null ? state?.error : state?.message}
+                    </div>
+                    <button
+                      disabled={state.buttonStatus}
+                      type="button"
+                      onClick={(key) => handleSubmit(key, props?.toke, props?.tutor?.tutor_id)}
+                    >
+                      {" "}
+                      {state.loading === true ? <Loading /> : "Save"}{" "}
+                    </button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
-}
+};
 
 export default EditTutor;

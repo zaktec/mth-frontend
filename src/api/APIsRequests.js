@@ -16,6 +16,16 @@ export const authAPIsRequests = {
     return await axios.delete(variables.ADMIN_LOGOUT_API, configs);
   },
 
+  singoutTutorRequest: async (token) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(variables.TUTOR_LOGOUT_API, configs);
+  },
+
+  singoutStudentRequest: async (token) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(variables.STUDENT_LOGOUT_API, configs);
+  },
+
   signupStudentTutorAdminRequest: async (role, data) => {
     if (role === "admin") {
       const body = {
@@ -308,4 +318,230 @@ export const authAPIsRequests = {
       configs
     );
   },
+
+  ////  Tutor Api
+  postTutorApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      tutor_email: body.tutor_email,
+      tutor_active: body.tutor_active,
+      tutor_password: body.tutor_password,
+      tutor_lastname: body.tutor_lastname,
+      tutor_username: body.tutor_username,
+      tutor_firstname: body.tutor_firstname,
+      tutor_image: JSON.stringify(body.tutor_image),
+    };
+
+    return await axios.post(`${variables.ALL_TUTORS_API}`, data, configs);
+  },
+
+  getTutorsApi: async (token, sortBy) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+      params: { sort_by: sortBy },
+    };
+    return await axios.get(variables.ALL_TUTORS_API, config);
+  },
+
+  getTutorApi: async (token, tutor_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.ALL_TUTORS_API}/${tutor_id}`, configs);
+  },
+
+  deleteTutorApi: async (token, tutor_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(
+      `${variables.ALL_TUTORS_API}/${tutor_id}`,
+      configs
+    );
+  },
+
+  editTutorApi: async (token, tutor_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      tutor_username: body.tutor_username,
+      tutor_firstname: body.tutor_firstname,
+      tutor_lastname: body.tutor_lastname,
+      tutor_email: body.tutor_email,
+      tutor_password: body.tutor_password,
+      tutor_active: body.tutor_active,
+      tutor_image: body.tutor_image,
+    };
+    return await axios.patch(
+      `${variables.ALL_TUTORS_API}/${tutor_id}`,
+      data,
+      configs
+    );
+  },
+
+  ////  Topic Api
+  postTopicApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      topic_email: body.topic_email,
+      topic_active: body.topic_active,
+      topic_password: body.topic_password,
+      topic_lastname: body.topic_lastname,
+      topic_username: body.topic_username,
+      topic_firstname: body.topic_firstname,
+      topic_image: JSON.stringify(body.topic_image),
+    };
+
+    return await axios.post(`${variables.ALL_TOPICS_API}`, data, configs);
+  },
+
+  getTopicsApi: async (token, sortBy) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+      params: { sort_by: sortBy },
+    };
+    console.log(config)
+    return await axios.get(variables.ALL_TOPICS_API, config);
+  },
+
+  getTopicApi: async (token, topic_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.ALL_TOPICS_API}/${topic_id}`, configs);
+  },
+
+  deleteTopicApi: async (token, topic_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(
+      `${variables.ALL_TOPICS_API}/${topic_id}`,
+      configs
+    );
+  },
+
+  editTopicApi: async (token, topic_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      topic_username: body.topic_username,
+      topic_firstname: body.topic_firstname,
+      topic_lastname: body.topic_lastname,
+      topic_email: body.topic_email,
+      topic_password: body.topic_password,
+      topic_active: body.topic_active,
+      topic_image: body.topic_image,
+    };
+    return await axios.patch(
+      `${variables.ALL_TOPICS_API}/${topic_id}`,
+      data,
+      configs
+    );
+  },
+
+   ////  Quiz Api
+   postQuizApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      quiz_email: body.quiz_email,
+      quiz_active: body.quiz_active,
+      quiz_password: body.quiz_password,
+      quiz_lastname: body.quiz_lastname,
+      quiz_username: body.quiz_username,
+      quiz_firstname: body.quiz_firstname,
+      quiz_image: JSON.stringify(body.quiz_image),
+    };
+
+    return await axios.post(`${variables.ALL_QUIZZES_API}`, data, configs);
+  },
+
+  getQuizzesApi: async (token, sortBy) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+      params: { sort_by: sortBy },
+    };
+    console.log(config)
+    return await axios.get(variables.ALL_QUIZZES_API, config);
+  },
+
+  getQuizApi: async (token, quiz_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.ALL_QUIZZES_API}/${quiz_id}`, configs);
+  },
+
+  deleteQuizApi: async (token, quiz_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(
+      `${variables.ALL_QUIZZES_API}/${quiz_id}`,
+      configs
+    );
+  },
+
+  editQuizApi: async (token, quiz_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      quiz_username: body.quiz_username,
+      quiz_firstname: body.quiz_firstname,
+      quiz_lastname: body.quiz_lastname,
+      quiz_email: body.quiz_email,
+      quiz_password: body.quiz_password,
+      quiz_active: body.quiz_active,
+      quiz_image: body.quiz_image,
+    };
+    return await axios.patch(
+      `${variables.ALL_QUIZZES_API}/${quiz_id}`,
+      data,
+      configs
+    );
+  },
+
+
+   ////  Question Api
+   postQuestionApi: async (token, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      question_email: body.question_email,
+      question_active: body.question_active,
+      question_password: body.question_password,
+      question_lastname: body.question_lastname,
+      question_username: body.question_username,
+      question_firstname: body.question_firstname,
+      question_image: JSON.stringify(body.question_image),
+    };
+
+    return await axios.post(`${variables.ALL_QUESTIONS_API}`, data, configs);
+  },
+
+  getQuestionsApi: async (token, sortBy) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+      params: { sort_by: sortBy },
+    };
+    console.log(config)
+    return await axios.get(variables.ALL_QUESTIONS_API, config);
+  },
+
+  getQuestionApi: async (token, question_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.ALL_QUESTIONS_API}/${question_id}`, configs);
+  },
+
+  deleteQuestionApi: async (token, question_id) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.delete(
+      `${variables.ALL_QUESTIONS_API}/${question_id}`,
+      configs
+    );
+  },
+
+  editQuestionApi: async (token, question_id, body) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const data = {
+      question_username: body.question_username,
+      question_firstname: body.question_firstname,
+      question_lastname: body.question_lastname,
+      question_email: body.question_email,
+      question_password: body.question_password,
+      question_active: body.question_active,
+      question_image: body.question_image,
+    };
+    return await axios.patch(
+      `${variables.ALL_QUESTIONS_API}/${question_id}`,
+      data,
+      configs
+    );
+
+
+  }
 };

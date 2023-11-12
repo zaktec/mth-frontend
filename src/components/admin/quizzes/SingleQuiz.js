@@ -1,50 +1,60 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleQuizApi } from "../../api/axios";
-import DeleteQuizzes from "./DeleteQuizzes";
 import EditQuiz from "./EditQuiz";
-import QuizCSS from "../../css/quiz.module.css";
+import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Navbar from "../../navbar/Navbar";
+import DeleteQuiz from "./DeleteQuiz.js";
 
 
-function SingleQuiz() {
+const SingleQuiz = () => {
   const { quiz_id } = useParams();
-  const [quiz, setQuiz] = useState([]);
+  const [state, setState] = useState({ data: {}, isLoading: true, token: null });
 
   useEffect(() => {
-    
-    getSingleQuizApi(quiz_id).then((res) => {
-      setQuiz(res);
-      console.log("single",res)
-    });
+    const token =  verifyAuth();
+    setState((prevState) => ({...prevState, token: token?.token }));
+    const getQuizApi = async (token, quiz_id) => {  
+      await authAPIsRequests.getQuizApi(token?.token, quiz_id)
+        .then((response) => {
+          return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getQuizApi(token, quiz_id);
   }, [quiz_id]);
- 
+
+  if (state?.isLoading) return <p>Loading....</p>;
 
   return (
-    <main className={QuizCSS.SingleQuizPage}>
+    <div className="SingleMainPage">
+    <Navbar page='dashboard-admin' />
+
       <h1> Single Quiz page </h1>
-      <ul className={QuizCSS.Quiz__List}>
-        <li className={QuizCSS.QuizList__card}>
+      <ul className="MainListPage">
+        <li className="MainList__card">
         <p>
-            <b>Quiz ID :</b> {quiz.quiz_id}
+            <b>Quiz ID :</b> {state?.data?.quiz_id}
           </p>
           <p>
-            <b>Quiz Name :</b> {quiz.quiz_name}
+            <b>Quiz Name :</b> {state?.data?.quiz_name}
           </p>
           <p>
-            <b>Quiz Code :</b> {quiz.quiz_code}
+            <b>Quiz Code :</b> {state?.data?.quiz_code}
           </p>
           <p>
-            <b>Quiz Type :</b> {quiz.quiz_type}
+            <b>Quiz Type :</b> {state?.data?.quiz_type}
           </p>
-          
-          <DeleteQuizzes quiz_id={quiz.quiz_id} setQuiz={setQuiz} 
-          />
-         
-           <EditQuiz quiz = {quiz}/> 
         </li>
       </ul>
-    </main>
+      <div style={{ margin: '20px 20px' }}> <DeleteQuiz token= {state?.token} quiz_id={state?.data?.quiz_id} /> </div>
+      <div style={{ margin: '20px 20px' }}> <EditQuiz token= {state?.token} quiz={state?.data} /> </div>
+    </div>
+  
   );
 }
 

@@ -1,127 +1,251 @@
+import Input from "../../form/input";
 import React, { useState } from "react";
-import {  postTutorApi } from "../../../api/axios";
-import TutorCSS from "../../css/tutor.module.css";
+import Loading from "../../loading/Loading";
+import ImageUploader from "react-images-upload";
+import JoinPattern from "../../patterns/joinPattern";
+import Avatar from "../../../assets/images/avatar.png";
+import { authAPIsRequests } from "../../../api/APIsRequests";
 
-function PostTutor(props) {
-  const { setTutorList } = props;
-  const [displayPost, setPostDisplay] = useState(false);
-  const [newStudentActive, setnewStudentActive] = useState(false);
-  const [newFirstName, setnewFirstName] = useState("");
-  const [lastName, setlastName] = useState("");
-  const [newPassword, setnewPassword] = useState("");
-  const [newImage, setnewImage] = useState("");
 
-  const [newEmail, setNewTopicDescription] = useState("");
+const PostTutor = (props) => {
+
+  const [isTutorActiveTrue, setIsTutorActiveTrue] = useState(false);
+  const [isTutorActiveFalse, setIsTutorActiveFalse] = useState(false);
+  const [state, setState] = useState({
+    tutor_image: "",
+    tutor_email: "",
+    tutor_lastname: "",
+    tutor_username: "",
+    tutor_password: "",
+    tutor_firstname: "",
+    tutor_active: false,
+
+    error: null,
+    loading: false,
+    displayForm: false,
+    buttonStatus: false,
+  });
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newObject = {
-      tutor_firstname:  newFirstName,
-      tutor_lastname:  lastName,
-      tutor_email:  newEmail,
-      tutor_password:  newPassword,
-      tutor_active: newStudentActive,
-      tutor_image: newImage,
-    };
-   
-    // newObject.course_image = 0;
-
-   postTutorApi(newObject).then((response)=>{
-    setTutorList((currentValue) => {
-      const newTutorList = currentValue.map((tutor) => {
-        return { ...tutor };
-      });
-      newTutorList.unshift(response);
-      console.log(newTutorList);
-      setPostDisplay(false)
-      return newTutorList;
-    });
-   });  
+  const handleIstutorActiveTrue = () => {
+    if (isTutorActiveFalse === false) {
+      setIsTutorActiveTrue(!isTutorActiveTrue);
+      setState((prevState) => ({ ...prevState, tutor_active: true }));
+    }
   };
+
+  const handleIstutorActiveFalse = () => {
+    if (isTutorActiveTrue === false) {
+      setIsTutorActiveFalse(!isTutorActiveFalse);
+      setState((prevState) => ({ ...prevState, tutor_active: false }));
+    }
+  };
+
+  const handleSubmit = async (event, token) => {
+    event.preventDefault();
+
+    setState((prevState) => ({
+      ...prevState,
+      buttonStatus: true,
+      loading: true,
+      error: null,
+    }));
+
+    await authAPIsRequests
+      .postTutorApi(token, state)
+      .then((response) => {
+        setState((prevState) => ({
+          ...prevState,
+          message: "tutor saved successfully",
+        }));
+
+        setTimeout(() => {
+          window.location.replace(`/tutorlist`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          loading: false,
+          buttonStatus: false,
+          error: error?.response?.data?.message || error?.response?.data?.error,
+        }));
+      });
+  };
+
+  const handleDisplayForm = async (event) => {
+    event.preventDefault();
+    if (state.displayForm === true)
+      return setState((prevState) => ({ ...prevState, displayForm: false }));
+    if (state.displayForm === false)
+      return setState((prevState) => ({ ...prevState, displayForm: true }));
+  };
+
+  const onDrop = (picture) => {
+    setState((prevState) => ({
+      ...prevState,
+      tutor_image: picture[picture.length - 1],
+    }));
+  };
+
+  let profilePicturePreview = null;
+  if (state?.tutor_image) {
+    if (state?.tutor_image.name) {
+      const getDocName = state?.tutor_image.name;
+      const docLength = getDocName.length;
+      const point = getDocName.lastIndexOf(".");
+      const getExtensionFile = getDocName.substring(point, docLength);
+      const lowCaseExtensionFile = getExtensionFile.toLowerCase();
+      if (
+        lowCaseExtensionFile === ".jpg" ||
+        lowCaseExtensionFile === ".png" ||
+        lowCaseExtensionFile === ".gif"
+      ) {
+        profilePicturePreview = URL.createObjectURL(state?.tutor_image);
+      }
+    }
+  }
+
   return (
-    <div className={TutorCSS.PostTutorPage}>
-      <button
-        onClick={() =>
-          setPostDisplay((currentValue) => {
-            return !currentValue;
-          })
-        }
-      >Add Tutor
-      </button>
-      {displayPost ? (
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <p>Please Insert Your First Name </p>
-              <input
-                name="newFirstName"
-                placeholder="Insert First Name"
-                onChange={(event) => setnewFirstName(event.target.value)}
-                value={newFirstName}
-              />
-              <p>Please Insert Your Last Name  </p>
-              <input
-                name="lastName"
-                placeholder="Last Name"
-                onChange={(event) => setlastName(event.target.value)}
-                value={lastName}
-              />
-              <p>Please Insert Your Email </p>
-              <input
-                name="newEmail"
-                placeholder="Email"
-                onChange={(event) =>
-                  setNewTopicDescription(event.target.value)
-                }
-                value={newEmail}
-              />
-<p>Please Insert Your Password </p>
-              <input type="password"
-                name="newPassword"
-                placeholder="Password"
-                onChange={(event) => setnewPassword(event.target.value)}
-                value={newPassword}
-              />
-<fieldset>
-                <legend>Is Student Active</legend>
-                <div>
-                  <input
-                    type="checkbox"
-                    name="newStudentActive"
-                    //value="true"
-                    onChange={(event) => setnewStudentActive(true)}
-                    value={newStudentActive}
-                  />
-                  <label htmlFor="true">True</label>
-                  <input
-                    type="checkbox"
-                    name="newStudentActive"
-                    //value="false"
-                    onChange={(event) => setnewStudentActive(true)}
-                    value={newStudentActive}
-                  />
-                  <label htmlFor="false">False</label>
-                </div>
-              </fieldset>
-             
-              <p>Please Insert Your tutor image path </p>
-              <input type="text"
-                name="newImage"
-                placeholder="Image Path"
-                onChange={(event) => setnewImage(event.target.value)}
-                value={newImage}
-              />
-            </label>
-            <p></p>
-            <button>Go!</button>
-          </form>
-        </div>
+    <div className="PostMainPage">
+      {state?.displayForm === true ? (
+        <button onClick={(event) => handleDisplayForm(event)}>
+          No Add tutor
+        </button>
       ) : (
-        <div></div>
+        <button onClick={(event) => handleDisplayForm(event)}>
+          {" "}
+          Add tutor{" "}
+        </button>
+      )}
+
+      {state.displayForm === true && (
+        <div className="form-container">
+          <div className="form-header">
+            <div className="head">INSERT tutor</div>
+          </div>
+
+          <JoinPattern />
+
+          <div className="form-container">
+            <div className="sections-container">
+              <section className="section-one">
+                <div className="profile-picture">
+                  {" "}
+                  <img
+                    src={profilePicturePreview || Avatar}
+                    alt="profile"
+                  />{" "}
+                </div>
+                <ImageUploader
+                  fileContainerStyle={{
+                    marginTop: "50px",
+                    height: "50px",
+                    width: "200px",
+                    float: "left",
+                  }}
+                  buttonStyles={{ backgroundColor: "#808080", color: "#ffff" }}
+                  imgExtension={[".jpg", ".png"]}
+                  buttonText="Upload Picture"
+                  maxFileSize={100000000}
+                  onChange={onDrop}
+                  withLabel={false}
+                  withIcon
+                />
+              </section>
+
+              <section className="section-two">
+                <form className="form-fields">
+                  <div className="attribute-container">
+                    <Input
+                      type="text"
+                      name="tutor_username"
+                      handleChange={handleChange}
+                      value={state?.tutor_username}
+                      fieldname="Please Insert Your username"
+                    />
+                    <Input
+                      type="text"
+                      name="tutor_firstname"
+                      handleChange={handleChange}
+                      value={state?.tutor_firstname}
+                      fieldname="Insert Your First Name"
+                    />
+                    <Input
+                      type="text"
+                      name="tutor_lastname"
+                      handleChange={handleChange}
+                      value={state?.tutor_lastname}
+                      fieldname="Please Insert Your Last Name"
+                    />
+
+                    <Input
+                      type="text"
+                      name="tutor_email"
+                      value={state?.tutor_email}
+                      handleChange={handleChange}
+                      fieldname="Please Insert Your Email"
+                    />
+
+                    <Input
+                      type="password"
+                      name="tutor_password"
+                      handleChange={handleChange}
+                      value={state?.tutor_password}
+                      fieldname="Please Insert Your Password"
+                    />
+
+                    <div>
+                      <p style={{ margin: "10px 00px" }}> Is tutor Active </p>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isTutorActiveTrue}
+                          onChange={handleIstutorActiveTrue}
+                        />
+                        True
+                      </label>
+
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={isTutorActiveFalse}
+                          onChange={handleIstutorActiveFalse}
+                        />
+                        False
+                      </label>
+                    </div>
+
+                    <div className="result-container">
+                      {state?.error !== null ? state?.error : state?.message}
+                    </div>
+                    <button
+                      disabled={state.buttonStatus}
+                      type="button"
+                      onClick={(key) => handleSubmit(key, props?.token)}
+                    >
+                      {" "}
+                      {state.loading === true ? <Loading /> : "Save"}{" "}
+                    </button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
-}
+};
+
 
 export default PostTutor;

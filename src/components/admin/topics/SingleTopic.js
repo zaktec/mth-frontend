@@ -1,57 +1,73 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSingleTopicApi } from "../../api/axios";
 import EditTopic from "./EditTopic";
 import DeleteTopic from "./DeleteTopic";
-import TopicCSS from "../../css/topic.module.css";
+import { verifyAuth } from "../../../helpers";
+import { authAPIsRequests } from "../../../api/APIsRequests";
+import Navbar from "../../navbar/Navbar";
 
-function SingleTopic() {
+
+const SingleTopic = () => {
   const { topic_id } = useParams();
-  const [topic, setTopic] = useState({});
+  const [state, setState] = useState({ data: {}, isLoading: true, token: null });
+
 
   useEffect(() => {
-    getSingleTopicApi(topic_id).then((res) => {
-      console.log(res);
-      setTopic(res);
-    });
+    const token =  verifyAuth();
+    setState((prevState) => ({...prevState, token: token?.token }));
+    const getTopicApi = async (token, topic_id) => {  
+      await authAPIsRequests.getTopicApi(token?.token, topic_id)
+        .then((response) => {
+          return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getTopicApi(token, topic_id);
   }, [topic_id]);
+
+  if (state?.isLoading) return <p>Loading....</p>;
+
+
   return (
-    <main className={TopicCSS.SingleTopicPage}>
+    <div className="SingleMainPage">
+      <Navbar page='dashboard-admin' />
       <h1>Single topic Page</h1>
-      <ul className={TopicCSS.TopicList}>
-        <li className={TopicCSS.TopicList__card}>
+      <ul className="MainListPage">
+        <li className="MainList__card">
           <p>
-            <b>Topic Name: </b> {topic.topic_name}
+            <b>Topic Name: </b> {state?.data?.topic_name}
           </p>
           <p>
             <b>Topic Description: </b>
-            {topic.topic_desc}
+            {state?.data?.topic_desc}
           </p>
           <p>
             <b>Topic ID: </b>
-            {topic.topic_id}
+            {state?.data?.topic_id}
           </p>
           <p>
             <b>Topic Code: </b>
-            {topic.topic_code}
+            {state?.data?.topic_code}
           </p>
           <p>
             <b>Topic Index:</b>
-            {topic.topic_index}
+            {state?.data?.topic_index}
           </p>
           <p>
             <b>Topic Course ID:</b>
-            {topic.topic_course_id}
+            {state?.data?.topic_course_id}
           </p>
 
-          <DeleteTopic topic_id={topic.topic_id} setTopic={setTopic} 
-          />
-
-          <EditTopic topic={topic} />
-        </li>
+          </li>
       </ul>
-    </main>
+
+      <div style={{ margin: '20px 20px' }}> <DeleteTopic token= {state?.token} course_id={state?.data?.course_id} /> </div>
+      <div style={{ margin: '20px 20px' }}> <EditTopic token= {state?.token} course={state?.data} /> </div>
+    </div>
   );
 }
 
