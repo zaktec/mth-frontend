@@ -68,11 +68,20 @@ const SingleTutor = () => {
             src={state?.data?.tutor_image}
             alt={state?.data?.tutor_firstname}
           />
-</li>
+        </li>
       </ul>
-          
-      <div style={{ margin: '20px 20px' }}> <DeleteTutor token= {state?.token} course_id={state?.data?.tutor_id} /> </div>
-      <div style={{ margin: '20px 20px' }}> <EditTutor token= {state?.token} tutor={state?.data} /> </div>
+
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <DeleteTutor
+          token={state?.token}
+          course_id={state?.data?.tutor_id}
+        />{" "}
+      </div>
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <EditTutor token={state?.token} tutor={state?.data} />{" "}
+      </div>
     </div>
   );
 };

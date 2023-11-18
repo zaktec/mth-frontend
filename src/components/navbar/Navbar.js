@@ -181,7 +181,7 @@ const Navbar = (props) => {
                 disabled={state.buttonStatus}
                 onClick={(key) => handleLogout(key, "admin")}
               >
-                Logout
+                Logout, {shortData(props?.authData?.user?.admin_username, 5)}
               </button>
             </span>
           </div>
@@ -229,7 +229,7 @@ const Navbar = (props) => {
                 disabled={state.buttonStatus}
                 onClick={(key) => handleLogout(key, "tutor")}
               >
-                Logout
+                Logout, {shortData(props?.authData?.user?.tutor_username, 5)}
               </button>
             </span>
           </div>
