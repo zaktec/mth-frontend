@@ -1,20 +1,29 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../navbar/Navbar";
-import { getMessageApi } from "../../api/axios";
+import { authAPIsRequests } from "../../api/APIsRequests";
+
 
 const Home = () => {
 
   const [msg, setMsg] = useState("");
   useEffect(() => {
-    getMessageApi().then((res) => {
-      console.log(res);
-      setMsg(res);
-    });
-  }, []); 
+    const getHomeApi = async () =>{
+    await authAPIsRequests.getHomeMsgApi().then((res) => {
+       console.log(res);
+       return setMsg(res.data.message);
+    })
+    .catch((error) => {
+      console.log(error);
+  }); 
+}
+ getHomeApi() },[]); 
   return (
     <div className='home-unique'> 
       <Navbar page='home' />
-       <p>{msg}</p>  
+      <p>Welcome to this home page </p>  
+       <p>{msg} </p>  
+       
     </div>
   );
 }

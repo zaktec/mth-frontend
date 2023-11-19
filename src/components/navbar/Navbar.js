@@ -19,7 +19,7 @@ const Navbar = (props) => {
     loading: false,
     buttonStatus: false,
   });
-
+ console.log(props)
   const handleLogout = async (key, role) => {
     key.preventDefault();
     setState((prevState) => ({
@@ -127,7 +127,7 @@ const Navbar = (props) => {
               </span>
             ) : props?.page === "home" || props?.page === "signup" ? (
               <span>
-                <span className="auth-signin">Signin</span>
+                <span className="auth-signin">Login</span>
                 <a href="/signin/student"> Student </a>
                 <a href="/signin/tutor"> Tutor </a>
                 <a href="/signin/admin"> Admin </a>
@@ -142,7 +142,7 @@ const Navbar = (props) => {
               MTH
             </a>
             <a href="/dashboard/admin">
-              <FontAwesomeIcon icon={faHome} /> Home
+              <FontAwesomeIcon icon={faHome} /> {props?.user?.admin_username}Home
             </a>
             <a href="/courselist">
               <FontAwesomeIcon icon={faBook} /> Courses
@@ -193,7 +193,7 @@ const Navbar = (props) => {
               MTH
             </a>
             <a href="/dashboard/tutor">
-              <FontAwesomeIcon icon={faHome} /> DashBoard
+              <FontAwesomeIcon icon={faHome} /> {props.role}DashBoard
             </a>
             <a href="/tutorprofile/tutor">
               <FontAwesomeIcon icon={faBook} /> Profile

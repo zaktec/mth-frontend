@@ -66,7 +66,6 @@ const SortTutors = () => {
         </form>
         {/*  <p>Click the "Submit" button .</p> */}
       </div>
-      { console.log("testssss",state.data)}
        {
       <TutorList
         token={state?.token}

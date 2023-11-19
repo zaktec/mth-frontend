@@ -48,7 +48,7 @@ const Signup = () => {
         <Navbar page='signup' />
         <div className='auth-unique'>
             <div className='form__logo-container' >
-              <div className='form__header'>Signup Account</div>
+              <div className='form__header'> {role} Signup </div>
             </div>
 
             <div className='form__content'>
@@ -63,7 +63,7 @@ const Signup = () => {
               </button>
               
               <div className='form__links'><a className='form__link' href='./'>Forgot your password ?</a></div>
-              <div className='form__links'>Already have account ? <a className='form__link' href='/signin/student'>Signin Student</a> | <a className='form__link' href='/signin/tutor'>Signin Tutor</a></div>
+              <div className='form__links'>Already have account ? <a className='form__link' href='/signin/student'> Student Login</a> | <a className='form__link' href='/signin/tutor'>Tutor Login</a> | <a className='form__link' href='/signin/admin'>Admin Login</a></div>
             </div>
         </div>
     </div>

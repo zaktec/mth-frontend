@@ -2,6 +2,13 @@ import axios from "axios";
 import { variables } from "../helpers";
 
 export const authAPIsRequests = {
+
+getHomeMsgApi:async() =>{
+
+return await axios.get(variables.HOME_API)
+},
+
+
   signinStudentTutorAdminRequest: async (role, data) => {
     if (role === "tutor")
       return await axios.post(variables.TUTOR_SIGNIN_API, data);
@@ -88,7 +95,7 @@ export const authAPIsRequests = {
       lesson_topic_fk_id: body.lesson_topic_fk_id,
     };
 
-    return await axios.post(`${variables.ALL_LESSONS_API}`, data, configs);
+    return await axios.post(`${variables.POST_LESSON_API}`, data, configs);
   },
 
   getLessonsApi: async (token, sortBy) => {
@@ -96,13 +103,13 @@ export const authAPIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    return await axios.get(variables.ALL_LESSONS_API, config);
+    return await axios.get(variables.GET_ALL_LESSONS_API, config);
   },
 
   getLessonApi: async (token, lesson_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.get(
-      `${variables.ALL_LESSONS_API}/${lesson_id}`,
+      `${variables.GET_ALL_LESSONS_API}/${lesson_id}`,
       configs
     );
   },
@@ -110,7 +117,7 @@ export const authAPIsRequests = {
   deleteLessonApi: async (token, lesson_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_LESSONS_API}/${lesson_id}`,
+      `${variables.DELETE_LESSON_API}/${lesson_id}`,
       configs
     );
   },
@@ -127,7 +134,7 @@ export const authAPIsRequests = {
       lesson_topic_fk_id: body.lesson_topic_fk_id,
     };
     return await axios.patch(
-      `${variables.ALL_LESSONS_API}/${lesson_id}`,
+      `${variables.EDIT_LESSON_API}/${lesson_id}`,
       data,
       configs
     );
@@ -144,7 +151,7 @@ export const authAPIsRequests = {
       course_image: body.course_image,
     };
 
-    return await axios.post(`${variables.ALL_COURSES_API}`, data, configs);
+    return await axios.post(`${variables.POST_COURSE_API}`, data, configs);
   },
 
   getCoursesApi: async (token, sortBy) => {
@@ -152,13 +159,13 @@ export const authAPIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    return await axios.get(variables.ALL_COURSES_API, configs);
+    return await axios.get(variables.GET_ALL_COURSES_API, configs);
   },
 
   getCourseApi: async (token, course_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.get(
-      `${variables.ALL_COURSES_API}/${course_id}`,
+      `${variables.GET_ALL_COURSES_API}/${course_id}`,
       configs
     );
   },
@@ -166,7 +173,7 @@ export const authAPIsRequests = {
   deleteCourseApi: async (token, course_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_COURSES_API}/${course_id}`,
+      `${variables.DELETE_COURSE_API}/${course_id}`,
       configs
     );
   },
@@ -182,7 +189,7 @@ export const authAPIsRequests = {
     };
 
     return await axios.patch(
-      `${variables.ALL_COURSES_API}/${course_id}`,
+      `${variables.EDIT_COURSE_API}/${course_id}`,
       data,
       configs
     );
@@ -210,7 +217,7 @@ export const authAPIsRequests = {
       student_tutor_fk_id: body.student_tutor_fk_id,
     };
 
-    return await axios.post(`${variables.ALL_STUDENTS_API}`, data, configs);
+    return await axios.post(`${variables.POST_STUDENT_API}`, data, configs);
   },
 
   getStudentsApi: async (token, sortBy) => {
@@ -218,13 +225,13 @@ export const authAPIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    return await axios.get(variables.ALL_STUDENTS_API, config);
+    return await axios.get(variables.GET_ALL_STUDENTS_API, config);
   },
 
   getStudentApi: async (token, student_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.get(
-      `${variables.ALL_STUDENTS_API}/${student_id}`,
+      `${variables.GET_ALL_STUDENTS_API}/${student_id}`,
       configs
     );
   },
@@ -232,7 +239,7 @@ export const authAPIsRequests = {
   deleteStudentApi: async (token, student_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_LESSONS_API}/${student_id}`,
+      `${variables.DELETE_STUDENTS_API}/${student_id}`,
       configs
     );
   },
@@ -258,7 +265,7 @@ export const authAPIsRequests = {
       student_tutor_fk_id: body.student_tutor_fk_id,
     };
     return await axios.patch(
-      `${variables.ALL_STUDENTS_API}/${student_id}`,
+      `${variables.EDIT_STUDENTS_API}/${student_id}`,
       data,
       configs
     );
@@ -277,7 +284,7 @@ export const authAPIsRequests = {
       admin_image: JSON.stringify(body.admin_image),
     };
 
-    return await axios.post(`${variables.ALL_ADMINS_API}`, data, configs);
+    return await axios.post(`${variables.POST_ADMIN_API}`, data, configs);
   },
 
   getAdminsApi: async (token, sortBy) => {
@@ -285,18 +292,18 @@ export const authAPIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    return await axios.get(variables.ALL_ADMINS_API, config);
+    return await axios.get(variables.GET_ALL_ADMINS_API, config);
   },
 
   getAdminApi: async (token, admin_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.ALL_ADMINS_API}/${admin_id}`, configs);
+    return await axios.get(`${variables.GET_ALL_ADMINS_API}/${admin_id}`, configs);
   },
 
   deleteAdminApi: async (token, admin_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_ADMINS_API}/${admin_id}`,
+      `${variables.DELETE_ADMIN_API}/${admin_id}`,
       configs
     );
   },
@@ -313,7 +320,7 @@ export const authAPIsRequests = {
       admin_image: body.admin_image,
     };
     return await axios.patch(
-      `${variables.ALL_ADMINS_API}/${admin_id}`,
+      `${variables.EDIT_ADMIN_API}/${admin_id}`,
       data,
       configs
     );
@@ -332,7 +339,7 @@ export const authAPIsRequests = {
       tutor_image: JSON.stringify(body.tutor_image),
     };
 
-    return await axios.post(`${variables.ALL_TUTORS_API}`, data, configs);
+    return await axios.post(`${variables.POST_TUTOR_API}`, data, configs);
   },
 
   getTutorsApi: async (token, sortBy) => {
@@ -340,18 +347,18 @@ export const authAPIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    return await axios.get(variables.ALL_TUTORS_API, config);
+    return await axios.get(variables.GET_ALL_TUTORS_API, config);
   },
 
   getTutorApi: async (token, tutor_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.ALL_TUTORS_API}/${tutor_id}`, configs);
+    return await axios.get(`${variables.GET_ALL_TUTORS_API}/${tutor_id}`, configs);
   },
 
   deleteTutorApi: async (token, tutor_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_TUTORS_API}/${tutor_id}`,
+      `${variables.DELETE_TUTOR_API}/${tutor_id}`,
       configs
     );
   },
@@ -365,10 +372,10 @@ export const authAPIsRequests = {
       tutor_email: body.tutor_email,
       tutor_password: body.tutor_password,
       tutor_active: body.tutor_active,
-      tutor_image: body.tutor_image,
+      tutor_image: JSON.stringify(body.tutor_image),
     };
     return await axios.patch(
-      `${variables.ALL_TUTORS_API}/${tutor_id}`,
+      `${variables.EDIT_TUTOR_API}/${tutor_id}`,
       data,
       configs
     );
@@ -387,7 +394,7 @@ export const authAPIsRequests = {
       topic_image: JSON.stringify(body.topic_image),
     };
 
-    return await axios.post(`${variables.ALL_TOPICS_API}`, data, configs);
+    return await axios.post(`${variables.POST_TOPIC_API}`, data, configs);
   },
 
   getTopicsApi: async (token, sortBy) => {
@@ -396,18 +403,18 @@ export const authAPIsRequests = {
       params: { sort_by: sortBy },
     };
     console.log(config)
-    return await axios.get(variables.ALL_TOPICS_API, config);
+    return await axios.get(variables.GET_ALL_TOPICS_API, config);
   },
 
   getTopicApi: async (token, topic_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.ALL_TOPICS_API}/${topic_id}`, configs);
+    return await axios.get(`${variables.GET_ALL_TOPICS_API}/${topic_id}`, configs);
   },
 
   deleteTopicApi: async (token, topic_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_TOPICS_API}/${topic_id}`,
+      `${variables.DELETE_TOPIC_API}/${topic_id}`,
       configs
     );
   },
@@ -424,7 +431,7 @@ export const authAPIsRequests = {
       topic_image: body.topic_image,
     };
     return await axios.patch(
-      `${variables.ALL_TOPICS_API}/${topic_id}`,
+      `${variables.EDIT_TOPIC_API}/${topic_id}`,
       data,
       configs
     );
@@ -443,7 +450,7 @@ export const authAPIsRequests = {
       quiz_image: JSON.stringify(body.quiz_image),
     };
 
-    return await axios.post(`${variables.ALL_QUIZZES_API}`, data, configs);
+    return await axios.post(`${variables.POST_QUIZ_API}`, data, configs);
   },
 
   getQuizzesApi: async (token, sortBy) => {
@@ -452,18 +459,18 @@ export const authAPIsRequests = {
       params: { sort_by: sortBy },
     };
     console.log(config)
-    return await axios.get(variables.ALL_QUIZZES_API, config);
+    return await axios.get(variables.GET_ALL_QUIZZES_API, config);
   },
 
   getQuizApi: async (token, quiz_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.ALL_QUIZZES_API}/${quiz_id}`, configs);
+    return await axios.get(`${variables.GET_ALL_QUIZZES_API}/${quiz_id}`, configs);
   },
 
   deleteQuizApi: async (token, quiz_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_QUIZZES_API}/${quiz_id}`,
+      `${variables.DELETE_QUIZ_API}/${quiz_id}`,
       configs
     );
   },
@@ -480,7 +487,7 @@ export const authAPIsRequests = {
       quiz_image: body.quiz_image,
     };
     return await axios.patch(
-      `${variables.ALL_QUIZZES_API}/${quiz_id}`,
+      `${variables.EDIT_QUIZ_API}/${quiz_id}`,
       data,
       configs
     );
@@ -500,7 +507,7 @@ export const authAPIsRequests = {
       question_image: JSON.stringify(body.question_image),
     };
 
-    return await axios.post(`${variables.ALL_QUESTIONS_API}`, data, configs);
+    return await axios.post(`${variables.POST_QUESTION_API}`, data, configs);
   },
 
   getQuestionsApi: async (token, sortBy) => {
@@ -509,18 +516,18 @@ export const authAPIsRequests = {
       params: { sort_by: sortBy },
     };
     console.log(config)
-    return await axios.get(variables.ALL_QUESTIONS_API, config);
+    return await axios.get(variables.GET_ALL_QUESTIONS_API, config);
   },
 
   getQuestionApi: async (token, question_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.ALL_QUESTIONS_API}/${question_id}`, configs);
+    return await axios.get(`${variables.GET_ALL_QUESTIONS_API}/${question_id}`, configs);
   },
 
   deleteQuestionApi: async (token, question_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.delete(
-      `${variables.ALL_QUESTIONS_API}/${question_id}`,
+      `${variables.DELETE_QUESTION_API}/${question_id}`,
       configs
     );
   },
@@ -537,7 +544,7 @@ export const authAPIsRequests = {
       question_image: body.question_image,
     };
     return await axios.patch(
-      `${variables.ALL_QUESTIONS_API}/${question_id}`,
+      `${variables.EDIT_QUESTION_API}/${question_id}`,
       data,
       configs
     );

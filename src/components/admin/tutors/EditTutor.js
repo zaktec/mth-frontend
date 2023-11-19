@@ -163,41 +163,46 @@ const EditTutor = (props) => {
                 <form className="form-fields">
                   <div className="attribute-container">
                     <Input
+                    fieldname="Please Insert Your username"
                       type="text"
                       name="tutor_username"
                       handleChange={handleChange}
                       value={state?.tutor_username}
-                      fieldname="Please Insert Your username"
+                      
                     />
                     <Input
+                    fieldname="Insert Your First Name"
                       type="text"
                       name="tutor_firstname"
                       handleChange={handleChange}
                       value={state?.tutor_firstname}
-                      fieldname="Insert Your First Name"
+                      
                     />
                     <Input
+                    fieldname="Please Insert Your Last Name"
                       type="text"
                       name="tutor_lastname"
                       handleChange={handleChange}
                       value={state?.tutor_lastname}
-                      fieldname="Please Insert Your Last Name"
+                      
                     />
 
                     <Input
+                    fieldname="Please Insert Your Email"
                       type="text"
                       name="tutor_email"
                       value={state?.tutor_email}
                       handleChange={handleChange}
-                      fieldname="Please Insert Your Email"
+                      
                     />
 
                     <Input
+                    fieldname="Please Insert Your Password"
                       type="password"
                       name="tutor_password"
                       handleChange={handleChange}
                       value={state?.tutor_password}
-                      fieldname="Please Insert Your Password"
+                      
                     />
 
                     <div>
@@ -227,7 +232,7 @@ const EditTutor = (props) => {
                     <button
                       disabled={state.buttonStatus}
                       type="button"
-                      onClick={(key) => handleSubmit(key, props?.toke, props?.tutor?.tutor_id)}
+                      onClick={(key) => handleSubmit(key, props?.token, props?.tutor?.tutor_id)}
                     >
                       {" "}
                       {state.loading === true ? <Loading /> : "Save"}{" "}
