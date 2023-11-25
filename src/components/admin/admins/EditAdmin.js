@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Loading from "../../loading/Loading";
 import Input from "../../form/input";
 import ImageUploader from "react-images-upload";
@@ -57,7 +57,7 @@ const EditAdmin = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .editAdminApi(token, admin_id, state)
       .then((response) => {
         setState((prevState) => ({

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../navbar/Navbar';
 import Loading from '../loading/Loading';
 import { validateSignup, verifyRole } from '../../helpers';
-import { authAPIsRequests } from '../../api/APIsRequests';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const Signup = () => {
   const { role } = useParams();
@@ -34,7 +34,7 @@ const Signup = () => {
     if (error !== null) return setState((prevState) => ({...prevState, error }));
     setState((prevState) => ({...prevState, buttonStatus: true, loading: true, error: null }));
 
-    await authAPIsRequests.signupStudentTutorAdminRequest(role, { username: state.username, password: state.password })
+    await APIsRequests.signupStudentTutorAdminRequest(role, { username: state.username, password: state.password })
     .then(response => {
       return setState((prevState) => ({...prevState, response: 'Account Created Successfully. Click Signin Below', buttonStatus: false, loading: false }));
     })

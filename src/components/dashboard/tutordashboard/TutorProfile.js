@@ -1,27 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { APIsRequests } from '../../../api/APIsRequests';
 
 const TutorProfile = (props) => {
-  console.log(props);
+  const [state, setState] = useState({
+    data: [],
+    isLoading: true
+  });
+
+  useEffect(() => {
+    const getTutorProfile = async (token, tutorId) => {
+      await APIsRequests.getTutorApi(token, tutorId)
+        .then((response) => {
+          return setState((prevState) => ({
+            ...prevState,
+            isLoading: false,
+            data: response?.data?.data,
+          }));
+        })
+        .catch((error) => console.log(error))
+    };
+
+    getTutorProfile(props?.authData?.token, props?.authData?.user?.tutor_id);
+  }, [props?.authData?.token, props?.authData?.user?.tutor_id]);
+
+  if (state.isLoading) return <p>Loading....</p>;
   return (
     <div className="SingleMainPage">
       <h1>Tutor Dashboard</h1>
       <ul className="MainListPage">
         <li className="List__card">
           <p>
-            <b>Tutor UserName: </b> {props?.authData?.user?.tutor_username}
+            <b>Tutor UserName: </b> {state?.data?.tutor_username}
           </p>
           <p>
-            <b>Tutor Name: </b> {props?.authData?.user?.tutor_firstname}
+            <b>Tutor Name: </b> {state?.data?.tutor_firstname}
           </p>
           <p>
-            <b>Tutor Last Name: </b>
-            {props?.authData?.user?.tutor_lastname}
+            <b>Tutor Last Name: </b> {state?.data?.tutor_lastname}
           </p>
           <p>
-            <b>Tutor Password</b>
-            {props?.authData?.user?.tutor_password}
+            <b>Tutor Password</b> {state?.data?.tutor_password}
           </p>
-          <b>Tutor Image :</b> {props?.authData?.user?.tutor_image}
+          <b>Tutor Image :</b> {state?.data?.tutor_image}
         </li>
       </ul>
     </div>

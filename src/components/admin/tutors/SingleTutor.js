@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import EditTutor from "./EditTutor";
 import DeleteTutor from "./DeleteTutor";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 
 const SingleTutor = () => {
@@ -19,7 +19,7 @@ const SingleTutor = () => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getTutorApi = async (token, tutor_id) => {
-      await authAPIsRequests
+      await APIsRequests
         .getTutorApi(token?.token, tutor_id)
         .then((response) => {
           return setState((prevState) => ({

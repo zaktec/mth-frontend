@@ -5,7 +5,7 @@ import DeleteStudent from "./DeleteStudent";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const SingleStudent = () =>{
   const { student_id } = useParams();
@@ -19,7 +19,7 @@ const SingleStudent = () =>{
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getStudentApi = async (token, student_id) => {
-      await authAPIsRequests
+      await APIsRequests
         .getStudentApi(token?.token, student_id)
         .then((response) => {
           return setState((prevState) => ({

@@ -1,10 +1,10 @@
 import React from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const DeleteTutor = (props) => {
   const handleDeleteTutor = async (event, token, tutor_id) => {
     event.preventDefault();
-    await authAPIsRequests
+    await APIsRequests
       .deleteTutorApi(token, tutor_id)
       .then((response) => {
         window.location.replace(`/tutorlist`);

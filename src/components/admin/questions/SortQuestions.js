@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QuestionList from "./QuestionList";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 import { verifyAuth } from "../../../helpers";
 
@@ -18,7 +18,7 @@ const SortQuestions = () => {
     setState((prevState) => ({ ...prevState, token: authData?.token }));
     setState((prevState) => ({...prevState, authData }));
     const getQuestionsApi = async (authData, sortBy) => {
-      await authAPIsRequests
+      await APIsRequests
         .getQuestionsApi(authData?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({

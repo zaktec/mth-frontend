@@ -4,7 +4,7 @@ import Loading from "../../loading/Loading";
 import ImageUploader from "react-images-upload";
 import JoinPattern from "../../patterns/joinPattern";
 import Avatar from "../../../assets/images/avatar.png";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const PostAdmin = (props) => {
   const [isAdminActiveTrue, setIsAdminActiveTrue] = useState(false);
@@ -57,7 +57,7 @@ const PostAdmin = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .postAdminApi(token, state)
       .then((response) => {
         setState((prevState) => ({

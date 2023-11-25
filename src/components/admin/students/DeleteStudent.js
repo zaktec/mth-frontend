@@ -1,10 +1,10 @@
 import React from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const DeleteStudent = (props) => {
   const handleDeleteStudent = async (event, token, student_id) => {
     event.preventDefault();
-    await authAPIsRequests
+    await APIsRequests
       .deleteLessonApi(token, student_id)
       .then((response) => {
         window.location.replace(`/studentlist`);

@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "../../navbar/Navbar";
-import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
-import AdminList from "./AdminList";
+import React, { useState, useEffect } from 'react';
+import AdminList from './AdminList';
+import Navbar from '../../navbar/Navbar';
+import { verifyAuth } from '../../../helpers';
+import { APIsRequests } from '../../../api/APIsRequests';
 
 const SortAdmins = () => {
   const [state, setState] = useState({
     data: [],
     isLoading: true,
     token: null,
-    sortBy: "admin_id",
+    sortBy: 'admin_id',
   });
 
   useEffect(() => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getAdminsApi = async (token, sortBy) => {
-      await authAPIsRequests
+      await APIsRequests
         .getAdminsApi(token?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
@@ -46,23 +46,23 @@ const SortAdmins = () => {
   };
 
   return (
-    <div className={"SortMainPage"}>
-      <Navbar page="dashboard-admin" />
+    <div className={'SortMainPage'}>
+      <Navbar page='dashboard-admin' />
       <div>
         <h1> Sort Admin List </h1>
         <p> Choose a column to sort the article list </p>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="categories">Choose a category</label>
-          <select name="categories" id="categories" onChange={handleChange}>
-            <option value="admin_id">All</option>
-            <option value="admin_firstname">FirstName</option>
-            <option value="admin_lastname">LastName</option>
-            <option value="admin_active">Active</option>
+          <label htmlFor='categories'>Choose a category</label>
+          <select name='categories' id='categories' onChange={handleChange}>
+            <option value='admin_id'>All</option>
+            <option value='admin_firstname'>FirstName</option>
+            <option value='admin_lastname'>LastName</option>
+            <option value='admin_active'>Active</option>
           </select>
           <br></br>
-        {/*   <input type="submit" value="Submit" /> */}
+        {/*   <input type='submit' value='Submit' /> */}
         </form>
-      {/*   <p>Click the "Submit" button .</p> */}
+      {/*   <p>Click the 'Submit' button .</p> */}
       </div>
       {
         <AdminList

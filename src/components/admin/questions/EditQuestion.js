@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../loading/Loading";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
 import ImageUploader from "react-images-upload";
 import JoinPattern from "../../patterns/joinPattern";
@@ -41,7 +41,7 @@ const EditQuestion = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .editQuestionApi(token, question_id, state)
       .then((response) => {
         setState((prevState) => ({

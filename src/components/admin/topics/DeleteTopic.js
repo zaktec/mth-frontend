@@ -1,11 +1,11 @@
 import React from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const DeleteTopic = (props) => {
   const handleDeleteTopic = async (key, token, topic_id) => {
     key.preventDefault();
 
-    await authAPIsRequests.deleteTopicApi(token, topic_id)
+    await APIsRequests.deleteTopicApi(token, topic_id)
     .then((response) => {
       window.location.replace(`/courselist`);
     })

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StudentList from "./StudentList";
 import Navbar from "../../navbar/Navbar";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const SortStudents = () => {
   const [state, setState] = useState({
@@ -16,7 +16,7 @@ const SortStudents = () => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getStudentsApi = async (token, sortBy) => {
-      await authAPIsRequests
+      await APIsRequests
         .getStudentsApi(token?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({

@@ -4,7 +4,7 @@ import Loading from "../../loading/Loading";
 import ImageUploader from "react-images-upload";
 import JoinPattern from "../../patterns/joinPattern";
 import Avatar from "../../../assets/images/avatar.png";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 
 const PostTutor = (props) => {
@@ -60,7 +60,7 @@ const PostTutor = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .postTutorApi(token, state)
       .then((response) => {
         setState((prevState) => ({

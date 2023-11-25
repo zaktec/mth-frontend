@@ -1,10 +1,10 @@
 import React from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const DeleteQuiz = (props) =>{
   const handleDeleteQuiz = async (event, token, quiz_id) => {
     event.preventDefault();
-    await authAPIsRequests
+    await APIsRequests
       .deleteQuizApi(token, quiz_id)
       .then((response) => {
         window.location.replace(`/quizlist`);

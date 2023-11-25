@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 import DeleteAdmin from "./DeleteAdmin";
 import EditAdmin from "./EditAdmin";
@@ -19,7 +19,7 @@ const SingleAdmin = () => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getAdminApi = async (token, admin_id) => {
-      await authAPIsRequests
+      await APIsRequests
         .getAdminApi(token?.token, admin_id)
         .then((response) => {
           return setState((prevState) => ({

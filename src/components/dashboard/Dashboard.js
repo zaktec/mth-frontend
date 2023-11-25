@@ -2,9 +2,9 @@ import React from 'react';
 import Navbar from "../navbar/Navbar";
 import { verifyAuth } from '../../helpers';
 import { useParams } from 'react-router-dom';
+import TutorProfile from "./tutordashboard/TutorProfile";
 import AdminProfile from './admindashboard/AdminProfile';
 import StudentProfile from "./studentdashboard/StudentProfile";
-import TutorProfile from "./tutordashboard/TutorProfile";
 
 const Dashboard = () => {
   const { role } = useParams();

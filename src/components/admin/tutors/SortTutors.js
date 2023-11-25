@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TutorList from "./TutorList";
 import Navbar from "../../navbar/Navbar";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 
 const SortTutors = () => {
@@ -17,7 +17,7 @@ const SortTutors = () => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getTutorsApi = async (token, sortBy) => {
-      await authAPIsRequests
+      await APIsRequests
         .getTutorsApi(token?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({

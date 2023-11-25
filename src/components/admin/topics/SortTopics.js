@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 import TopicList from "./TopicList";
 
@@ -18,7 +18,7 @@ const SortTopics = () => {
     setState((prevState) => ({ ...prevState, token: authData?.token }));
     setState((prevState) => ({...prevState, authData }));
     const getTopicsApi = async (authData, sortBy) => {
-      await authAPIsRequests
+      await APIsRequests
         .getTopicsApi(authData?.token, sortBy)
         .then((response) => {
           console.log(response)

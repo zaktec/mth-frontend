@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Loading from "../../loading/Loading";
 import Input from "../../form/input";
 
@@ -37,7 +37,7 @@ const EditLesson = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .editLessonApi(token, lesson_id, state)
       .then((response) => {
         setState((prevState) => ({

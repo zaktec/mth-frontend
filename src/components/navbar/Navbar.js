@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { shortData } from "../../helpers";
-import { authAPIsRequests } from "../../api/APIsRequests";
+import { APIsRequests } from "../../api/APIsRequests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -29,7 +29,7 @@ const Navbar = (props) => {
       error: null,
     }));
     if (role === "admin") {
-      await authAPIsRequests
+      await APIsRequests
         .singoutAdminRequest(props?.authData?.token)
         .then((response) => {
           localStorage.removeItem("data");
@@ -46,7 +46,7 @@ const Navbar = (props) => {
         });
     }
     if (role === "tutor") {
-      await authAPIsRequests
+      await APIsRequests
         .singoutTutorRequest(props?.authData?.token)
         .then((response) => {
           localStorage.removeItem("data");
@@ -63,7 +63,7 @@ const Navbar = (props) => {
         });
     }
     if (role === "student") {
-      await authAPIsRequests
+      await APIsRequests
         .singoutStudentRequest(props?.authData?.token)
         .then((response) => {
           localStorage.removeItem("data");

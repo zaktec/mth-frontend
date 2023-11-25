@@ -1,6 +1,6 @@
 import Loading from "../../loading/Loading";
 import React, { useState } from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
 
 const PostTopic = (props) => {
@@ -35,7 +35,7 @@ const PostTopic = (props) => {
       loading: true,
       error: null,
     }));
-    await authAPIsRequests
+    await APIsRequests
       .postTopicsApi(token, state)
       .then((response) => {
         setState((prevState) => ({

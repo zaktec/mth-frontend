@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Navbar from "../navbar/Navbar";
-import { authAPIsRequests } from "../../api/APIsRequests";
+import { APIsRequests } from "../../api/APIsRequests";
 
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
   const [msg, setMsg] = useState("");
   useEffect(() => {
     const getHomeApi = async () =>{
-    await authAPIsRequests.getHomeMsgApi().then((res) => {
+    await APIsRequests.getHomeServerMsgApi().then((res) => {
        console.log(res);
        return setMsg(res.data.message);
     })

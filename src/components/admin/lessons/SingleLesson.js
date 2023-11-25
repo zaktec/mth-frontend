@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import DeleteLesson from "./DeleteLesson";
  import EditLesson from "./EditLesson"; 
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 
 const SingleLesson = () => {
@@ -19,7 +19,7 @@ const SingleLesson = () => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getLessonApi = async (token, lesson_id) => {
-      await authAPIsRequests
+      await APIsRequests
         .getLessonApi(token?.token, lesson_id)
         .then((response) => {
           return setState((prevState) => ({

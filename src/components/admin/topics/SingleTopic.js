@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import EditTopic from "./EditTopic";
 import DeleteTopic from "./DeleteTopic";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 
 
@@ -17,7 +17,7 @@ const SingleTopic = () => {
     const token =  verifyAuth();
     setState((prevState) => ({...prevState, token: token?.token }));
     const getTopicApi = async (token, topic_id) => {  
-      await authAPIsRequests.getTopicApi(token?.token, topic_id)
+      await APIsRequests.getTopicApi(token?.token, topic_id)
         .then((response) => {
           return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
         })

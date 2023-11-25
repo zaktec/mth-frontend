@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CourseList from "../courses/CourseList";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 
 const SortCourses = () => {
@@ -18,7 +18,7 @@ const SortCourses = () => {
     setState((prevState) => ({ ...prevState, token: authData?.token }));
     setState((prevState) => ({...prevState, authData }));
     const getCoursesApi = async (authData, sortBy) => {
-      await authAPIsRequests
+      await APIsRequests
         .getCoursesApi(authData?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({

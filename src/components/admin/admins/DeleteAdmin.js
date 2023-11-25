@@ -1,10 +1,10 @@
 import React from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const DeleteAdmin = (props) => {
   const handleDeleteAdmin = async (event, token, admin_id) => {
     event.preventDefault();
-    await authAPIsRequests
+    await APIsRequests
       .deleteAdminApi(token, admin_id)
       .then((response) => {
         window.location.replace(`/adminlist`);

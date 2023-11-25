@@ -1,6 +1,6 @@
 import Loading from "../../loading/Loading";
 import React, { useState } from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
 import ImageUploader from "react-images-upload";
 import JoinPattern from "../../patterns/joinPattern";
@@ -41,7 +41,7 @@ const PostCourse = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .postCourseApi(token, state)
       .then((response) => {
         setState((prevState) => ({

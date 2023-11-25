@@ -5,7 +5,7 @@ import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
 import Navbar from "../../navbar/Navbar";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const SingleQuestion = (props) => {
   const { question_id } = useParams();
@@ -19,7 +19,7 @@ const SingleQuestion = (props) => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getQuestionApi = async (token, question_id) => {
-      await authAPIsRequests
+      await APIsRequests
         .getQuestionApi(token?.token, question_id)
         .then((response) => {
           return setState((prevState) => ({

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import EditCourse from "./EditCourse";
 import DeleteCourse from "./DeleteCourse";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 
 
@@ -15,7 +15,7 @@ const SingleCourse = () => {
     const token =  verifyAuth();
     setState((prevState) => ({...prevState, token: token?.token }));
     const getCourseApi = async (token, course_id) => {  
-      await authAPIsRequests.getCourseApi(token?.token, course_id)
+      await APIsRequests.getCourseApi(token?.token, course_id)
         .then((response) => {
           return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
         })

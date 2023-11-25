@@ -1,6 +1,6 @@
 import Loading from "../../loading/Loading";
 import React, { useEffect, useState } from "react";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
 
 const EditQuiz = (props) => {
@@ -37,7 +37,7 @@ const EditQuiz = (props) => {
       error: null,
     }));
 
-    await authAPIsRequests
+    await APIsRequests
       .editQuizApi(token, quiz_id, state)
       .then((response) => {
         setState((prevState) => ({

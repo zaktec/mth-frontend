@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EditQuiz from "./EditQuiz";
 import { verifyAuth } from "../../../helpers";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Navbar from "../../navbar/Navbar";
 import DeleteQuiz from "./DeleteQuiz.js";
 
@@ -16,7 +16,7 @@ const SingleQuiz = () => {
     const token =  verifyAuth();
     setState((prevState) => ({...prevState, token: token?.token }));
     const getQuizApi = async (token, quiz_id) => {  
-      await authAPIsRequests.getQuizApi(token?.token, quiz_id)
+      await APIsRequests.getQuizApi(token?.token, quiz_id)
         .then((response) => {
           return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
         })

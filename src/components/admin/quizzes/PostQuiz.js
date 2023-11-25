@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Loading from "../../loading/Loading";
-import { authAPIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from "../../../api/APIsRequests";
 import Input from "../../form/input";
 
 const PostQuiz = (props) => {
@@ -36,7 +36,7 @@ const PostQuiz = (props) => {
       loading: true,
       error: null,
     }));
-    await authAPIsRequests
+    await APIsRequests
       .postQuizzesApi(token, state)
       .then((response) => {
         setState((prevState) => ({
