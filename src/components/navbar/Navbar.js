@@ -19,7 +19,6 @@ const Navbar = (props) => {
     loading: false,
     buttonStatus: false,
   });
- console.log(props)
   const handleLogout = async (key, role) => {
     key.preventDefault();
     setState((prevState) => ({

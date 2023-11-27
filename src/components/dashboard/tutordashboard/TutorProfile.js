@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { APIsRequests } from '../../../api/APIsRequests';
+import EditTutor from '../../admin/tutors/EditTutor';
+import TutorStudents from './TutorStudents';
 
 const TutorProfile = (props) => {
+  console.log(props)
   const [state, setState] = useState({
     data: [],
     isLoading: true
@@ -30,6 +33,7 @@ const TutorProfile = (props) => {
       <ul className="MainListPage">
         <li className="List__card">
           <p>
+           
             <b>Tutor UserName: </b> {state?.data?.tutor_username}
           </p>
           <p>
@@ -44,6 +48,15 @@ const TutorProfile = (props) => {
           <b>Tutor Image :</b> {state?.data?.tutor_image}
         </li>
       </ul>
+
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <EditTutor token={props?.authData?.token} tutor={state?.data} />{" "}
+      </div>
+
+      <div style={{ margin: "20px 20px" }}>
+        <TutorStudents token={props?.authData?.token} tutor={state?.data} />{" "}
+      </div>
     </div>
   );
 };

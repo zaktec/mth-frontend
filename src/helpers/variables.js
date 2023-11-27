@@ -62,3 +62,7 @@ export const POST_QUESTION_API = `${SERVER_URL}/api/v1/questions/post-questions`
 export const EDIT_QUESTION_API = `${SERVER_URL}/api/v1/questions/update-questions`;
 export const GET_ALL_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-questions`;
 export const DELETE_QUESTION_API = `${SERVER_URL}/api/v1/questions/delete-questions`;
+
+
+//Tutor dashboard
+export const TUTOR_STUDENT_API = `${SERVER_URL}/api/v1/students/get-tutor-students`;

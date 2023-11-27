@@ -560,4 +560,18 @@ export const APIsRequests = {
       configs
     );
   },
+
+//Tutor Dashboard-----------
+
+
+getTutorStudentsApi: async (token) => {
+  const config = {
+    headers: { Authorization: `BEARER ${token}` },
+
+  };
+  console.log(config);
+  return await axios.get(variables.TUTOR_STUDENT_API, config);
+},
+
+
 };
