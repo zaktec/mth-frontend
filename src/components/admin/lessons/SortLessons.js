@@ -43,7 +43,7 @@ const SortLessons = () => {
 
   return (
     <main className="SortMainPage">
-      <Navbar page='dashboard-admin' />
+      <Navbar page='admin-dashboard' />
       <div>
         <h1> Sort Lesson List </h1>
         <p> Choose a column to sort the Tutor list </p>

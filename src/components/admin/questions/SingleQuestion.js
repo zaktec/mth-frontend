@@ -40,7 +40,7 @@ const SingleQuestion = (props) => {
 
   return (
     <div className="SingleMainPage">
-      <Navbar page="dashboard-admin" />
+      <Navbar page="admin-dashboard" />
       <h1> Single Question page </h1>
       <ul className="MainListPage">
         <li className="MainList__card">

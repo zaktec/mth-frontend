@@ -34,7 +34,7 @@ const SingleTopic = () => {
 
   return (
     <div className="SingleMainPage">
-      <Navbar page='dashboard-admin' />
+      <Navbar page='admin-dashboard' />
       <h1>Single topic Page</h1>
       <ul className="MainListPage">
         <li className="MainList__card">

@@ -16,8 +16,7 @@ const SortQuizzes = () => {
     const token = verifyAuth();
     setState((prevState) => ({ ...prevState, token: token?.token }));
     const getQuizzesApi = async (token, sortBy) => {
-      await APIsRequests
-        .getQuizzesApi(token?.token, sortBy)
+      await APIsRequests.getQuizzesApi(token?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -46,7 +45,7 @@ const SortQuizzes = () => {
   };
   return (
     <div className={"SortMainPage"}>
-    <Navbar page="dashboard-admin" />
+      <Navbar page="admin-dashboard" />
       <div>
         <h1> Sort Quizzes List </h1>
         <p> Choose a column to sort the quiz list </p>
@@ -61,15 +60,16 @@ const SortQuizzes = () => {
           <br></br>
           <input type="submit" value="Submit" />
         </form>
-        <p>Click the "Submit" button .</p>
       </div>
       {
-      <QuizList token={state?.token}
+        <QuizList
           data={state?.data}
+          token={state?.token}
+          sortBy={state?.sortBy}
           isLoading={state?.isLoading}
-          sortBy={state?.sortBy} />
+        />
       }
-          </div>
+    </div>
   );
 };
 

@@ -1,31 +1,33 @@
 import React from "react";
 import EditStudent from "./EditStudent";
 import Navbar from "../../navbar/Navbar";
+import SudentQuizzes from './SudentQuizzes';
 import DeleteStudent from "./DeleteStudent";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { verifyAuth } from "../../../helpers";
 import { APIsRequests } from "../../../api/APIsRequests";
+import { verifyAuth, verifyRole } from "../../../helpers";
 
-const SingleStudent = () =>{
+const SingleStudent = () => {
+  const { role } = useParams();
   const { student_id } = useParams();
   const [state, setState] = useState({
     data: {},
+    authData: {},
     isLoading: true,
-    token: null,
-  })
+  });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    verifyRole(role);
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData: authData }));
     const getStudentApi = async (token, student_id) => {
-      await APIsRequests
-        .getStudentApi(token?.token, student_id)
+      await APIsRequests.getStudentApi(token, student_id)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
-            data: response?.data?.data,
             isLoading: false,
+            data: response?.data?.data,
           }));
         })
         .catch((error) => {
@@ -33,36 +35,70 @@ const SingleStudent = () =>{
         });
     };
 
-    getStudentApi(token, student_id);
-  }, [student_id]);
+    getStudentApi(authData.token, student_id);
+  }, [role, student_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
     <div className="SingleMainPage">
-    <Navbar page='dashboard-admin' />
-      <h1> Single Student page </h1>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+      <h1>STUDENT DETAIL</h1>
       <ul className="MainListPage">
-        <li className="StudentList__card">
-        <p><b>Student ID :</b> {state?.data?.student_id}</p>
-        <p><b>Student Username :</b> {state?.data?.student_username}</p>
-      <p><b>Student Firstname :</b> {state?.data?.student_firstname}</p>
-      <p><b>Student Lastname :</b> {state?.data?.student_lastname}</p>
-          <p><b>Student Email :</b> {state?.data?.student_email}</p>
-          <p><b>Student Password :</b> {state?.data?.student_id.student_password}</p>
-          <p><b>Student Active :</b> {state?.data?.student_active}</p>
-          <p><b>Student Grade :</b> {state?.data?.student_grade}</p>
-          <p><b>Student TargetGrade :</b> {state?.data?.student_targetgrade}</p>
-          <p><b>Student Notes :</b> {state?.data?.student_notes}</p>
-          <p><b>Student ProgressBar :</b> {state?.data?.student_progressbar}</p>
-          <p><b>Student Image :</b> {state?.data?.student_image}</p>
-        </li>
+        <p>
+          <b>Student ID :</b> {state?.data?.student_id}
+        </p>
+        <p>
+          <b>Student Username :</b> {state?.data?.student_username}
+        </p>
+        <p>
+          <b>Student Firstname :</b> {state?.data?.student_firstname}
+        </p>
+        <p>
+          <b>Student Lastname :</b> {state?.data?.student_lastname}
+        </p>
+        <p>
+          <b>Student Email :</b> {state?.data?.student_email}
+        </p>
+        <p>
+          <b>Student Active :</b> {state?.data?.student_active}
+        </p>
+        <p>
+          <b>Student Grade :</b> {state?.data?.student_grade}
+        </p>
+        <p>
+          <b>Student TargetGrade :</b> {state?.data?.student_targetgrade}
+        </p>
+        <p>
+          <b>Student Notes :</b> {state?.data?.student_notes}
+        </p>
+        <p>
+          <b>Student ProgressBar :</b> {state?.data?.student_progressbar}
+        </p>
+        <img
+          className="ListImage"
+          src={state?.data?.student_image}
+          alt={state?.data?.student_firstname}
+        />
       </ul>
 
-      <div style={{ margin: '20px 20px' }}> <DeleteStudent token= {state?.token} student_id={state?.data?.course_id} /> </div>
-     <div style={{ margin: '20px 20px' }}> <EditStudent token= {state?.token} student={state?.data} /> </div> 
+      <div style={{ margin: "20px 20px" }}>
+        <EditStudent authData={state?.authData} role={role} student={state?.data} />
+      </div>
+
+      {(role === "admin" || role === "student") && (
+        <div style={{ margin: "20px 20px" }}>
+          <DeleteStudent authData={state?.authData} student_id={student_id} />
+        </div>
+      )}
+
+      { role === 'tutor' && (
+        <div style={{ margin: "20px 20px" }}>
+          <SudentQuizzes authData={state?.authData} student_id={student_id} /> 
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default SingleStudent;

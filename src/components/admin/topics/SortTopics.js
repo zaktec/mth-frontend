@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import TopicList from "./TopicList";
+import Navbar from "../../navbar/Navbar";
 import { verifyAuth } from "../../../helpers";
 import { APIsRequests } from "../../../api/APIsRequests";
-import Navbar from "../../navbar/Navbar";
-import TopicList from "./TopicList";
 
 const SortTopics = () => {
   const [state, setState] = useState({
@@ -21,7 +21,6 @@ const SortTopics = () => {
       await APIsRequests
         .getTopicsApi(authData?.token, sortBy)
         .then((response) => {
-          console.log(response)
           return setState((prevState) => ({
             ...prevState,
             data: response?.data?.data,
@@ -52,7 +51,7 @@ const SortTopics = () => {
 
   return (
     <div className="SortMainPage">
-    <Navbar page='dashboard-admin' />
+    <Navbar page='admin-dashboard' />
       <div>
         <h1> Sort Topic List </h1>
         <p> Choose a column to sort the topic list </p>
@@ -68,10 +67,8 @@ const SortTopics = () => {
           <br></br>
           <input type="submit" value="Submit" />
         </form>
-        <p>Click the "Submit" button .</p>
       </div>
      {
-     
         <TopicList
          data={state?.data}
          sortBy={state?.sortBy}

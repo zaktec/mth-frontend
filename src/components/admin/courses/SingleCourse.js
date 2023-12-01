@@ -31,7 +31,7 @@ const SingleCourse = () => {
 
   return (
     <div className="SingleMainPage">
-      <Navbar page='dashboard-admin' />
+      <Navbar page='admin-dashboard' />
       <h1>Single Course Page</h1>
       <ul className="MainListPage">
         <li className="MainList__card">

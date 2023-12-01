@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { APIsRequests } from "../../../api/APIsRequests";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { APIsRequests } from '../../../api/APIsRequests';
+
 
 const TutorStudents = (props) => {
-  console.log("propos>>>",props);
   const [state, setState] = useState({
     displayForm: false,
+    isLoading: true,
     data: [],
-    isLoading: true
    
   });
 
@@ -15,7 +15,6 @@ const TutorStudents = (props) => {
     const getTutorStudentsApi = async (token) => {
       await APIsRequests.getTutorStudentsApi(token)
         .then((response) => {
-          console.log("22",response)
           return setState((prevState) => ({
             ...prevState,
             isLoading: false,
@@ -37,29 +36,21 @@ const TutorStudents = (props) => {
     if (state.displayForm === false)
       return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
+  
+  if (state.isLoading) return <p>Loading....</p>;
 
-
-/*   if (state.isLoading) return <p>Loading....</p>; */
   return (
-    <div className="EditMainPage">
+    <div className='EditMainPage'>
       {state?.displayForm === true ? (
-        <button onClick={(event) => handleDisplayForm(event)}>
-          No Students{" "}
-        </button>
+        <button onClick={(event) => handleDisplayForm(event)}>  STUDENT </button>
       ) : (
-        <button onClick={(event) => handleDisplayForm(event)}>
-          See Student
-        </button>
+        <button onClick={(event) => handleDisplayForm(event)}> SEE STUDENT </button>
       )}
       {state.displayForm === true && (
-        <ul className={"Main__List"}>
-          {props?.data.map((student) => {
-            return (
-              <Link
-                key={student.student_id}
-                to={`/students/${student.student_id}`}
-              >
-                <li key={student.student_id} className={"MainList__card"}>
+        <ul className={'Main__List'}>
+          { state.data.map((student) => (
+              <Link key={student.student_id} to={`/tutor/get-students/${student.student_id}`} >
+                <li key={student.student_id} className={'MainList__card'}>
                   <p>
                     <b>Student ID :</b> {student.student_id}
                   </p>
@@ -69,12 +60,10 @@ const TutorStudents = (props) => {
                   <p>
                     <b>Student Lastname :</b> {student.student_lastname}
                   </p>
-
                   <button> Click for more detail</button>
                 </li>
               </Link>
-            );
-          })}
+          ))}
         </ul>
       )}
     </div>

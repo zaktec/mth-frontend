@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import AdminList from './AdminList';
 import Navbar from '../../navbar/Navbar';
 import { verifyAuth } from '../../../helpers';
@@ -7,17 +8,17 @@ import { APIsRequests } from '../../../api/APIsRequests';
 const SortAdmins = () => {
   const [state, setState] = useState({
     data: [],
+    authData: {},
     isLoading: true,
-    token: null,
     sortBy: 'admin_id',
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData: authData }));
+
     const getAdminsApi = async (token, sortBy) => {
-      await APIsRequests
-        .getAdminsApi(token?.token, sortBy)
+      await APIsRequests.getAdminsApi(token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -30,7 +31,7 @@ const SortAdmins = () => {
         });
     };
 
-    getAdminsApi(token, state?.sortBy);
+    getAdminsApi(authData?.token, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
@@ -47,7 +48,7 @@ const SortAdmins = () => {
 
   return (
     <div className={'SortMainPage'}>
-      <Navbar page='dashboard-admin' />
+      <Navbar authData= { state?.authData } page='admin-dashboard' />
       <div>
         <h1> Sort Admin List </h1>
         <p> Choose a column to sort the article list </p>
@@ -59,17 +60,14 @@ const SortAdmins = () => {
             <option value='admin_lastname'>LastName</option>
             <option value='admin_active'>Active</option>
           </select>
-          <br></br>
-        {/*   <input type='submit' value='Submit' /> */}
         </form>
-      {/*   <p>Click the 'Submit' button .</p> */}
       </div>
       {
         <AdminList
-          token={state?.token}
           data={state?.data}
-          isLoading={state?.isLoading}
           sortBy={state?.sortBy}
+          authData={state?.authData}
+          isLoading={state?.isLoading}
         />
       }
     </div>

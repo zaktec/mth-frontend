@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { APIsRequests } from '../../../api/APIsRequests';
+import React, { useState, useEffect } from "react";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const AdminProfile = (props) => {
   const [state, setState] = useState({
     data: [],
-    isLoading: true
+    isLoading: true,
   });
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const AdminProfile = (props) => {
             data: response?.data?.data,
           }));
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log(error));
     };
 
     getAdminProfile(props?.authData?.token, props?.authData?.user?.admin_id);
@@ -26,9 +26,8 @@ const AdminProfile = (props) => {
   if (state.isLoading) return <p>Loading....</p>;
   return (
     <div className="SingleMainPage">
-    <h1>Admin Dashboard</h1>
-    <ul className="MainListPage">
-      <li className="List__card">
+      <h1>ADMIN DASHBOARD</h1>
+      <ul className="MainListPage">
         <p>
           <b>admin UserName: </b> {state?.data.admin_username}
         </p>
@@ -38,14 +37,14 @@ const AdminProfile = (props) => {
         <p>
           <b>admin Last Name: </b> {state?.data.admin_lastname}
         </p>
-        <p>
-          <b>admin Password</b> {state?.data.admin_password}
-        </p>
-        <b>admin Image :</b> {state?.data.admin_image}
-      </li>
-    </ul>
-  </div>
-);
+        <img
+          className="ListImage"
+          src={state?.data?.admin_image}
+          alt={state?.data?.admin_firstname}
+        />
+      </ul>
+    </div>
+  );
 };
 
 export default AdminProfile;

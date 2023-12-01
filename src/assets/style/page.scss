@@ -1,6 +1,7 @@
 .MainListPage {
   border: 1px solid black;
 }
+
 .PostMainPage {
   border: 1px solid black;
 }
@@ -9,12 +10,15 @@
   border: 1px solid black;
   
 }
+
 .EditMainPage {
-  border: 10px solid black;
+  border: 1px solid black;
 }
+
 .SingleMainPage {
   border: 10px solid black;
 }
+
 .Main__List {
   display: flex;
   flex-wrap: wrap;
@@ -23,11 +27,13 @@
   padding: 0;
   list-style-type: none;
 }
+
 .MainList__card {
   border: 5px solid black;
   margin: 1em;
   padding: 1em;
 }
+
 .MainList__h1 {
   font-size: 2em;
 }

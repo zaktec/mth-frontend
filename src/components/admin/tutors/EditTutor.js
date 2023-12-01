@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { APIsRequests } from "../../../api/APIsRequests";
-import Loading from "../../loading/Loading";
+
 import Input from "../../form/input";
+import Loading from "../../loading/Loading";
 import ImageUploader from "react-images-upload";
 import JoinPattern from "../../patterns/joinPattern";
 import Avatar from "../../../assets/images/avatar.png";
+import { APIsRequests } from "../../../api/APIsRequests";
 
 const EditTutor = (props) => {
-  console.log(props)
   const [isTutorActiveTrue, setIsTutorActiveTrue] = useState(false);
   const [isTutorActiveFalse, setIsTutorActiveFalse] = useState(false);
   const [state, setState] = useState({
@@ -17,12 +17,12 @@ const EditTutor = (props) => {
     displayForm: false,
     buttonStatus: false,
   });
-
+  
   useEffect(() => {
     for (let objKey in props?.tutor)
       setState((prevState) => ({
         ...prevState,
-        [objKey]: props?.tutor[objKey],
+        [objKey]: props?.tutor[objKey] || '',
       }));
   }, [props?.tutor]);
 
@@ -49,38 +49,6 @@ const EditTutor = (props) => {
     }
   };
 
-  const handleSubmit = async (event, token, tutor_id) => {
-    event.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      buttonStatus: true,
-      loading: true,
-      error: null,
-    }));
-
-    await APIsRequests
-      .editTutorApi(token, tutor_id, state)
-      .then((response) => {
-        console.log(response)
-        setState((prevState) => ({
-          ...prevState,
-          message: "Tutor updated successfully",
-        }));
-        setTimeout(() => {
-          window.location.replace(`/tutor/${tutor_id}`);
-        }, 2000);
-      })
-      .catch((error) => {
-        return setState((prevState) => ({
-          ...prevState,
-          error:
-            error?.error?.response?.data?.message ||
-            error?.response?.data?.error,
-          buttonStatus: false,
-          loading: false,
-        }));
-      });
-  };
   const handleDisplayForm = async (event) => {
     event.preventDefault();
     if (state.displayForm === true)
@@ -94,6 +62,41 @@ const EditTutor = (props) => {
       ...prevState,
       tutor_image: picture[picture.length - 1],
     }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      loading: true,
+      buttonStatus: true,
+    }));
+
+    await APIsRequests.editTutorApi(
+      props?.authData?.token,
+      props?.tutor?.tutor_id,
+      state
+    )
+      .then(() => {
+        setState((prevState) => ({
+          ...prevState,
+          message: "Tutor updated successfully",
+        }));
+        setTimeout(() => {
+          window.location.replace(`/${props?.role}/get-tutors/${props?.tutor?.tutor_id}`);
+        }, 2000);
+      })
+      .catch((error) => {
+        return setState((prevState) => ({
+          ...prevState,
+          error:
+            error?.error?.response?.data?.message ||
+            error?.response?.data?.error,
+          buttonStatus: false,
+          loading: false,
+        }));
+      });
   };
 
   let profilePicturePreview = null;
@@ -117,19 +120,17 @@ const EditTutor = (props) => {
   return (
     <div className="PostMainPage">
       {state?.displayForm === true ? (
-        <button onClick={(event) => handleDisplayForm(event)}>No Edit</button>
+        <button onClick={(event) => handleDisplayForm(event)}>NO EDIT</button>
       ) : (
-        <button onClick={(event) => handleDisplayForm(event)}>
-          Edit Tutor
-        </button>
+        <button onClick={(event) => handleDisplayForm(event)}>EDIT TUTOR</button>
       )}
 
       {state.displayForm === true && (
         <div className="form-container">
           <div className="form-header">
-            <div className="head">INSERT tutor</div>
+            {" "}
+            <div className="head">UPDATE TUTOR</div>{" "}
           </div>
-
           <JoinPattern />
 
           <div className="form-container">
@@ -163,46 +164,33 @@ const EditTutor = (props) => {
                 <form className="form-fields">
                   <div className="attribute-container">
                     <Input
-                    fieldname="Please Insert Your username"
                       type="text"
                       name="tutor_username"
                       handleChange={handleChange}
                       value={state?.tutor_username}
-                      
+                      fieldname="Please Insert Your username"
                     />
                     <Input
-                    fieldname="Insert Your First Name"
                       type="text"
                       name="tutor_firstname"
                       handleChange={handleChange}
                       value={state?.tutor_firstname}
-                      
+                      fieldname="Insert Your First Name"
                     />
                     <Input
-                    fieldname="Please Insert Your Last Name"
                       type="text"
                       name="tutor_lastname"
                       handleChange={handleChange}
                       value={state?.tutor_lastname}
-                      
+                      fieldname="Please Insert Your Last Name"
                     />
 
                     <Input
-                    fieldname="Please Insert Your Email"
                       type="text"
                       name="tutor_email"
                       value={state?.tutor_email}
                       handleChange={handleChange}
-                      
-                    />
-
-                    <Input
-                    fieldname="Please Insert Your Password"
-                      type="password"
-                      name="tutor_password"
-                      handleChange={handleChange}
-                      value={state?.tutor_password}
-                      
+                      fieldname="Please Insert Your Email"
                     />
 
                     <div>
@@ -232,10 +220,9 @@ const EditTutor = (props) => {
                     <button
                       disabled={state.buttonStatus}
                       type="button"
-                      onClick={(key) => handleSubmit(key, props?.token, props?.tutor?.tutor_id)}
+                      onClick={(event) => handleSubmit(event)}
                     >
-                      {" "}
-                      {state.loading === true ? <Loading /> : "Save"}{" "}
+                      {state.loading === true ? <Loading /> : "Save"}
                     </button>
                   </div>
                 </form>

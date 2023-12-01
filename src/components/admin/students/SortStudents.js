@@ -7,22 +7,22 @@ import { APIsRequests } from "../../../api/APIsRequests";
 const SortStudents = () => {
   const [state, setState] = useState({
     data: [],
+    authData: {},
     isLoading: true,
-    token: null,
     sortBy: "student_id",
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData: authData }));
+
     const getStudentsApi = async (token, sortBy) => {
-      await APIsRequests
-        .getStudentsApi(token?.token, sortBy)
+      await APIsRequests.getStudentsApi(token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
-            data: response?.data?.data,
             isLoading: false,
+            data: response?.data?.data,
           }));
         })
         .catch((error) => {
@@ -30,7 +30,7 @@ const SortStudents = () => {
         });
     };
 
-    getStudentsApi(token, state?.sortBy);
+    getStudentsApi(authData?.token, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
@@ -47,7 +47,7 @@ const SortStudents = () => {
 
   return (
     <div className={"SortMainPage"}>
-      <Navbar page="dashboard-admin" />
+      <Navbar authData= { state?.authData } page="admin-dashboard" />
       <div>
         <h1> Sort Student List </h1>
         <p> Choose a column to sort the article list </p>
@@ -62,17 +62,14 @@ const SortStudents = () => {
             <option value="student_targetgrade">Target Grade</option>
             <option value="student_progressbar">Progress Bar</option>
           </select>
-          <br></br>
-          <input type="submit" value="Submit" />
         </form>
-        <p>Click the "Submit" button .</p>
       </div>
       {
         <StudentList
-          token={state?.token}
           data={state?.data}
-          isLoading={state?.isLoading}
           sortBy={state?.sortBy}
+          authData={state?.authData}
+          isLoading={state?.isLoading}
         />
       }
     </div>

@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
+import Input from '../form/input';
 import Navbar from '../navbar/Navbar';
 import Loading from '../loading/Loading';
 import { APIsRequests } from '../../api/APIsRequests';
@@ -51,7 +52,7 @@ const Signin = () => {
       })
       .then((response) => {
         localStorage.setItem('data', JSON.stringify(response?.data));
-        window.location.replace(`/dashboard/${role}`);
+        window.location.replace(`/${role}/dashboard`);
       })
       .catch((error) => {
         return setState((prevState) => ({
@@ -68,33 +69,25 @@ const Signin = () => {
       <Navbar page='signin' />
       <div className='auth-unique'>
         <div className='form__logo-container'>
-          <div className='form__header'>{role} Login </div>
+          <div className='form__header'>{role} Signin </div>
         </div>
 
         <div className='form__content'>
-          <input
-            onChange={(name) => handleChange(name)}
+          <Input
             type='text'
             name='username'
             placeholder='Username'
-            autocomplete='on'
-            className='form__input'
+            handleChange={handleChange}
           />
-          <input
-            onChange={(name) => handleChange(name)}
+          <Input
             type='password'
             name='password'
             placeholder='Password'
-            className='form__input'
+            handleChange={handleChange}
           />
 
           <div className='form-error'>{state.error}</div>
-          <button
-            disabled={state.buttonStatus}
-            onClick={(key) => handleSubmit(key)}
-            type='submit'
-            className='form__button'
-          >
+          <button disabled={state.buttonStatus} onClick={(key) => handleSubmit(key)} type='submit' className='form__button'>
             {state.loading === true ? <Loading /> : 'Signin'}
           </button>
 
@@ -104,17 +97,17 @@ const Signin = () => {
             </a>
           </div>
           <div className='form__links'>
-            Don't have account ?{' '}
+            Don't have account ?
             <a className='form__link' href='/signup/student'>
               Signup Student
-            </a>{' '}
-            |{' '}
+            </a>
+
             <a className='form__link' href='/signup/tutor'>
-              Signup Tutor
-            </a>{' '}
-            |{' '}
+            | Signup Tutor
+            </a>
+
             <a className='form__link' href='/signup/admin'>
-              Signup Admin
+            | Signup Admin
             </a>
           </div>
         </div>

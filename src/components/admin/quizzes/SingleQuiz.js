@@ -32,7 +32,7 @@ const SingleQuiz = () => {
 
   return (
     <div className="SingleMainPage">
-    <Navbar page='dashboard-admin' />
+    <Navbar page='admin-dashboard' />
 
       <h1> Single Quiz page </h1>
       <ul className="MainListPage">

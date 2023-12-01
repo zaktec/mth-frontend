@@ -1,29 +1,29 @@
-import Loading from "../../loading/Loading";
-import React, { useState } from "react";
-import { APIsRequests } from "../../../api/APIsRequests";
-import Input from "../../form/input";
-import ImageUploader from "react-images-upload";
-import JoinPattern from "../../patterns/joinPattern";
-import Avatar from "../../../assets/images/avatar.png";
+import Loading from '../../loading/Loading';
+import React, { useState } from 'react';
+import { APIsRequests } from '../../../api/APIsRequests';
+import Input from '../../form/input';
+import ImageUploader from 'react-images-upload';
+import JoinPattern from '../../patterns/joinPattern';
+import Avatar from '../../../assets/images/avatar.png';
 
 const PostStudent = (props) => {
   const [isStudentActiveTrue, setIsStudentActiveTrue] = useState(false);
   const [isStudentActiveFalse, setIsStudentActiveFalse] = useState(false);
   const [state, setState] = useState({
-    student_username: "",
-    student_firstname: "",
-    student_lastname: "",
-    student_email: "",
-    student_password: "",
-    student_active: "TRUE",
+    student_username: '',
+    student_firstname: '',
+    student_lastname: '',
+    student_email: '',
+    student_password: '',
+    student_active: 'TRUE',
     student_grade: 0,
     student_targetgrade: 0,
     student_progressbar: 0,
-    student_notes: "",
-    student_image: "",
+    student_notes: '',
+    student_image: '',
     student_msg_count: 0,
-    student_msg_input: "",
-    student_msg_output: "",
+    student_msg_input: '',
+    student_msg_output: '',
     student_course_fk_id: 0,
     student_tutor_fk_id: 0,
 
@@ -56,7 +56,7 @@ const PostStudent = (props) => {
     }
   };
 
-  const handleSubmit = async (event, token) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
@@ -64,12 +64,12 @@ const PostStudent = (props) => {
       loading: true,
       error: null,
     }));
-    await APIsRequests
-      .postStudentApi(token, state)
+
+    await APIsRequests.postStudentApi(props?.authData?.token, state)
       .then((response) => {
         setState((prevState) => ({
           ...prevState,
-          message: "student posted successfully",
+          message: 'student posted successfully',
         }));
         setTimeout(() => {
           window.location.replace(`/studentlist`);
@@ -105,13 +105,13 @@ const PostStudent = (props) => {
     if (state?.student_image.name) {
       const getDocName = state?.student_image.name;
       const docLength = getDocName.length;
-      const point = getDocName.lastIndexOf(".");
+      const point = getDocName.lastIndexOf('.');
       const getExtensionFile = getDocName.substring(point, docLength);
       const lowCaseExtensionFile = getExtensionFile.toLowerCase();
       if (
-        lowCaseExtensionFile === ".jpg" ||
-        lowCaseExtensionFile === ".png" ||
-        lowCaseExtensionFile === ".gif"
+        lowCaseExtensionFile === '.jpg' ||
+        lowCaseExtensionFile === '.png' ||
+        lowCaseExtensionFile === '.gif'
       ) {
         profilePicturePreview = URL.createObjectURL(state?.student_image);
       }
@@ -119,45 +119,40 @@ const PostStudent = (props) => {
   }
 
   return (
-    <div className="PostMainPage">
+    <div className='PostMainPage'>
       {state?.displayForm === true ? (
-        <button onClick={(event) => handleDisplayForm(event)}>
-          No Add Student
-        </button>
+        <button onClick={(event) => handleDisplayForm(event)}>NO ADD</button>
       ) : (
-        <button onClick={(event) => handleDisplayForm(event)}>
-          {" "}
-          Add Student{" "}
-        </button>
+        <button onClick={(event) => handleDisplayForm(event)}>ADD STUDENT</button>
       )}
       {state.displayForm === true && (
-        <div className="form-container">
-          <div className="form-header">
-            <div className="head">INSERT STUDENT</div>
+        <div className='form-container'>
+          <div className='form-header'>
+            <div className='head'>INSERT STUDENT</div>
           </div>
 
           <JoinPattern />
 
-          <div className="form-container">
-            <div className="sections-container">
-              <section className="section-one">
-                <div className="profile-picture">
-                  {" "}
+          <div className='form-container'>
+            <div className='sections-container'>
+              <section className='section-one'>
+                <div className='profile-picture'>
+                  {' '}
                   <img
                     src={profilePicturePreview || Avatar}
-                    alt="profile"
-                  />{" "}
+                    alt='profile'
+                  />{' '}
                 </div>
                 <ImageUploader
                   fileContainerStyle={{
-                    marginTop: "50px",
-                    height: "50px",
-                    width: "200px",
-                    float: "left",
+                    marginTop: '50px',
+                    height: '50px',
+                    width: '200px',
+                    float: 'left',
                   }}
-                  buttonStyles={{ backgroundColor: "#808080", color: "#ffff" }}
-                  imgExtension={[".jpg", ".png"]}
-                  buttonText="Upload Picture"
+                  buttonStyles={{ backgroundColor: '#808080', color: '#ffff' }}
+                  imgExtension={['.jpg', '.png']}
+                  buttonText='Upload Picture'
                   maxFileSize={100000000}
                   onChange={onDrop}
                   withLabel={false}
@@ -165,52 +160,52 @@ const PostStudent = (props) => {
                 />
               </section>
 
-              <section className="section-two">
-                <form className="form-fields">
-                  <div className="attribute-container">
+              <section className='section-two'>
+                <form className='form-fields'>
+                  <div className='attribute-container'>
                     <Input
-                      fieldname="Please Insert Your username"
-                      type="text"
-                      name="student_username"
+                      type='text'
+                      name='student_username'
+                      handleChange={handleChange}
                       value={state?.student_username}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your username'
                     />
                     <Input
-                      fieldname="Insert Your First Name"
-                      type="text"
-                      name="student_firstname"
+                      type='text'
+                      name='student_firstname'
+                      handleChange={handleChange}
                       value={state?.student_firstname}
-                      handleChange={handleChange}
+                      fieldname='Insert Your First Name'
                     />
                     <Input
-                      fieldname="Please Insert Your Last Name"
-                      type="text"
-                      name="student_lastname"
+                      type='text'
+                      name='student_lastname'
+                      handleChange={handleChange}
                       value={state?.student_lastname}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your Last Name'
                     />
 
                     <Input
-                      fieldname="Please Insert Your Email"
-                      type="text"
-                      name="student_email"
+                      type='text'
+                      name='student_email'
+                      handleChange={handleChange}
                       value={state?.student_email}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your Email'
                     />
 
                     <Input
-                      fieldname="Please Insert Your Password"
-                      type="text"
-                      name="student_password"
-                      value={state?.student_password}
+                      type='text'
+                      name='student_password'
                       handleChange={handleChange}
+                      value={state?.student_password}
+                      fieldname='Please Insert Your Password'
                     />
 
                     <div>
-                      <p style={{ margin: "10px 00px" }}> Is Student Active </p>
+                      <p style={{ margin: '10px 00px' }}> Is Student Active </p>
                       <label>
                         <input
-                          type="checkbox"
+                          type='checkbox'
                           checked={isStudentActiveTrue}
                           onChange={handleIsStudentActiveTrue}
                         />
@@ -219,7 +214,7 @@ const PostStudent = (props) => {
 
                       <label>
                         <input
-                          type="checkbox"
+                          type='checkbox'
                           checked={isStudentActiveFalse}
                           onChange={handleIsStudentActiveFalse}
                         />
@@ -228,84 +223,84 @@ const PostStudent = (props) => {
                     </div>
 
                     <Input
-                      fieldname="Please Insert Your Grade"
-                      type="number"
-                      name="student_grade"
-                      value={state?.student_grade}
+                      type='number'
+                      name='student_grade'
                       handleChange={handleChange}
+                      value={state?.student_grade}
+                      fieldname='Please Insert Your Grade'
                     />
                     <Input
-                      fieldname="Please Insert Your Grade"
-                      type="number"
-                      name="student_grade"
-                      value={state?.student_grade}
+                      type='number'
+                      name='student_grade'
                       handleChange={handleChange}
+                      value={state?.student_grade}
+                      fieldname='Please Insert Your Grade'
                     />
                     <Input
-                      fieldname="Please Insert Your Target grade"
-                      type="number"
-                      name="student_targetgrade"
+                      type='number'
+                      name='student_targetgrade'
                       value={state?.target_grade}
                       handleChange={handleChange}
+                      fieldname='Please Insert Your Target grade'
                     />
                     <Input
-                      fieldname="Please Insert Your Target grade"
-                      type="number"
-                      name="student_targetgrade"
+                      type='number'
+                      name='student_targetgrade'
                       value={state?.target_grade}
                       handleChange={handleChange}
+                      fieldname='Please Insert Your Target grade'
                     />
                     <Input
-                      fieldname="Please Insert Your Progressbar"
-                      type="number"
-                      name="student_progressbar"
+                      type='number'
+                      name='student_progressbar'
+                      handleChange={handleChange}
                       value={state?.student_progressbar}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your Progressbar'
                     />
                     <Input
-                      fieldname="Please Insert Your Student Notes"
-                      type="text"
-                      name="student_notes"
+                      type='text'
+                      name='student_notes'
+                      handleChange={handleChange}
                       value={state?.student_notes}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your Student Notes'
                     />
                     <Input
-                      fieldname="Please Insert Your Student Image"
-                      type="text"
-                      name="student_image"
+                      type='text'
+                      name='student_image'
+                      handleChange={handleChange}
                       value={state?.student_image}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your Student Image'
                     />
                     <Input
-                      fieldname="Please Insert Your Message Count"
-                      type="number"
-                      name="student_msg_count"
+                      type='number'
+                      name='student_msg_count'
+                      handleChange={handleChange}
                       value={state?.student_msg_count}
-                      handleChange={handleChange}
+                      fieldname='Please Insert Your Message Count'
                     />
                     <Input
-                      fieldname="Please Insert Your Message Input"
-                      type="text"
-                      name="student_msg_input"
-                      value={state?.student_msg_input}
+                      type='text'
+                      name='student_msg_input'
                       handleChange={handleChange}
+                      value={state?.student_msg_input}
+                      fieldname='Please Insert Your Message Input'
                     />
                     <Input
-                      fieldname="Please Insert Your Message Output"
-                      type="text"
-                      name="student_msg_input"
-                      value={state?.student_msg_input}
+                      type='text'
+                      name='student_msg_input'
                       handleChange={handleChange}
+                      value={state?.student_msg_input}
+                      fieldname='Please Insert Your Message Output'
                     />
-                    <div className="result-container">
+                    <div className='result-container'>
                       {state?.error !== null ? state?.error : state?.message}
                     </div>
                     <button
+                      type='button'
                       disabled={state.buttonStatus}
-                      type="button"
-                      onClick={(key) => handleSubmit(key, props?.token)}
+                      onClick={(key) => handleSubmit(key)}
                     >
-                      {state.loading === true ? <Loading /> : "Save"}
+                      {state.loading === true ? <Loading /> : 'Save'}
                     </button>
                   </div>
                 </form>
@@ -317,4 +312,5 @@ const PostStudent = (props) => {
     </div>
   );
 };
+
 export default PostStudent;

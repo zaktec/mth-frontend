@@ -69,7 +69,7 @@ const EditTopic = (props) => {
   return (
     <div className="PostMainPage">
     {state?.displayForm === true ? (
-      <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
+      <button onClick={(key) => handleDisplayForm(key)}> NO EDIT </button>
     ) : (
       <button onClick={(key) => handleDisplayForm(key)}>Edit Topic</button>
     )}

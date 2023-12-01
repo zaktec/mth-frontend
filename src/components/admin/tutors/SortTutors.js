@@ -8,22 +8,23 @@ import { APIsRequests } from "../../../api/APIsRequests";
 const SortTutors = () => {
   const [state, setState] = useState({
     data: [],
+    authData: {},
     isLoading: true,
-    token: null,
     sortBy: "tutor_id",
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData: authData }));
+
     const getTutorsApi = async (token, sortBy) => {
       await APIsRequests
-        .getTutorsApi(token?.token, sortBy)
+        .getTutorsApi(token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
+            isLoading: false,
             data: response?.data?.data,
-            isLoading: false,      
           }));      
           
         })
@@ -32,7 +33,7 @@ const SortTutors = () => {
         });
     };
 
-    getTutorsApi(token, state?.sortBy);
+    getTutorsApi(authData?.token, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
@@ -49,7 +50,7 @@ const SortTutors = () => {
   
   return (
     <div className={"SortMainPage"}>
-      <Navbar page="dashboard-admin" />
+      <Navbar  authData= { state?.authData } page="admin-dashboard" />
       <div>
         <h1> Sort Tutor List </h1>
         <p> Choose a column to sort the Tutor list </p>
@@ -61,17 +62,14 @@ const SortTutors = () => {
             <option value="tutor_lastname">LastName</option>
             <option value="tutor_active">Active</option>
           </select>
-          <br></br>
-          {/*    <input type="submit" value="Submit" /> */}
         </form>
-        {/*  <p>Click the "Submit" button .</p> */}
       </div>
        {
       <TutorList
-        token={state?.token}
         data={state?.data}
-        isLoading={state?.isLoading}
         sortBy={state?.sortBy}
+        authData={state?.authData}
+        isLoading={state?.isLoading}
       />
       } 
     </div>

@@ -1,26 +1,28 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { verifyAuth } from "../../../helpers";
-import { APIsRequests } from "../../../api/APIsRequests";
-import Navbar from "../../navbar/Navbar";
-import DeleteAdmin from "./DeleteAdmin";
+
 import EditAdmin from "./EditAdmin";
+import DeleteAdmin from "./DeleteAdmin";
+import Navbar from "../../navbar/Navbar";
+import { APIsRequests } from "../../../api/APIsRequests";
+import { verifyAuth, verifyRole } from "../../../helpers";
 
 const SingleAdmin = () => {
+  const { role } = useParams();
   const { admin_id } = useParams();
   const [state, setState] = useState({
     data: {},
+    authData: {},
     isLoading: true,
-    token: null,
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    verifyRole(role);
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData: authData }));
     const getAdminApi = async (token, admin_id) => {
-      await APIsRequests
-        .getAdminApi(token?.token, admin_id)
+      await APIsRequests.getAdminApi(token, admin_id)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -33,51 +35,43 @@ const SingleAdmin = () => {
         });
     };
 
-    getAdminApi(token, admin_id);
-  }, [admin_id]);
+    getAdminApi(authData?.token, admin_id);
+  }, [role, admin_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
     <div className="SingleMainPage">
-      <Navbar page="dashboard-admin" />
-      <h1> Single Admin page </h1>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+      <h1> ADMIN DETAIL</h1>
       <ul className="MainListPage">
-        <li className="List__card">
-          <p>
-            <b>Admin ID :</b> {state?.data?.admin_id}
-          </p>
-          <p>
-            <b>Admin Username :</b> {state?.data?.admin_username}
-          </p>
-          <p>
-            <b>admin Firstname :</b> {state?.data?.admin_firstname}
-          </p>
-          <p>
-            <b>admin Lastname :</b> {state?.data?.admin_lastname}
-          </p>
-          <p>
-            <b>admin Email :</b> {state?.data?.admin_email}
-          </p>
-          <p>
-            <b>admin Password :</b> {state?.data?.admin_password}
-          </p>
-          <p>
-            <b>admin Image :</b> {state?.data?.admin_image}
-          </p>
-        </li>
+        <p>
+          <b>Admin ID :</b> {state?.data?.admin_id}
+        </p>
+        <p>
+          <b>Admin Username :</b> {state?.data?.admin_username}
+        </p>
+        <p>
+          <b>admin Firstname :</b> {state?.data?.admin_firstname}
+        </p>
+        <p>
+          <b>admin Lastname :</b> {state?.data?.admin_lastname}
+        </p>
+        <p>
+          <b>admin Email :</b> {state?.data?.admin_email}
+        </p>
+        <img
+          className="ListImage"
+          src={state?.data?.admin_image}
+          alt={state?.data?.admin_firstname}
+        />
       </ul>
 
       <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <DeleteAdmin
-          token={state?.token}
-          admin_id={state?.data?.admin_id}
-        />{" "}
+        <EditAdmin authData={state?.authData} role={role} admin={state?.data} />
       </div>
       <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <EditAdmin token={state?.token} admin={state?.data} />{" "}
+        <DeleteAdmin authData={state?.authData} admin_id={admin_id} />
       </div>
     </div>
   );

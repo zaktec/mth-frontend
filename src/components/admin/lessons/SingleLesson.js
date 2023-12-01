@@ -40,7 +40,7 @@ const SingleLesson = () => {
 
   return (
     <main className="SingleMainPage">
-      <Navbar page='dashboard-admin' />
+      <Navbar page='admin-dashboard' />
       <h1> Single Lesson page </h1>
       <ul className="Main__List">
         <li className="MainList__card">

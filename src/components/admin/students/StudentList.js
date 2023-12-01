@@ -4,21 +4,16 @@ import { Link } from "react-router-dom";
 
 const StudentList = (props) => {
   if (props?.isLoading) return <p>Loading....</p>
-  console.log(props);
 
   return (
     <div className={"MainListPage"}>
       <h2 className="MainList__h1">Students</h2>
      
-       <PostStudent token = {props?.token} /> 
+       <PostStudent authData = {props?.authData} /> 
 
         <ul className={"Main__List"}>
-        {props?.data.map((student) => {
-          return (
-            <Link
-              key={student.student_id}
-              to={`/students/${student.student_id}`}
-            >
+        {props?.data.map((student) => (
+            <Link key={student.student_id} to={`/admin/get-students/${student.student_id}`} >
               <li key={student.student_id} className={"MainList__card"}>
                 <p>
                   <b>Student ID :</b> {student.student_id}
@@ -29,17 +24,14 @@ const StudentList = (props) => {
                 <p>
                   <b>Student Lastname :</b> {student.student_lastname}
                 </p>
-
-                {/* <img
-                className="Student__avatar-img"
-                src={student.student_image}
-                alt={student.student_firstname}
-              ></img> */}
+                <p>
+                  <img src={student.student_image} alt={student.student_firstname} ></img>
+                </p>
+                
                 <button> Click for more detail</button>
               </li>
             </Link>
-          );
-        })}
+          ))}
       </ul>
     </div>
   );

@@ -96,12 +96,9 @@ const EditQuestion = (props) => {
   return (
     <div className="PostMainPage">
     {state?.displayForm === true ? (
-      <button onClick={(event) => handleDisplayForm(event)}>
-        {" "}
-        No Edit question{" "}
-      </button>
+      <button onClick={(event) => handleDisplayForm(event)}> NO EDIT QUESTION </button>
     ) : (
-      <button onClick={(event) => handleDisplayForm(event)}> Edit question </button>
+      <button onClick={(event) => handleDisplayForm(event)}> EDIT QUESTION </button>
     )}
 
     {state.displayForm === true && (

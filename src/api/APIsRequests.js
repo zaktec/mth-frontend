@@ -405,7 +405,6 @@ export const APIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    console.log(config);
     return await axios.get(variables.GET_ALL_TOPICS_API, config);
   },
 
@@ -464,7 +463,6 @@ export const APIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    console.log(config);
     return await axios.get(variables.GET_ALL_QUIZZES_API, config);
   },
 
@@ -523,7 +521,7 @@ export const APIsRequests = {
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    console.log(config);
+
     return await axios.get(variables.GET_ALL_QUESTIONS_API, config);
   },
 
@@ -561,17 +559,19 @@ export const APIsRequests = {
     );
   },
 
-//Tutor Dashboard-----------
+  //Tutor Dashboard-----------
+  getTutorStudentsApi: async (token) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
 
+    };
+    return await axios.get(variables.TUTOR_STUDENT_API, config);
+  },
 
-getTutorStudentsApi: async (token) => {
-  const config = {
-    headers: { Authorization: `BEARER ${token}` },
-
-  };
-  console.log(config);
-  return await axios.get(variables.TUTOR_STUDENT_API, config);
-},
-
-
+  getStudentQuizzes: async (token, student_id) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+    };
+    return await axios.get(`${variables.GET_TUTOR_STUDENT_QUIZZES_API}/${student_id}`, config);
+  },
 };

@@ -49,7 +49,7 @@ const SortCourses = () => {
 
   return (
     <div className="SortMainPage">
-      <Navbar page='dashboard-admin' />
+      <Navbar page='admin-dashboard' />
 
       <div>
         <h1> Sort Courses List </h1>
@@ -63,9 +63,8 @@ const SortCourses = () => {
             <option value="course_level">CourseLevel</option>
           </select>
           <br></br>
-         {/*  <input type="submit" value="Submit" /> */}
+          <input type="submit" value="Submit" />
         </form>
-      
       </div>
       {
         <CourseList

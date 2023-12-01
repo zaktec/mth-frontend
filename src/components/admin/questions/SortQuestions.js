@@ -49,7 +49,7 @@ const SortQuestions = () => {
 
   return (
     <div className="SortMainPage">
-    <Navbar page='dashboard-admin' />
+    <Navbar page='admin-dashboard' />
       <div>
         <h1> Sort Questions List </h1>
         <p> Choose a column to sort the quiz list </p>
@@ -64,7 +64,6 @@ const SortQuestions = () => {
           <br></br>
           <input type="submit" value="Submit" />
         </form>
-        <p>Click the "Submit" button .</p>
       </div>
       <QuestionList 
       data={state?.data}

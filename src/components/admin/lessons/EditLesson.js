@@ -70,7 +70,7 @@ const EditLesson = (props) => {
   return (
     <div className="EditMainPage">
       {state?.displayForm === true ? (
-        <button onClick={(key) => handleDisplayForm(key)}> No Edit </button>
+        <button onClick={(key) => handleDisplayForm(key)}> NO EDIT </button>
       ) : (
         <button onClick={(key) => handleDisplayForm(key)}>Edit Lesson </button>
       )}

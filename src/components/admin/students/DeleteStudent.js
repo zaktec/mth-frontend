@@ -2,11 +2,10 @@ import React from "react";
 import { APIsRequests } from "../../../api/APIsRequests";
 
 const DeleteStudent = (props) => {
-  const handleDeleteStudent = async (event, token, student_id) => {
+  const handleDeleteStudent = async (event) => {
     event.preventDefault();
-    await APIsRequests
-      .deleteLessonApi(token, student_id)
-      .then((response) => {
+    await APIsRequests.deleteLessonApi(props?.authData?.token, props?.student_id)
+      .then(() => {
         window.location.replace(`/studentlist`);
       })
       .catch((error) => {
@@ -16,11 +15,9 @@ const DeleteStudent = (props) => {
 
   return (
     <div>
-      <button
-        onClick={(event) =>
-          handleDeleteStudent(event, props?.token, props?.student_id)
-        }>Delete Student</button>
+      <button onClick={(event) =>handleDeleteStudent(event)}>DELETE STUDENT</button>
     </div>
   );
 };
+
 export default DeleteStudent;
