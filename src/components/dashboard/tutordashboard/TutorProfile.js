@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import TutorStudents from "./TutorStudents";
-import EditTutor from "../../admin/tutors/EditTutor";
-import { APIsRequests } from "../../../api/APIsRequests";
+import EditTutor from "../../tutors/EditTutor";
+import { APIsRequests } from '../../../api/APIsRequests';
 
 const TutorProfile = (props) => {
   const [state, setState] = useState({

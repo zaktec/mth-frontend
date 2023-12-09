@@ -16,19 +16,16 @@ const Dashboard = () => {
       role === "student" ? 
         <div className='dashboard-unique'> 
           <Navbar authData= { authData } page='student-dashboard' />
-          Student Dashboard
           <StudentProfile authData= { authData } /> 
         </div>
       : role === "tutor" ?
         <div className='dashboard-unique'> 
           <Navbar authData= { authData } page='tutor-dashboard' />
-          Tutor Dashboard
           <TutorProfile authData= { authData } />
         </div>
       : role === "admin" ? 
         <div className='dashboard-unique'> 
           <Navbar authData= { authData } page='admin-dashboard' />
-          Admin Dashboard
           <AdminProfile authData= { authData } />
         </div>
       : null

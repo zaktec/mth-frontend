@@ -1,10 +1,44 @@
+@import 'react-toastify/dist/ReactToastify.css';
+@import './assets/style/quizQuestions.scss';
+@import './assets/style/colors.scss';
 @import './assets/style/navBar.scss';
 @import './assets/style/auth.scss';
 @import './assets/style/page.scss';
 
 *, body {
-    margin:10000000000;
-    padding:0;
-    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
 }
 
+.Toastify__toast-container {
+  z-index: 100;
+  width: 380px;
+  font-size: 15px;
+  font-weight: 900;
+
+  .Toastify__toast--success {
+    font-size: medium;
+    text-align: center;
+    color: $greenColor;
+    background: $grayColor;
+  }
+  
+  .Toastify__toast--info {
+    color: $blueColor;
+    text-align: center;
+    background: $grayColor;
+  }
+
+  .Toastify__toast--warning {
+    text-align: center;
+    color: $yellowColor;
+    background: $grayColor;
+  }
+
+  .Toastify__toast--error {
+    color: $redColor;
+    text-align: center;
+    background: $grayColor;
+  }         
+}

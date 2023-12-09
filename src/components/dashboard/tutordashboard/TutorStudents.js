@@ -46,19 +46,20 @@ const TutorStudents = (props) => {
       ) : (
         <button onClick={(event) => handleDisplayForm(event)}> SEE STUDENT </button>
       )}
+
       {state.displayForm === true && (
         <ul className={'Main__List'}>
-          { state.data.map((student) => (
-              <Link key={student.student_id} to={`/tutor/get-students/${student.student_id}`} >
-                <li key={student.student_id} className={'MainList__card'}>
+          { state.data.map((element) => (
+              <Link key={element.student_id} to={`/tutor/get-students/${element.student_id}`} >
+                <li key={element.student_id} className={'MainList__card'}>
                   <p>
-                    <b>Student ID :</b> {student.student_id}
+                    <b>Student ID :</b> {element.student_id}
                   </p>
                   <p>
-                    <b>Student Firstname :</b> {student.student_firstname}
+                    <b>Student Firstname :</b> {element.student_firstname}
                   </p>
                   <p>
-                    <b>Student Lastname :</b> {student.student_lastname}
+                    <b>Student Lastname :</b> {element.student_lastname}
                   </p>
                   <button> Click for more detail</button>
                 </li>
@@ -69,5 +70,6 @@ const TutorStudents = (props) => {
     </div>
   );
 };
+
 
 export default TutorStudents;

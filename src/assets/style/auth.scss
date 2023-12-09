@@ -55,7 +55,7 @@
         .form-error {
             font-weight: 600;
             text-align: center;
-            color: $errorColor;
+            color: $redColor;
         }
 
         .form-response {
@@ -87,7 +87,7 @@
 
             .form__link {
                 font-size: 0.9em;
-                color: $linkColor;
+                color: $blueColor;
                 text-decoration: none;
             }
         }

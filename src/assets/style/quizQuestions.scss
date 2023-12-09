@@ -1,0 +1,128 @@
+@import "./size.scss";
+@import "./colors.scss";
+
+.quiz-question-container {
+  .header-container {
+    .svg-container {
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: -1;
+      position: absolute;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 70px;
+      padding: 0vw 00vw 00vw 10vw;
+    }
+  }
+
+  .question-answer-container {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+    padding: 10vw 00vw 00vw 0vw;
+
+    .question {
+      padding: 10px 30px;
+      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+      
+      .question-title {
+        font-size: 20px;
+        margin: 15px auto;
+        text-decoration: underline;
+      }
+
+      .question-body {
+        font-size: 20px;
+        margin: 15px auto;
+      }
+    }
+
+    .answer {
+      padding: 10px 30px;
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 22px 70px 4px;
+      
+      .form__input {
+        width: 90%;
+        border: none;
+        color: #333;
+        display: block;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        transition: all 0.3s;
+        padding: 1.5rem 2rem;
+        border-radius: 0.2rem;
+        background-color: rgb(255, 255, 255);
+        border-bottom: 1px solid $defaultColor;
+      }
+      
+      .form__input:focus{
+        outline: none;
+      }
+    }
+  }
+
+  .button-container {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+
+    button {
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 20px;
+        user-select: none;
+        padding: 16px 21px;
+        position: relative;
+        text-align: center;
+        color: $whiteColor;
+        border-radius: 56px;
+        transition: all .3s;
+        display: inline-block;
+        text-decoration: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        background-color: $blueColor;
+        font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
+      }
+    
+      button:before {
+        background-color: initial;
+        background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+        border-radius: 125px;
+        content: "";
+        height: 50%;
+        left: 4%;
+        opacity: .5;
+        position: absolute;
+        top: 0;
+        transition: all .3s;
+        width: 92%;
+      }
+    
+      button:hover {
+        box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+        transform: scale(1.05);
+      }
+    
+      @media (min-width: 768px) {
+        button {
+          padding: 16px 48px;
+        }
+      }
+  }
+}
+
+.quiz-question-container {
+  @media (min-width: 768px) {
+    .question-answer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}

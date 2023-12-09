@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { APIsRequests } from "../../../api/APIsRequests";
+import { APIsRequests } from '../../../api/APIsRequests';
 
 const AdminProfile = (props) => {
   const [state, setState] = useState({

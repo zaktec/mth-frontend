@@ -25,7 +25,7 @@ export const GET_ALL_TUTORS_API = `${SERVER_URL}/api/v1/tutors/get-tutors`;
 export const POST_COURSE_API = `${SERVER_URL}/api/v1/courses/post-courses`;
 export const EDIT_COURSE_API = `${SERVER_URL}/api/v1/courses/update-courses`;
 export const GET_ALL_COURSES_API = `${SERVER_URL}/api/v1/courses/get-courses`;
-export const DELETE_COURSE_API = `${SERVER_URL}/api/v1/courses/update-courses`;
+export const DELETE_COURSE_API = `${SERVER_URL}/api/v1/courses/delete-courses`;
 
 // LESSONS APIs
 export const POST_LESSON_API = `${SERVER_URL}/api/v1//lessons/post-lessons`;
@@ -66,4 +66,6 @@ export const DELETE_QUESTION_API = `${SERVER_URL}/api/v1/questions/delete-questi
 
 //Tutor dashboard
 export const TUTOR_STUDENT_API = `${SERVER_URL}/api/v1/tutors/get-tutor-students`;
-export const GET_TUTOR_STUDENT_QUIZZES_API = `${SERVER_URL}/api/v1/tutors/get-tutor-student-quizzes`;
+export const POST_STUDENT_QUIZ_API = `${SERVER_URL}/api/v1/quizzes/post-student-quizzes`;
+export const GET_STUDENT_QUIZZES_API = `${SERVER_URL}/api/v1/quizzes/get-student-quizzes`;
+export const GET_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-quiz-questions`;

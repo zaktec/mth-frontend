@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { APIsRequests } from "../../../api/APIsRequests";
-import SudentQuizzes from '../../admin/students/SudentQuizzes';
+import { APIsRequests } from '../../../api/APIsRequests';
+import StudentQuizzes from '../../students/StudentQuizzes';
 
 const StudentProfile = (props) => {
   const { role } = useParams();
@@ -75,7 +75,7 @@ const StudentProfile = (props) => {
 
       { role === 'student' && (
         <div style={{ margin: "20px 20px" }}>
-          <SudentQuizzes authData={props?.authData} student_id={props?.authData?.user?.student_id} /> 
+          <StudentQuizzes authData={props?.authData} role={role} student_id={props?.authData?.user?.student_id} /> 
         </div>
       )}
     </div>

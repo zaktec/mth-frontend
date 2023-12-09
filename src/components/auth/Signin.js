@@ -87,7 +87,7 @@ const Signin = () => {
           />
 
           <div className='form-error'>{state.error}</div>
-          <button disabled={state.buttonStatus} onClick={(key) => handleSubmit(key)} type='submit' className='form__button'>
+          <button disabled={state.buttonStatus} onClick={(event) => handleSubmit(event)} type='submit' className='form__button'>
             {state.loading === true ? <Loading /> : 'Signin'}
           </button>
 
@@ -98,15 +98,15 @@ const Signin = () => {
           </div>
           <div className='form__links'>
             Don't have account ?
-            <a className='form__link' href='/signup/student'>
+            <a className='form__link' href='/student/signup'>
               Signup Student
             </a>
 
-            <a className='form__link' href='/signup/tutor'>
+            <a className='form__link' href='/tutor/signup'>
             | Signup Tutor
             </a>
 
-            <a className='form__link' href='/signup/admin'>
+            <a className='form__link' href='/admin/signup'>
             | Signup Admin
             </a>
           </div>
