@@ -11,11 +11,11 @@ const LessonList = (props) => {
     <main className="MainListPage">
       <h1 className="MainList__h1"> Lesson List </h1>
 
-      <PostLesson token={props?.token} />
+      <PostLesson  authData= {props?.authData} token={props?.token} />
       <ul className="Main__List">
         {props?.data.map((element) => {
           return (
-            <Link key={element.lesson_id} to={`/lessons/${element.lesson_id}`}>
+            <Link key={element.lesson_id} to={`/${props?.role}/lessons/${element.lesson_id}`}>
               <li className="MainList__card">
                 <p style={{ margin: "10px auto" }}>
                   <b>Lesson Name: </b> {element.lesson_name}

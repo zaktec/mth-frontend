@@ -8,11 +8,11 @@ const TopicList = (props) => {
   return (
     <div className="MainListPage">
       <h1 className="MainList__h1"> TopicList </h1>
-      {<PostTopic setTopicListtoken={props?.token} />}
+      {<PostTopic authData= {props?.authData} role={props?.role}/>}
 
       <ul className="Main__List">
         {props?.data.map((element) => (
-          <Link key={element.topic_id} to={`/topics/${element.topic_id}`}>
+          <Link key={element.topic_id} to={`/${props?.role}/topics/${element.topic_id}`}>
             <li className="MainList__card">
               <p>
                 <b>Topic Name: </b> {element.topic_name}

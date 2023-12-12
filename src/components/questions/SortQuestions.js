@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import QuestionList from "./QuestionList";
-import { APIsRequests } from '../../api/APIsRequests';
-import Navbar from '../navbar/Navbar';
-import { verifyAuth } from '../../helpers';
+import { APIsRequests } from "../../api/APIsRequests";
+import Navbar from "../navbar/Navbar";
+import { verifyAuth } from "../../helpers";
 
 const SortQuestions = () => {
+  const { role } = useParams();
   const [state, setState] = useState({
     data: [],
     token: null,
@@ -15,11 +17,9 @@ const SortQuestions = () => {
 
   useEffect(() => {
     const authData = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: authData?.token }));
     setState((prevState) => ({...prevState, authData }));
     const getQuestionsApi = async (authData, sortBy) => {
-      await APIsRequests
-        .getQuestionsApi(authData?.token, sortBy)
+      await APIsRequests.getQuestionsApi(authData?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -40,7 +40,6 @@ const SortQuestions = () => {
   };
 
   const handleChange = (event) => {
-    
     return setState((prevState) => ({
       ...prevState,
       sortBy: event.target.value,
@@ -49,7 +48,7 @@ const SortQuestions = () => {
 
   return (
     <div className="SortMainPage">
-    <Navbar page='admin-dashboard' />
+      <Navbar authData={state?.authData} page="admin-dashboard" />
       <div>
         <h1> Sort Questions List </h1>
         <p> Choose a column to sort the quiz list </p>
@@ -65,11 +64,13 @@ const SortQuestions = () => {
           <input type="submit" value="Submit" />
         </form>
       </div>
-      <QuestionList 
-      data={state?.data}
-      sortBy={state?.sortBy}
-      token={state?.authData}
-      isLoading={state?.isLoading} />
+      <QuestionList
+        role={role}
+        data={state?.data}
+        sortBy={state?.sortBy}
+        authData={state?.authData}
+        isLoading={state?.isLoading}
+      />
     </div>
   );
 };

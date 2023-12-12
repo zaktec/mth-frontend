@@ -14,12 +14,12 @@ const QuizList =(props) => {
     <div className="MainListPage">
     <h1 className="MainList__h1"> QuizList </h1>
      
-    <PostQuiz token= {props?.token} />
+    <PostQuiz authData= {props?.authData} role={props?.role} />
 
     <ul className="Main__List">
         {props?.data.map((element) => {
           return (
-            <Link key={element.quiz_id} to={`/quizzes/${element.quiz_id}`}>
+            <Link key={element.quiz_id} to={`/${props?.role}/quizzes/${element.quiz_id}`}>
               <li className="MainList__card">
                 <p><b>Quiz Name: </b> {element.quiz_name}</p>
                 <p><b>Quiz Code: </b>{element.quiz_code}</p>

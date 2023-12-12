@@ -2,42 +2,49 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EditQuiz from "./EditQuiz.js";
-import { verifyAuth } from '../../helpers';
-import { APIsRequests } from '../../api/APIsRequests';
-import Navbar from '../navbar/Navbar';
+import { verifyAuth } from "../../helpers";
+import { APIsRequests } from "../../api/APIsRequests";
+import Navbar from "../navbar/Navbar";
 import DeleteQuiz from "./DeleteQuiz.js";
 
-
 const SingleQuiz = () => {
-  const { quiz_id } = useParams();
-  const [state, setState] = useState({ data: {}, isLoading: true, token: null });
+  const { role, quiz_id } = useParams();
+  const [state, setState] = useState({
+    data: {},
+    isLoading: true,
+    authData: {},
+  });
 
   useEffect(() => {
-    const token =  verifyAuth();
-    setState((prevState) => ({...prevState, token: token?.token }));
-    const getQuizApi = async (token, quiz_id) => {  
-      await APIsRequests.getQuizApi(token?.token, quiz_id)
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData }));
+    const getQuizApi = async (token, quiz_id) => {
+      await APIsRequests.getQuizApi(token, quiz_id)
         .then((response) => {
-          return setState((prevState) => ({...prevState, data: response?.data?.data, isLoading: false }));
+          return setState((prevState) => ({
+            ...prevState,
+            data: response?.data?.data,
+            isLoading: false,
+          }));
         })
         .catch((error) => {
           console.log(error);
         });
     };
 
-    getQuizApi(token, quiz_id);
+    getQuizApi(authData?.token, quiz_id);
   }, [quiz_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
     <div className="SingleMainPage">
-    <Navbar page='admin-dashboard' />
+      <Navbar authData={state?.authData} page="admin-dashboard" />
 
       <h1> Single Quiz page </h1>
       <ul className="MainListPage">
         <li className="MainList__card">
-        <p>
+          <p>
             <b>Quiz ID :</b> {state?.data?.quiz_id}
           </p>
           <p>
@@ -51,11 +58,15 @@ const SingleQuiz = () => {
           </p>
         </li>
       </ul>
-      <div style={{ margin: '20px 20px' }}> <DeleteQuiz token= {state?.token} quiz_id={state?.data?.quiz_id} /> </div>
-      <div style={{ margin: '20px 20px' }}> <EditQuiz token= {state?.token} quiz={state?.data} /> </div>
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <DeleteQuiz authData={state?.authData} role={role} quiz_id={quiz_id} /></div>
+      <div style={{ margin: "20px 20px" }}>
+        {" "}
+        <EditQuiz token={state?.authData} role={role} quiz={state?.data} />{" "}
+      </div>
     </div>
-  
   );
-}
+};
 
 export default SingleQuiz;

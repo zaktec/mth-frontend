@@ -33,30 +33,35 @@ const RoutePages = () => {
         <Route path='/' element={<HomePage />}></Route>
         <Route path='/:role/signin' element={<Signin />}></Route>
         <Route path='/:role/signup' element={<Signup />}></Route>
-
-         {/*  Authorisation Route  */}
-        <Route path='/quizlist' element={<SortQuizzes />}></Route>
-        <Route path='/topiclist' element={<SortTopics />}></Route>
         <Route path='/adminlist' element={<SortAdmins />}></Route>
          <Route path='/tutorlist' element={<SortTutors />}></Route>
-        <Route path='/lessonlist' element={<SortLessons />}></Route>
         <Route path='/studentlist' element={<SortStudents />}></Route>
-        <Route path='/questionlist' element={<SortQuestions />}></Route> 
-        <Route path='/quizzes/:quiz_id' element={<SingleQuiz />}></Route>
-        <Route path='/topics/:topic_id' element={<SingleTopic />}></Route>
+      
         <Route path='/tutorprofile/:role' element={<TutorProfile />}></Route>
-        <Route path='/lessons/:lesson_id' element={<SingleLesson />}></Route>
-        <Route path='/questions/:question_id' element={<SingleQuestion />}></Route>
+       
+
+       {/*  new routes */}
+       <Route path='/:role/questions' element={<SortQuestions />}></Route> 
+       <Route path='/:role/questions/:question_id' element={<SingleQuestion />}></Route>
 
 
-        
-        {/* <Route path='/:role/quizzes' element={<SortQuizzes />}></Route> */}
+        <Route path='/:role/lessons' element={<SortLessons />}></Route>
+        <Route path='/:role/lessons/:lesson_id' element={<SingleLesson />}></Route>
 
         <Route path='/:role/dashboard' element={<Dashboard />}></Route>
+
         <Route path='/:role/courses' element={<SortCourses />}></Route>
         <Route path='/:role/courses/:course_id' element={<SingleCourse />}></Route>
-        <Route path='/:role/quiz-questions/:quiz_id' element={<QuizQuestion />}></Route>
 
+        <Route path='/:role/quizzes' element={<SortQuizzes />}></Route>
+        <Route path='/:role/quizzes/:quiz_id' element={<SingleQuiz />}></Route>
+
+        <Route path='/:role/topics' element={<SortTopics />}></Route>
+        <Route path='/:role/topics/:topic_id' element={<SingleTopic />}></Route> 
+
+
+
+        <Route path='/:role/quiz-questions/:quiz_id' element={<QuizQuestion />}></Route>
         <Route path='/:role/get-admins/:admin_id' element={<SingleAdmin />}></Route>
         <Route path='/:role/get-tutors/:tutor_id' element={<SingleTutor />}></Route>
         <Route path='/:role/get-students/:student_id' element={<SingleStudent />}></Route> 

@@ -3,24 +3,24 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
-import Navbar from '../navbar/Navbar';
-import { verifyAuth } from '../../helpers';
-import { APIsRequests } from '../../api/APIsRequests';
+import Navbar from "../navbar/Navbar";
+import { verifyAuth } from "../../helpers";
+import { APIsRequests } from "../../api/APIsRequests";
 
 const SingleQuestion = (props) => {
-  const { question_id } = useParams();
+  const { role, question_id } = useParams();
   const [state, setState] = useState({
     data: {},
     isLoading: true,
+    authData: {},
     token: null,
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData }));
     const getQuestionApi = async (token, question_id) => {
-      await APIsRequests
-        .getQuestionApi(token?.token, question_id)
+      await APIsRequests.getQuestionApi(token, question_id)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -33,14 +33,14 @@ const SingleQuestion = (props) => {
         });
     };
 
-    getQuestionApi(token, question_id);
+    getQuestionApi(authData?.token, question_id);
   }, [question_id]);
 
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
     <div className="SingleMainPage">
-      <Navbar page="admin-dashboard" />
+      <Navbar authData={state?.authData} page="admin-dashboard" />
       <h1> Single Question page </h1>
       <ul className="MainListPage">
         <li className="MainList__card">
@@ -96,13 +96,17 @@ const SingleQuestion = (props) => {
       <div style={{ margin: "20px 20px" }}>
         {" "}
         <DeleteQuestion
-          token={state?.token}
-          question_id={state?.data?.question_id}
+          authData={state?.authData}
+          role={role}
+          question_id={question_id}
         />{" "}
       </div>
       <div style={{ margin: "20px 20px" }}>
         {" "}
-        <EditQuestion token={state?.token} question={state?.data} />{" "}
+        <EditQuestion 
+         authData={state?.authData}
+         question={state?.data}
+         role={role} />{" "}
       </div>
     </div>
   );

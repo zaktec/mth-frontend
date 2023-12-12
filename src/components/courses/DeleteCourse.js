@@ -3,8 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { APIsRequests } from '../../api/APIsRequests';
 
 const DeleteCourse = (props) => {
-  const handleDeleteCourse = async (key) => {
-    key.preventDefault();
+  const handleDeleteCourse = async (event) => {
+    event.preventDefault();
 
     await APIsRequests.deleteCourseApi(props?.authData.token, props?.course_id)
     .then(() => {

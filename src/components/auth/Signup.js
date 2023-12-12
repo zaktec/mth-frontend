@@ -83,7 +83,7 @@ const Signup = () => {
               </button>
               
               <div className='form__links'><a className='form__link' href='./'>Forgot your password ?</a></div>
-              <div className='form__links'>Already have account ? <a className='form__link' href='/student/signin'> Student Signin</a> | <a className='form__link' href='/tutor/signin'>Tutor Signin</a> | <a className='form__link' href='/admin/signin'>Admin Signin</a></div>
+              <div className='form__links'>Already have account ? <a className='form__link' href='/student/signin'> Student Login</a> | <a className='form__link' href='/tutor/signin'>Tutor Login</a> | <a className='form__link' href='/admin/signin'>Admin Login</a></div>
             </div>
         </div>
     </div>

@@ -3,20 +3,23 @@ import Navbar from '../navbar/Navbar';
 import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 import QuizList from './QuizList';
+import { useParams } from 'react-router-dom';
 
 const SortQuizzes = () => {
+  const { role } = useParams();
   const [state, setState] = useState({
     data: [],
     token: null,
+    authData: {},
     isLoading: true,
     sortBy: 'quiz_id',
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
-    const getQuizzesApi = async (token, sortBy) => {
-      await APIsRequests.getQuizzesApi(token?.token, sortBy)
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData }));
+    const getQuizzesApi = async (authData, sortBy) => {
+      await APIsRequests.getQuizzesApi(authData?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -29,7 +32,7 @@ const SortQuizzes = () => {
         });
     };
 
-    getQuizzesApi(token, state?.sortBy);
+    getQuizzesApi(authData, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
@@ -45,7 +48,7 @@ const SortQuizzes = () => {
   };
   return (
     <div className={'SortMainPage'}>
-      <Navbar page='admin-dashboard' />
+      <Navbar authData={state?.authData} page='admin-dashboard' />
       <div>
         <h1> Sort Quizzes List </h1>
         <p> Choose a column to sort the quiz list </p>
@@ -63,8 +66,9 @@ const SortQuizzes = () => {
       </div>
       {
         <QuizList
+          role={role}
           data={state?.data}
-          token={state?.token}
+          authData={state?.authData}
           sortBy={state?.sortBy}
           isLoading={state?.isLoading}
         />

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import TopicList from "./TopicList";
 import Navbar from '../navbar/Navbar';
 import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 
 const SortTopics = () => {
+  const { role } = useParams();
   const [state, setState] = useState({
     data: [],
     token: null,
@@ -15,7 +17,7 @@ const SortTopics = () => {
 
   useEffect(() => {
     const authData = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: authData?.token }));
+    setState((prevState) => ({ ...prevState, authData}));
     setState((prevState) => ({...prevState, authData }));
     const getTopicsApi = async (authData, sortBy) => {
       await APIsRequests
@@ -51,7 +53,7 @@ const SortTopics = () => {
 
   return (
     <div className="SortMainPage">
-    <Navbar page='admin-dashboard' />
+    <Navbar authData={state?.authData} page='admin-dashboard' />
       <div>
         <h1> Sort Topic List </h1>
         <p> Choose a column to sort the topic list </p>
@@ -70,11 +72,11 @@ const SortTopics = () => {
       </div>
      {
         <TopicList
+        role={role}
          data={state?.data}
          sortBy={state?.sortBy}
-         token={state?.authData}
+         authData={state?.authData}
          isLoading={state?.isLoading}
-      
         />
      }
     </div>

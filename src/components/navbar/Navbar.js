@@ -116,14 +116,14 @@ const Navbar = (props) => {
                 <div className='profile-picture'> <img src='https://avatars.githubusercontent.com/u/38179232?v=4' alt='profile' /> </div>
               ) : props?.page === 'home' || props?.page === 'signin' ? (
                 <span>
-                  <span className='auth-signin'>Signin</span>
+                  <span className='auth-signin'>Login</span>
                   <a href='/student/signin'> Student </a>
                   <a href='/tutor/signin'> Tutor </a>
                   <a href='/admin/signin'> Admin </a>
                 </span>
               ) : props?.page === 'signup' ? (
                 <span>
-                  <span className='auth-signin'>signup</span>
+                  <span className='auth-signin'>SignUp</span>
                   <a href='/student/signup'> Student </a>
                   <a href='/tutor/signup'> Tutor </a>
                   <a href='/admin/signup'> Admin </a>
@@ -144,7 +144,7 @@ const Navbar = (props) => {
               <a href='/admin/courses'>
                 <FontAwesomeIcon icon={faBook} />Courses
               </a>
-              <a href='/topiclist'>
+              <a href='/admin/topics'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Topics
               </a>
               <a href='/adminlist'>
@@ -156,13 +156,13 @@ const Navbar = (props) => {
               <a href='/tutorlist'>
                 <FontAwesomeIcon icon={faUserMd} /> Tutors
               </a>
-              <a href='/lessonlist'>
+              <a href='/admin/lessons'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
               </a>
-              <a href='/quizlist'>
+              <a href='/admin/quizzes'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
               </a>
-              <a href='/questionlist'>
+              <a href='/admin/questions'>
                 <FontAwesomeIcon icon={faQuestionCircle} /> Questions
               </a>
               <a href='/setting'>

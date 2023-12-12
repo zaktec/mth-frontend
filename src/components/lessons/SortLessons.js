@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import LessonList from "./LessonList";
-import { verifyAuth } from '../../helpers';
-import { APIsRequests } from '../../api/APIsRequests';
-import Navbar from '../navbar/Navbar';
+import { verifyAuth } from "../../helpers";
+import { APIsRequests } from "../../api/APIsRequests";
+import Navbar from "../navbar/Navbar";
+import { useParams } from "react-router-dom";
 
 const SortLessons = () => {
+  const { role } = useParams();
   const [state, setState] = useState({
     data: [],
     isLoading: true,
     token: null,
+    authData: {},
     sortBy: "lesson_id",
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
-    const getLessonsApi = async (token, sortBy) => {
-      await APIsRequests
-        .getLessonsApi(token?.token, sortBy)
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData }));
+    const getLessonsApi = async (authData, sortBy) => {
+      await APIsRequests.getLessonsApi(authData?.token, sortBy)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -29,21 +31,23 @@ const SortLessons = () => {
           console.log(error);
         });
     };
-    getLessonsApi(token, state?.sortBy);
+    getLessonsApi(authData, state?.sortBy);
   }, [state.sortBy]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  }; 
+  };
 
   const handleChange = (event) => {
-    
-    return setState((prevState) => ({...prevState, sortBy: event.target.value }));
+    return setState((prevState) => ({
+      ...prevState,
+      sortBy: event.target.value,
+    }));
   };
 
   return (
     <main className="SortMainPage">
-      <Navbar page='admin-dashboard' />
+      <Navbar authData={state?.authData} page="admin-dashboard" />
       <div>
         <h1> Sort Lesson List </h1>
         <p> Choose a column to sort the Tutor list </p>
@@ -55,9 +59,16 @@ const SortLessons = () => {
             <option value="lesson_code">LessonCode</option>
             <option value="lesson_topic_id">LessonTopicID</option>
           </select>
-        </form><br/>
+        </form>
+        <br />
       </div>
-       <LessonList token= {state?.token} data= { state?.data } isLoading= {state?.isLoading}  sortBy={state?.sortBy}/> 
+      <LessonList
+      role={role}
+        authData={state?.authData}
+        data={state?.data}
+        isLoading={state?.isLoading}
+        sortBy={state?.sortBy}
+      />
     </main>
   );
 };

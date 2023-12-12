@@ -69,7 +69,7 @@ const Signin = () => {
       <Navbar page='signin' />
       <div className='auth-unique'>
         <div className='form__logo-container'>
-          <div className='form__header'>{role} Signin </div>
+          <div className='form__header'>{role} Login </div>
         </div>
 
         <div className='form__content'>

@@ -8,19 +8,19 @@ import { APIsRequests } from '../../api/APIsRequests';
 import Navbar from '../navbar/Navbar';
 
 const SingleLesson = () => {
-  const { lesson_id } = useParams();
+  const { role, lesson_id } = useParams();
   const [state, setState] = useState({
     data: {},
     isLoading: true,
-    token: null,
+    authData: {},
   });
 
   useEffect(() => {
-    const token = verifyAuth();
-    setState((prevState) => ({ ...prevState, token: token?.token }));
+    const authData = verifyAuth();
+    setState((prevState) => ({ ...prevState, authData }));
     const getLessonApi = async (token, lesson_id) => {
       await APIsRequests
-        .getLessonApi(token?.token, lesson_id)
+        .getLessonApi(token, lesson_id)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -33,14 +33,14 @@ const SingleLesson = () => {
         });
     };
 
-    getLessonApi(token, lesson_id);
+    getLessonApi(authData?.token, lesson_id);
   }, [lesson_id]);
 
   if (state?.isLoading) return <p>Loading...</p>;
 
   return (
     <main className="SingleMainPage">
-      <Navbar page='admin-dashboard' />
+      <Navbar authData={state?.authData} page='admin-dashboard' />
       <h1> Single Lesson page </h1>
       <ul className="Main__List">
         <li className="MainList__card">
@@ -70,11 +70,10 @@ const SingleLesson = () => {
         </li>
       </ul>
       <div style={{ margin: "20px 20px" }}>
-        <DeleteLesson token={state?.token} lesson_id={state?.data?.lesson_id} />{" "}
-      </div>
+        <DeleteLesson authData={state?.authData} role ={role} lesson_id={lesson_id} /></div>
 
      <div style={{ margin: "20px 20px" }}>
-        <EditLesson token={state?.token} lesson={state?.data} />
+        <EditLesson authData= {state?.authData} role ={role} lesson={state?.data} />
       </div> 
     </main>
   );

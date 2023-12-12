@@ -1,14 +1,18 @@
 import React from "react";
 import { APIsRequests } from '../../api/APIsRequests';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const DeleteQuestion = (props) => {
-  const handleDeleteQuestion = async (event, token, Question_id) => {
+  const handleDeleteQuestion = async (event) => {
     event.preventDefault();
     await APIsRequests
-      .deleteQuestionApi(token, Question_id)
+      .deleteQuestionApi(props?.authData.token, props?.question_id)
       .then((response) => {
-        window.location.replace(`/Questionlist`);
+        toast.success('Course deleted successfully');
+        setTimeout(() => {
+        window.location.replace(`/${props?.role}/questions`);
+      }, 2000);
       })
       .catch((error) => {
         console.log(error);
@@ -17,6 +21,7 @@ const DeleteQuestion = (props) => {
 
   return (
     <div>
+       <ToastContainer />
       <button
         onClick={(key) =>
           handleDeleteQuestion(key, props?.token, props?.Question_id)

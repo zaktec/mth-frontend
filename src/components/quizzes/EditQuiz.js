@@ -2,6 +2,7 @@ import Loading from '../loading/Loading';
 import React, { useEffect, useState } from "react";
 import { APIsRequests } from '../../api/APIsRequests';
 import Input from '../form/input';
+import { ToastContainer, toast } from 'react-toastify';
 
 const EditQuiz = (props) => {
   const [state, setState] = useState({
@@ -28,7 +29,7 @@ const EditQuiz = (props) => {
     }));
   };
 
-  const handleSubmit = async (event, token, quiz_id) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
@@ -38,14 +39,15 @@ const EditQuiz = (props) => {
     }));
 
     await APIsRequests
-      .editQuizApi(token, quiz_id, state)
+      .editQuizApi(props?.authData?.token, props?.quiz?.quiz_id, state)
       .then((response) => {
         setState((prevState) => ({
           ...prevState,
           message: "quiz updated successfully",
         }));
+        toast.success('Quiz updated successfully');
         setTimeout(() => {
-          window.location.replace(`/cquizzes/${quiz_id}`);
+          window.location.replace(`/${props?.role}/quizzes/${props?.quiz?.quiz_id}`);
         }, 2000);
       })
       .catch((error) => {
@@ -66,6 +68,8 @@ const EditQuiz = (props) => {
       return setState((prevState) => ({ ...prevState, displayForm: true }));
   };
   return (
+    <>
+    <ToastContainer />
     <div className="PostMainPage">
       {state?.displayForm === true ? (
         <button onClick={(key) => handleDisplayForm(key)}> No Add Quiz</button>
@@ -162,6 +166,7 @@ const EditQuiz = (props) => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

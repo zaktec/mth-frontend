@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-
 import Navbar from '../navbar/Navbar';
 import { verifyAuth } from '../../helpers';
 import CourseList from './CourseList';
