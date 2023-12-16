@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import Input from '../form/input';
 import Loading from '../loading/Loading';
 import ImageUploader from 'react-images-upload';
@@ -50,6 +51,13 @@ const EditAdmin = (props) => {
 
   const handleDisplayForm = async (event) => {
     event.preventDefault();
+
+    if (state?.admin_active === true)
+      setIsAdminActiveTrue(!isAdminActiveTrue);
+
+    if (state?.admin_active  === false)
+      setIsAdminActiveFalse(!isAdminActiveFalse);
+
     if (state.displayForm === true)
       return setState((prevState) => ({ ...prevState, displayForm: false }));
     if (state.displayForm === false)

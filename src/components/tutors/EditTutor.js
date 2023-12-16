@@ -51,6 +51,13 @@ const EditTutor = (props) => {
 
   const handleDisplayForm = async (event) => {
     event.preventDefault();
+
+    if (state?.tutor_active === true)
+      setIsTutorActiveTrue(!isTutorActiveTrue);
+
+    if (state?.tutor_active  === false)
+      setIsTutorActiveFalse(!isTutorActiveFalse);
+
     if (state.displayForm === true)
       return setState((prevState) => ({ ...prevState, displayForm: false }));
     if (state.displayForm === false)
@@ -128,8 +135,7 @@ const EditTutor = (props) => {
       {state.displayForm === true && (
         <div className='form-container'>
           <div className='form-header'>
-            {' '}
-            <div className='head'>UPDATE TUTOR</div>{' '}
+            <div className='head'>UPDATE TUTOR</div>
           </div>
           <JoinPattern />
 

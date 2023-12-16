@@ -68,7 +68,7 @@ const SingleTutor = () => {
         <EditTutor authData={state?.authData} role={role} tutor={state?.data} />
       </div>
       <div style={{ margin: '20px 20px' }}>
-        <DeleteTutor authData={state?.authData} tutor_id={tutor_id} />
+        <DeleteTutor authData={state?.authData} role={role} tutor_id={tutor_id} />
       </div>
     </div>
   );

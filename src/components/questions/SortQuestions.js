@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import QuestionList from "./QuestionList";
-import { APIsRequests } from "../../api/APIsRequests";
-import Navbar from "../navbar/Navbar";
-import { verifyAuth } from "../../helpers";
+import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+
+import Navbar from '../navbar/Navbar';
+import QuestionList from './QuestionList';
+import { verifyAuth } from '../../helpers';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const SortQuestions = () => {
   const { role } = useParams();
   const [state, setState] = useState({
     data: [],
-    token: null,
     authData: {},
     isLoading: true,
-    sortBy: "question_id",
+    sortBy: 'question_id',
   });
 
   useEffect(() => {
@@ -47,23 +47,25 @@ const SortQuestions = () => {
   };
 
   return (
-    <div className="SortMainPage">
-      <Navbar authData={state?.authData} page="admin-dashboard" />
+    <div className='SortMainPage'>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <div>
         <h1> Sort Questions List </h1>
         <p> Choose a column to sort the quiz list </p>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="categories">Choose a category</label>
-          <select name="categories" id="categories" onChange={handleChange}>
-            <option value="question_id">All</option>
-            <option value="question_calc">QuestionCalc</option>
-            <option value="question_calc">QuestionCode</option>
-            <option value="question_mark">CourseLevel</option>
+          <label htmlFor='categories'>Choose a category</label>
+          <select name='categories' id='categories' onChange={handleChange}>
+            <option value='question_id'>All</option>
+            <option value='question_calc'>QuestionCalc</option>
+            <option value='question_calc'>QuestionCode</option>
+            <option value='question_mark'>CourseLevel</option>
           </select>
           <br></br>
-          <input type="submit" value="Submit" />
+          <input type='submit' value='Submit' />
         </form>
       </div>
+
       <QuestionList
         role={role}
         data={state?.data}

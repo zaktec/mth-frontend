@@ -6,7 +6,7 @@ const DeleteAdmin = (props) => {
     event.preventDefault();
     await APIsRequests.deleteAdminApi(props?.authData?.token, props?.admin_id)
       .then(() => {
-        window.location.replace(`/adminlist`);
+        window.location.replace(`/${props?.role}/admins`);
       })
       .catch((error) => {
         console.log(error);

@@ -1,11 +1,12 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import EditQuiz from "./EditQuiz.js";
-import { verifyAuth } from "../../helpers";
-import { APIsRequests } from "../../api/APIsRequests";
-import Navbar from "../navbar/Navbar";
-import DeleteQuiz from "./DeleteQuiz.js";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import EditQuiz from './EditQuiz.js';
+import Navbar from '../navbar/Navbar';
+import DeleteQuiz from './DeleteQuiz.js';
+import { verifyAuth } from '../../helpers';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const SingleQuiz = () => {
   const { role, quiz_id } = useParams();
@@ -38,12 +39,12 @@ const SingleQuiz = () => {
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
-    <div className="SingleMainPage">
-      <Navbar authData={state?.authData} page="admin-dashboard" />
+    <div className='SingleMainPage'>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
 
       <h1> Single Quiz page </h1>
-      <ul className="MainListPage">
-        <li className="MainList__card">
+      <ul className='MainListPage'>
+        <li className='MainList__card'>
           <p>
             <b>Quiz ID :</b> {state?.data?.quiz_id}
           </p>
@@ -58,12 +59,11 @@ const SingleQuiz = () => {
           </p>
         </li>
       </ul>
-      <div style={{ margin: "20px 20px" }}>
-        {" "}
+
+      <div style={{ margin: '20px 20px' }}>
         <DeleteQuiz authData={state?.authData} role={role} quiz_id={quiz_id} /></div>
-      <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <EditQuiz token={state?.authData} role={role} quiz={state?.data} />{" "}
+      <div style={{ margin: '20px 20px' }}>
+        <EditQuiz token={state?.authData} role={role} quiz={state?.data} />
       </div>
     </div>
   );

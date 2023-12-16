@@ -6,7 +6,7 @@ const DeleteStudent = (props) => {
     event.preventDefault();
     await APIsRequests.deleteLessonApi(props?.authData?.token, props?.student_id)
       .then(() => {
-        window.location.replace(`/studentlist`);
+        window.location.replace(`/${props?.role}/students`);
       })
       .catch((error) => {
         console.log(error);

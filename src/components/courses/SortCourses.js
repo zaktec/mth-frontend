@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+
 import Navbar from '../navbar/Navbar';
-import { verifyAuth } from '../../helpers';
 import CourseList from './CourseList';
+import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 
 const SortCourses = () => {
@@ -49,7 +50,7 @@ const SortCourses = () => {
 
   return (
     <div className='SortMainPage'>
-      <Navbar authData={state?.authData} page='admin-dashboard' />
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
 
       <div>
         <h1> Sort Courses List </h1>

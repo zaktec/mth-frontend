@@ -1,11 +1,12 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import DeleteQuestion from "./DeleteQuestion";
-import EditQuestion from "./EditQuestion";
-import Navbar from "../navbar/Navbar";
-import { verifyAuth } from "../../helpers";
-import { APIsRequests } from "../../api/APIsRequests";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
+import Navbar from '../navbar/Navbar';
+import EditQuestion from './EditQuestion';
+import { verifyAuth } from '../../helpers';
+import DeleteQuestion from './DeleteQuestion';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const SingleQuestion = (props) => {
   const { role, question_id } = useParams();
@@ -39,11 +40,12 @@ const SingleQuestion = (props) => {
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
-    <div className="SingleMainPage">
-      <Navbar authData={state?.authData} page="admin-dashboard" />
+    <div className='SingleMainPage'>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <h1> Single Question page </h1>
-      <ul className="MainListPage">
-        <li className="MainList__card">
+      <ul className='MainListPage'>
+        <li className='MainList__card'>
           <p>
             <b>Question ID :</b> {state?.data?.question_id}
           </p>
@@ -93,20 +95,11 @@ const SingleQuestion = (props) => {
         </li>
       </ul>
 
-      <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <DeleteQuestion
-          authData={state?.authData}
-          role={role}
-          question_id={question_id}
-        />{" "}
+      <div style={{ margin: '20px 20px' }}>
+        <DeleteQuestion authData={state?.authData}  role={role} question_id={question_id} />
       </div>
-      <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <EditQuestion 
-         authData={state?.authData}
-         question={state?.data}
-         role={role} />{" "}
+      <div style={{ margin: '20px 20px' }}>
+        <EditQuestion authData={state?.authData} question={state?.data} role={role} />
       </div>
     </div>
   );

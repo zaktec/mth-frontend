@@ -6,7 +6,7 @@ const DeleteTutor = (props) => {
     event.preventDefault();
     await APIsRequests.deleteTutorApi(props?.authData?.token, props?.tutor_id)
       .then(() => {
-        window.location.replace(`/tutorlist`);
+        window.location.replace(`/${props?.role}/tutors`);
       })
       .catch((error) => {
         console.log(error);

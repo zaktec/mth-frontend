@@ -90,13 +90,13 @@ const SingleStudent = () => {
 
       {(role === 'admin' || role === 'student') && (
         <div style={{ margin: '20px 20px' }}>
-          <DeleteStudent authData={state?.authData} student_id={student_id} />
+          <DeleteStudent authData={state?.authData} role={role} student_id={student_id} />
         </div>
       )}
 
       { role === 'tutor' && (
         <div style={{ margin: '20px 20px' }}>
-          <SudentQuizzes authData={state?.authData} student_id={student_id} role={role} /> 
+          <SudentQuizzes authData={state?.authData} role={role} student_id={student_id} /> 
         </div>
       )}
     </div>

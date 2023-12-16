@@ -9,7 +9,7 @@ const AdminList = (props) => {
   return (
     <div className={"MainListPage"}>
       <h2 className="MainList__h1">Admins</h2>
-      <PostAdmin authData={props?.authData} />
+      <PostAdmin authData={props?.authData} role={props?.role} />
 
       <ul className={"Main__List"}>
         {props?.data.map((element) => (

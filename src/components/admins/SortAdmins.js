@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 import AdminList from './AdminList';
@@ -6,6 +7,7 @@ import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 
 const SortAdmins = () => {
+  const { role } = useParams();
   const [state, setState] = useState({
     data: [],
     authData: {},
@@ -48,7 +50,8 @@ const SortAdmins = () => {
 
   return (
     <div className={'SortMainPage'}>
-      <Navbar authData= { state?.authData } page='admin-dashboard' />
+      <Navbar authData= { state?.authData } page={`${role}-dashboard`} />
+
       <div>
         <h1> Sort Admin List </h1>
         <p> Choose a column to sort the article list </p>
@@ -62,8 +65,10 @@ const SortAdmins = () => {
           </select>
         </form>
       </div>
+
       {
         <AdminList
+          role={role}
           data={state?.data}
           sortBy={state?.sortBy}
           authData={state?.authData}

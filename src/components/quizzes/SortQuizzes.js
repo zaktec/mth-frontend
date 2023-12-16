@@ -1,9 +1,11 @@
+import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+
+import QuizList from './QuizList';
 import Navbar from '../navbar/Navbar';
 import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
-import QuizList from './QuizList';
-import { useParams } from 'react-router-dom';
+
 
 const SortQuizzes = () => {
   const { role } = useParams();
@@ -48,7 +50,8 @@ const SortQuizzes = () => {
   };
   return (
     <div className={'SortMainPage'}>
-      <Navbar authData={state?.authData} page='admin-dashboard' />
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <div>
         <h1> Sort Quizzes List </h1>
         <p> Choose a column to sort the quiz list </p>
@@ -64,6 +67,7 @@ const SortQuizzes = () => {
           <input type='submit' value='Submit' />
         </form>
       </div>
+
       {
         <QuizList
           role={role}

@@ -18,103 +18,147 @@
     }
   }
 
-  .question-answer-container {
-    width: 90%;
-    margin: 0 auto;
+  section {
+    width: 70%;
+    margin: auto;
     display: block;
-    padding: 10vw 00vw 00vw 0vw;
+    padding: 5vw 00vw 00vw 0vw;
 
-    .question {
-      padding: 10px 30px;
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-      
+    .card {
+      margin: 50px auto;
+      border: 2px solid #e3dedc;
+
       .question-title {
+        display: block;
         font-size: 20px;
-        margin: 15px auto;
+        font-weight: 900;
+        color: #4e4e4e;
+        padding: 20px 30px;
         text-decoration: underline;
+        background-color: #b4b4b42a;
+      }
+
+      .question-img {
+        padding: 10px 30px;
+        display: block;
+
+        img {
+          width: 400px;
+          height: 240px;
+        }
       }
 
       .question-body {
-        font-size: 20px;
-        margin: 15px auto;
-      }
-    }
-
-    .answer {
-      padding: 10px 30px;
-      box-shadow: rgba(0, 0, 0, 0.19) 0px 22px 70px 4px;
-      
-      .form__input {
-        width: 90%;
-        border: none;
-        color: #333;
         display: block;
-        margin: 0 auto;
-        font-size: 1.2rem;
-        transition: all 0.3s;
-        padding: 1.5rem 2rem;
-        border-radius: 0.2rem;
-        background-color: rgb(255, 255, 255);
-        border-bottom: 1px solid $defaultColor;
+        font-size: 20px;
+        padding: 10px 30px;
       }
-      
-      .form__input:focus{
-        outline: none;
-      }
-    }
-  }
 
-  .button-container {
-    width: 90%;
-    margin: 0 auto;
-    text-align: center;
+      .input-answer {
+        max-height: 50px;
+        min-height: 50px;
+        padding: 10px 30px;
 
-    button {
-        border: 0;
-        outline: 0;
-        cursor: pointer;
-        font-size: 18px;
-        font-weight: 600;
-        margin-top: 20px;
-        user-select: none;
-        padding: 16px 21px;
-        position: relative;
-        text-align: center;
-        color: $whiteColor;
-        border-radius: 56px;
-        transition: all .3s;
-        display: inline-block;
-        text-decoration: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        background-color: $blueColor;
-        font-family: system-ui,-apple-system,system-ui,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",sans-serif;
-      }
-    
-      button:before {
-        background-color: initial;
-        background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
-        border-radius: 125px;
-        content: "";
-        height: 50%;
-        left: 4%;
-        opacity: .5;
-        position: absolute;
-        top: 0;
-        transition: all .3s;
-        width: 92%;
-      }
-    
-      button:hover {
-        box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
-        transform: scale(1.05);
-      }
-    
-      @media (min-width: 768px) {
-        button {
-          padding: 16px 48px;
+        .form__input {
+          width: 60%;
+          border: none;
+          color: #333;
+          display: block;
+          font-size: 1.2rem;
+          padding: 1rem 2rem;
+          transition: all 0.3s;
+          border-radius: 0.2rem;
+          border-bottom: 1px solid #adacac;
+          background-color: rgb(255, 255, 255);
+          box-shadow: 0 14px 2px -2px rgba(0, 0, 0, 0.08); 
+        }
+
+        .form__input:focus{
+          outline: none;
         }
       }
+
+      .choice-answer {
+        display: flex;
+        max-height: 50px;
+        min-height: 50px;
+        padding: 10px 30px;
+
+        button {
+          outline: 0;
+          font-size: 15px;
+          cursor: pointer;
+          min-height: 40px;
+          min-width: 60px;
+          font-weight: 500;
+          color: #202223;
+          border-radius: 4px;
+          text-align: center;
+          margin-right: 10px;
+          padding:  1rem 2rem;
+          display: inline-block;
+          background: #ffffff;
+          border: 1px solid #babfc3;
+          box-shadow: rgba(0, 0, 0, 0.39) 0px 1px 0px 0px;
+          :hover {
+            background: #f6f6f7;
+            outline: 1px solid transparent;
+          }
+        }
+
+        .choice-answer {
+          color: $whiteColor;
+          background-color: $greenColor;
+        }
+      }
+
+      .button-container {
+        padding: 30px;
+        display: flex;
+        justify-content: space-between; 
+
+        button {
+          width: 30%;
+          height: 60px;
+          outline: none;
+          color: #fff;
+          border-width: 0;
+          cursor: pointer;
+          font-size: 18px;
+          font-weight: 600;
+          overflow: hidden;
+          margin: 12px 0 0;
+          line-height: 1.15;
+          user-select: none;
+          padding: 16px 21px;
+          position: relative;
+          text-align: center;
+          border-radius: 6px;
+          text-transform: none;
+          box-sizing: border-box;
+          transform: translateZ(0);
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          backface-visibility: hidden;
+          background-color: $blueColor;
+          transition: all 0.2s, box-shadow 0.08s ease-in;
+          font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto,
+            Ubuntu, "Helvetica Neue", sans-serif;
+          box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+          rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+        }
+
+        button:disabled {
+          cursor: default;
+        }
+
+        button:focus {
+          box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+            rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
+            rgba(50, 151, 211, 0.3) 0 0 0 4px;
+        }
+      }
+    }
   }
 }
 

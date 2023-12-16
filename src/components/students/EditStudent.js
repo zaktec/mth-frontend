@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { APIsRequests } from '../../api/APIsRequests';
-import Loading from '../loading/Loading';
+
 import Input from '../form/input';
+import Loading from '../loading/Loading';
 import ImageUploader from 'react-images-upload';
 import JoinPattern from '../patterns/joinPattern';
 import Avatar from '../../assets/images/avatar.png';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const EditStudent = (props) => {
   const [isStudentActiveTrue, setIsStudentActiveTrue] = useState(false);
@@ -51,6 +52,7 @@ const EditStudent = (props) => {
 
   const handleDisplayForm = async (event) => {
     event.preventDefault();
+
     if (state?.student_active === true)
       setIsStudentActiveTrue(!isStudentActiveTrue);
 
@@ -102,7 +104,7 @@ const EditStudent = (props) => {
         }));
       });
   };
-
+  
   let profilePicturePreview = null;
   if (state?.student_image) {
     if (state?.student_image.name) {

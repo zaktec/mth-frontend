@@ -8,7 +8,6 @@ import { APIsRequests } from '../../api/APIsRequests';
 
 
 const PostTutor = (props) => {
-
   const [isTutorActiveTrue, setIsTutorActiveTrue] = useState(false);
   const [isTutorActiveFalse, setIsTutorActiveFalse] = useState(false);
   const [state, setState] = useState({
@@ -34,7 +33,6 @@ const PostTutor = (props) => {
       [event.target.name]: event.target.value,
     }));
   };
-
   
   const handleIstutorActiveTrue = () => {
     if (isTutorActiveFalse === false) {
@@ -68,7 +66,7 @@ const PostTutor = (props) => {
         }));
 
         setTimeout(() => {
-          window.location.replace(`/tutorlist`);
+          window.location.replace(`/${props?.role}/tutors`);
         }, 2000);
       })
       .catch((error) => {

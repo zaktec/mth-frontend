@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+
 import TopicList from "./TopicList";
 import Navbar from '../navbar/Navbar';
 import { verifyAuth } from '../../helpers';
@@ -53,7 +54,8 @@ const SortTopics = () => {
 
   return (
     <div className="SortMainPage">
-    <Navbar authData={state?.authData} page='admin-dashboard' />
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <div>
         <h1> Sort Topic List </h1>
         <p> Choose a column to sort the topic list </p>
@@ -70,9 +72,10 @@ const SortTopics = () => {
           <input type="submit" value="Submit" />
         </form>
       </div>
+
      {
         <TopicList
-        role={role}
+         role={role}
          data={state?.data}
          sortBy={state?.sortBy}
          authData={state?.authData}

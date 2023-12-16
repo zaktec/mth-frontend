@@ -9,7 +9,7 @@ const StudentList = (props) => {
     <div className={"MainListPage"}>
       <h2 className="MainList__h1">Students</h2>
      
-       <PostStudent authData = {props?.authData} /> 
+       <PostStudent authData={props?.authData} role={props?.role} /> 
 
         <ul className={"Main__List"}>
         {props?.data.map((element) => (

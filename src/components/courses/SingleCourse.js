@@ -1,11 +1,11 @@
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-import EditCourse from "./EditCourse";
-import Navbar from "../navbar/Navbar";
-import DeleteCourse from "./DeleteCourse";
-import { verifyAuth } from "../../helpers";
-import { APIsRequests } from "../../api/APIsRequests";
+import EditCourse from './EditCourse';
+import Navbar from '../navbar/Navbar';
+import DeleteCourse from './DeleteCourse';
+import { verifyAuth } from '../../helpers';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const SingleCourse = (props) => {
   const { role, course_id } = useParams();
@@ -38,54 +38,40 @@ const SingleCourse = (props) => {
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
-    <div className="SingleMainPage">
-      <Navbar authData={state?.authData} page="admin-dashboard" />
+    <div className='SingleMainPage'>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <h1>Single Course Page</h1>
-      <ul className="MainListPage">
-        <li className="MainList__card">
+      <ul className='MainListPage'>
+        <li className='MainList__card'>
           <p>
-            {" "}
-            <b>Course ID: </b> {state?.data?.course_id}{" "}
+            <b>Course ID: </b> {state?.data?.course_id}
           </p>
           <p>
-            {" "}
-            <b>Course Code: </b> {state?.data?.course_code}{" "}
+            <b>Course Code: </b> {state?.data?.course_code}
           </p>
           <p>
-            {" "}
-            <b>Course Name: </b> {state?.data?.course_name}{" "}
+            <b>Course Name: </b> {state?.data?.course_name}
           </p>
           <p>
-            {" "}
-            <b>Course Level:</b> {state?.data?.course_level}{" "}
+            <b>Course Level:</b> {state?.data?.course_level}
           </p>
           <p>
-            {" "}
-            <b>Course Descriutorption: </b> {state?.data?.course_desc}{" "}
+            <b>Course Descriutorption: </b> {state?.data?.course_desc}
           </p>
           <img
-            className="ListImage"
-            src={state?.data?.course_image}
+            className='ListImage'
             alt={state?.data?.course_name}
+            src={state?.data?.course_image}
           />
         </li>
       </ul>
 
-      <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <DeleteCourse
-          authData={state?.authData}
-          role={role}
-          course_id={course_id}
-        />{" "}
+      <div style={{ margin: '20px 20px' }}>
+        <DeleteCourse authData={state?.authData} role={role} course_id={course_id} />
       </div>
-      <div style={{ margin: "20px 20px" }}>
-        {" "}
-        <EditCourse
-          authData={state?.authData}
-          course={state?.data}
-          role={role}
-        />{" "}
+      <div style={{ margin: '20px 20px' }}>
+        <EditCourse authData={state?.authData} course={state?.data} role={role} />
       </div>
     </div>
   );

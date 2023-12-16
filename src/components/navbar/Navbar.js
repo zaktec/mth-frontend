@@ -99,13 +99,13 @@ const Navbar = (props) => {
                 <FontAwesomeIcon icon={faHome} /> Home
               </a>
               <a href='/'>
+                <FontAwesomeIcon icon={faCog} /> Blog
+              </a>
+              <a href='/'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> About Us
               </a>
               <a href='/'>
                 <FontAwesomeIcon icon={faGraduationCap} /> Services
-              </a>
-              <a href='/'>
-                <FontAwesomeIcon icon={faCog} /> Blog
               </a>
               <a href='/'>
                 <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
@@ -141,20 +141,20 @@ const Navbar = (props) => {
               <a href='/admin/dashboard'>
                 <FontAwesomeIcon icon={faHome} /> Admin DashBoard
               </a>
+              <a href='/admin/admins'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Admins
+              </a>
+              <a href='/admin/tutors'>
+                <FontAwesomeIcon icon={faUserMd} /> Tutors
+              </a>
+              <a href='/admin/students'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Students
+              </a>
               <a href='/admin/courses'>
                 <FontAwesomeIcon icon={faBook} />Courses
               </a>
               <a href='/admin/topics'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Topics
-              </a>
-              <a href='/adminlist'>
-                <FontAwesomeIcon icon={faGraduationCap} /> Admins
-              </a>
-              <a href='/studentlist'>
-                <FontAwesomeIcon icon={faGraduationCap} /> Students
-              </a>
-              <a href='/tutorlist'>
-                <FontAwesomeIcon icon={faUserMd} /> Tutors
               </a>
               <a href='/admin/lessons'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
@@ -165,7 +165,7 @@ const Navbar = (props) => {
               <a href='/admin/questions'>
                 <FontAwesomeIcon icon={faQuestionCircle} /> Questions
               </a>
-              <a href='/setting'>
+              <a href='/admin/setting'>
                 <FontAwesomeIcon icon={faCog} /> Settings
               </a>
               <a href='/contactus'>
@@ -192,28 +192,25 @@ const Navbar = (props) => {
               <a href='/tutor/dashboard'>
                 <FontAwesomeIcon icon={faHome} /> Tutor DashBoard
               </a>
-              <a href='/tutorprofile/tutor'>
-                <FontAwesomeIcon icon={faBook} /> Profile
-              </a>
-              <a href='/topics'>
-                <FontAwesomeIcon icon={faClipboardCheck} /> Topics
-              </a>
-              <a href='/students'>
-                <FontAwesomeIcon icon={faGraduationCap} /> Students
-              </a>
-              <a href='/tutors'>
+              <a href='/tutor/tutors'>
                 <FontAwesomeIcon icon={faUserMd} /> Tutors
               </a>
-              <a href='/lesson'>
+              <a href='/tutor/students'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Students
+              </a>
+              <a href='/tutor/topics'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Topics
+              </a>
+              <a href='/tutor/lessons'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
               </a>
-              <a href='/quizzes'>
+              <a href='/tutor/quizzes'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
               </a>
-              <a href='/questions'>
+              <a href='/tutor/questions'>
                 <FontAwesomeIcon icon={faQuestionCircle} /> Questions
               </a>
-              <a href='/setting'>
+              <a href='/tutor/setting'>
                 <FontAwesomeIcon icon={faCog} /> Settings
               </a>
               <a href='/contactus'>
@@ -240,28 +237,25 @@ const Navbar = (props) => {
               <a href='/student/dashboard'>
                 <FontAwesomeIcon icon={faHome} /> Student DashBoard
               </a>
+              <a href='/student/tutors'>
+                <FontAwesomeIcon icon={faUserMd} /> Tutors
+              </a>
+              <a href='/student/students'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Students
+              </a>
               <a href='/student/courses'>
                 <FontAwesomeIcon icon={faBook} />Courses
               </a>
-              <a href='/topics'>
-                <FontAwesomeIcon icon={faClipboardCheck} /> Profile
-              </a>
-              <a href='/students'>
-                <FontAwesomeIcon icon={faGraduationCap} /> Students
-              </a>
-              <a href='/tutors'>
-                <FontAwesomeIcon icon={faUserMd} /> Tutors
-              </a>
-              <a href='/lesson'>
+              <a href='/student/lessons'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
               </a>
-              <a href='/quizzes'>
+              <a href='/student/quizzes'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
               </a>
-              <a href='/questions'>
+              <a href='/student/questions'>
                 <FontAwesomeIcon icon={faQuestionCircle} /> Questions
               </a>
-              <a href='/setting'>
+              <a href='/student/setting'>
                 <FontAwesomeIcon icon={faCog} /> Settings
               </a>
               <a href='/contactus'>

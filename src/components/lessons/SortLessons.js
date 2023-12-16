@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import LessonList from "./LessonList";
-import { verifyAuth } from "../../helpers";
-import { APIsRequests } from "../../api/APIsRequests";
-import Navbar from "../navbar/Navbar";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import LessonList from './LessonList';
+import { verifyAuth } from '../../helpers';
+import { APIsRequests } from '../../api/APIsRequests';
+import Navbar from '../navbar/Navbar';
+import { useParams } from 'react-router-dom';
 
 const SortLessons = () => {
   const { role } = useParams();
@@ -12,7 +12,7 @@ const SortLessons = () => {
     isLoading: true,
     token: null,
     authData: {},
-    sortBy: "lesson_id",
+    sortBy: 'lesson_id',
   });
 
   useEffect(() => {
@@ -46,18 +46,18 @@ const SortLessons = () => {
   };
 
   return (
-    <main className="SortMainPage">
-      <Navbar authData={state?.authData} page="admin-dashboard" />
+    <main className='SortMainPage'>
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
       <div>
         <h1> Sort Lesson List </h1>
         <p> Choose a column to sort the Tutor list </p>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="categories">Choose a category</label>
-          <select name="categories" id="categories" onChange={handleChange}>
-            <option value="lesson_id">All</option>
-            <option value="lesson_name">LessonName</option>
-            <option value="lesson_code">LessonCode</option>
-            <option value="lesson_topic_id">LessonTopicID</option>
+          <label htmlFor='categories'>Choose a category</label>
+          <select name='categories' id='categories' onChange={handleChange}>
+            <option value='lesson_id'>All</option>
+            <option value='lesson_name'>LessonName</option>
+            <option value='lesson_code'>LessonCode</option>
+            <option value='lesson_topic_id'>LessonTopicID</option>
           </select>
         </form>
         <br />

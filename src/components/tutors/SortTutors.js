@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
-import TutorList from "./TutorList";
+import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+
+import TutorList from './TutorList';
 import Navbar from '../navbar/Navbar';
-// import { verifyAuth } from '../../helpers';
 import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 
-
 const SortTutors = () => {
+  const { role } = useParams();
   const [state, setState] = useState({
     data: [],
     authData: {},
     isLoading: true,
-    sortBy: "tutor_id",
+    sortBy: 'tutor_id',
   });
 
   useEffect(() => {
@@ -48,28 +49,31 @@ const SortTutors = () => {
   };
   
   return (
-    <div className={"SortMainPage"}>
-      <Navbar  authData= { state?.authData } page="admin-dashboard" />
+    <div className='SortMainPage'>
+      <Navbar  authData= { state?.authData } page={`${role}-dashboard`} />
+
       <div>
         <h1> Sort Tutor List </h1>
         <p> Choose a column to sort the Tutor list </p>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="categories">Choose a category</label>
-          <select name="categories" id="categories" onChange={handleChange}>
-            <option value="tutor_id">All</option>
-            <option value="tutor_firstname">FirstName</option>
-            <option value="tutor_lastname">LastName</option>
-            <option value="tutor_active">Active</option>
+          <label htmlFor='categories'>Choose a category</label>
+          <select name='categories' id='categories' onChange={handleChange}>
+            <option value='tutor_id'>All</option>
+            <option value='tutor_firstname'>FirstName</option>
+            <option value='tutor_lastname'>LastName</option>
+            <option value='tutor_active'>Active</option>
           </select>
         </form>
       </div>
+
        {
-      <TutorList
-        data={state?.data}
-        sortBy={state?.sortBy}
-        authData={state?.authData}
-        isLoading={state?.isLoading}
-      />
+        <TutorList
+          role={role}
+          data={state?.data}
+          sortBy={state?.sortBy}
+          authData={state?.authData}
+          isLoading={state?.isLoading}
+        />
       } 
     </div>
   );

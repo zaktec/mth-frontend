@@ -65,7 +65,7 @@ const PostAdmin = (props) => {
         }));
 
         setTimeout(() => {
-          window.location.replace(`/adminlist`);
+          window.location.replace(`/${props?.role}/admins`);
         }, 2000);
       })
       .catch((error) => {

@@ -43,6 +43,7 @@ const SingleAdmin = () => {
   return (
     <div className="SingleMainPage">
       <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <h1> ADMIN DETAIL</h1>
       <ul className="MainListPage">
         <p>
@@ -71,7 +72,7 @@ const SingleAdmin = () => {
         <EditAdmin authData={state?.authData} role={role} admin={state?.data} />
       </div>
       <div style={{ margin: "20px 20px" }}>
-        <DeleteAdmin authData={state?.authData} admin_id={admin_id} />
+        <DeleteAdmin authData={state?.authData} role={role} admin_id={admin_id} />
       </div>
     </div>
   );

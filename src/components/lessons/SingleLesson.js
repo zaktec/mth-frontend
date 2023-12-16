@@ -1,11 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+import Navbar from '../navbar/Navbar';
+import EditLesson from "./EditLesson"; 
 import DeleteLesson from "./DeleteLesson";
- import EditLesson from "./EditLesson"; 
 import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
-import Navbar from '../navbar/Navbar';
 
 const SingleLesson = () => {
   const { role, lesson_id } = useParams();
@@ -40,7 +41,8 @@ const SingleLesson = () => {
 
   return (
     <main className="SingleMainPage">
-      <Navbar authData={state?.authData} page='admin-dashboard' />
+      <Navbar authData={state?.authData} page={`${role}-dashboard`} />
+
       <h1> Single Lesson page </h1>
       <ul className="Main__List">
         <li className="MainList__card">
@@ -70,9 +72,10 @@ const SingleLesson = () => {
         </li>
       </ul>
       <div style={{ margin: "20px 20px" }}>
-        <DeleteLesson authData={state?.authData} role ={role} lesson_id={lesson_id} /></div>
+        <DeleteLesson authData={state?.authData} role ={role} lesson_id={lesson_id} />
+      </div>
 
-     <div style={{ margin: "20px 20px" }}>
+      <div style={{ margin: "20px 20px" }}>
         <EditLesson authData= {state?.authData} role ={role} lesson={state?.data} />
       </div> 
     </main>
