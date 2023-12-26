@@ -1,18 +1,25 @@
-const verifyAuth =  () => {
+import axios from "axios";
+import { variables } from "../helpers";
+
+const verifyAuth = () => {
     try {
       const data = localStorage.getItem('data');
       if (data) {
         const unstringfyData = JSON.parse(data);
         const { user, token } = unstringfyData;
         if (!token || token === undefined) window.location.replace('/');
-        if (token) return { user, token };
+
+        const configs = { headers: { Authorization: `BEARER ${token}` } };
+        axios.get(variables.INVALID_TOKEN_API, configs)
+        .then(() => console.log('OK'))
+        .catch(() => window.location.replace('/'));
+
+        return { user, token };
       }
   
       window.location.replace('/');
-      return null;
     } catch (error) {
       window.location.replace('/');
-      return error.toString();
     }
 };
 

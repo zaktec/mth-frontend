@@ -2,9 +2,9 @@ import React from 'react';
 import Navbar from "../navbar/Navbar";
 import { verifyAuth } from '../../helpers';
 import { useParams } from 'react-router-dom';
+import TutorProfile from "./tutordashboard/TutorProfile";
 import AdminProfile from './admindashboard/AdminProfile';
 import StudentProfile from "./studentdashboard/StudentProfile";
-import TutorProfile from "./tutordashboard/TutorProfile";
 
 const Dashboard = () => {
   const { role } = useParams();
@@ -15,20 +15,17 @@ const Dashboard = () => {
     {
       role === "student" ? 
         <div className='dashboard-unique'> 
-          <Navbar authData= { authData } page='dashboard-student' />
-          Student Dashboard 
+          <Navbar authData= { authData } page={`${role}-dashboard`} />
           <StudentProfile authData= { authData } /> 
         </div>
       : role === "tutor" ?
         <div className='dashboard-unique'> 
-          <Navbar authData= { authData } page='dashboard-tutor' />
-          Tutor Dashboard 
+          <Navbar authData= { authData } page={`${role}-dashboard`} />
           <TutorProfile authData= { authData } />
         </div>
       : role === "admin" ? 
         <div className='dashboard-unique'> 
-          <Navbar authData= { authData } page='dashboard-admin' />
-          Admin Dashboard
+          <Navbar authData= { authData } page={`${role}-dashboard`} />
           <AdminProfile authData= { authData } />
         </div>
       : null

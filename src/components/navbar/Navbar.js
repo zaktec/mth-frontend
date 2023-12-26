@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { shortData } from "../../helpers";
-import { authAPIsRequests } from "../../api/APIsRequests";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { shortData } from '../../helpers';
 import {
   faHome,
   faBook,
@@ -11,7 +12,8 @@ import {
   faGraduationCap,
   faUserMd,
   faClipboardCheck,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
+import { APIsRequests } from '../../api/APIsRequests';
 
 const Navbar = (props) => {
   const [state, setState] = useState({
@@ -19,63 +21,64 @@ const Navbar = (props) => {
     loading: false,
     buttonStatus: false,
   });
- console.log(props)
+
   const handleLogout = async (key, role) => {
     key.preventDefault();
     setState((prevState) => ({
       ...prevState,
-      buttonStatus: true,
-      loading: true,
       error: null,
+      loading: true,
+      buttonStatus: true,
     }));
-    if (role === "admin") {
-      await authAPIsRequests
-        .singoutAdminRequest(props?.authData?.token)
-        .then((response) => {
-          localStorage.removeItem("data");
-          window.location.replace("/");
+
+    if (role === 'admin') {
+      await APIsRequests.singoutAdminRequest(props?.authData?.token)
+        .then(() => {
+          toast.success('Logged out successfully');
+          localStorage.removeItem('data');
+          setTimeout(() => window.location.replace('/'), 1000);
         })
         .catch((error) => {
+          toast.error(error?.response?.data?.message || error?.response?.data?.error);
           return setState((prevState) => ({
             ...prevState,
             loading: false,
             buttonStatus: false,
-            error:
-              error?.response?.data?.message || error?.response?.data?.error,
+            error: error?.response?.data?.message || error?.response?.data?.error,
           }));
         });
     }
-    if (role === "tutor") {
-      await authAPIsRequests
-        .singoutTutorRequest(props?.authData?.token)
-        .then((response) => {
-          localStorage.removeItem("data");
-          window.location.replace("/");
+    if (role === 'tutor') {
+      await APIsRequests.singoutTutorRequest(props?.authData?.token)
+        .then(() => {
+          toast.success('Logged out successfully');
+          localStorage.removeItem('data');
+          setTimeout(() => window.location.replace('/'), 1000);
         })
         .catch((error) => {
+          toast.error(error?.response?.data?.message || error?.response?.data?.error);
           return setState((prevState) => ({
             ...prevState,
             loading: false,
             buttonStatus: false,
-            error:
-              error?.response?.data?.message || error?.response?.data?.error,
+            error: error?.response?.data?.message || error?.response?.data?.error,
           }));
         });
     }
-    if (role === "student") {
-      await authAPIsRequests
-        .singoutStudentRequest(props?.authData?.token)
-        .then((response) => {
-          localStorage.removeItem("data");
-          window.location.replace("/");
+    if (role === 'student') {
+      await APIsRequests.singoutStudentRequest(props?.authData?.token)
+        .then(() => {
+          toast.success('Logged out successfully');
+          localStorage.removeItem('data');
+          setTimeout(() => window.location.replace('/'), 1000);
         })
         .catch((error) => {
+          toast.error(error?.response?.data?.message || error?.response?.data?.error);
           return setState((prevState) => ({
             ...prevState,
             loading: false,
             buttonStatus: false,
-            error:
-              error?.response?.data?.message || error?.response?.data?.error,
+            error: error?.response?.data?.message || error?.response?.data?.error,
           }));
         });
     }
@@ -83,206 +86,195 @@ const Navbar = (props) => {
 
   return (
     <>
-      {props?.page === "home" ||
-      props?.page === "signin" ||
-      props?.page === "signup" ? (
-        <nav className="navbar-unique">
-          <div className="menu">
-            <a className="logo" href="/">
-              MTH
-            </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faHome} /> Home
-            </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faBook} /> Courses
-            </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faClipboardCheck} /> About Us
-            </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faGraduationCap} /> Services
-            </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faCog} /> Blog
-            </a>
-            <a href="/">
-              <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
-            </a>
-          </div>
-          <div className="auth">
-            {props?.page === "dashboard" ? (
-              <div className="profile-picture">
-                <img
-                  src="https://avatars.githubusercontent.com/u/38179232?v=4"
-                  alt="profile"
-                />
-              </div>
-            ) : props?.page === "signin" ? (
-              <span>
-                <span className="auth-signin">Signup</span>
-                <a href="/signup/student"> Student </a>
-                <a href="/signup/tutor"> Tutor </a>
-                <a href="/signup/admin"> Admin </a>
+      <ToastContainer />
+      { props?.page === 'home' ||
+        props?.page === 'signin' ||
+        props?.page === 'signup' ? (
+          <nav className='navbar-unique'>
+            <div className='menu'>
+              <a className='logo' href='/'>
+                MTH
+              </a>
+              <a href='/'>
+                <FontAwesomeIcon icon={faHome} /> Home
+              </a>
+              <a href='/'>
+                <FontAwesomeIcon icon={faCog} /> Blog
+              </a>
+              <a href='/'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> About Us
+              </a>
+              <a href='/'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Services
+              </a>
+              <a href='/'>
+                <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
+              </a>
+            </div>
+            <div className='auth'>
+              {props?.page === 'dashboard' ? (
+                <div className='profile-picture'> <img src='https://avatars.githubusercontent.com/u/38179232?v=4' alt='profile' /> </div>
+              ) : props?.page === 'home' || props?.page === 'signin' ? (
+                <span>
+                  <span className='auth-signin'>Login</span>
+                  <a href='/student/signin'> Student </a>
+                  <a href='/tutor/signin'> Tutor </a>
+                  <a href='/admin/signin'> Admin </a>
+                </span>
+              ) : props?.page === 'signup' ? (
+                <span>
+                  <span className='auth-signin'>SignUp</span>
+                  <a href='/student/signup'> Student </a>
+                  <a href='/tutor/signup'> Tutor </a>
+                  <a href='/admin/signup'> Admin </a>
+                </span>
+              )
+              : null}
+            </div>
+          </nav>
+        ) : props?.page === 'admin-dashboard' ? (
+          <nav className='navbar-unique'>
+            <div className='menu'>
+              <a className='logo' href='/admin/dashboard'>
+                MTH
+              </a>
+              <a href='/admin/dashboard'>
+                <FontAwesomeIcon icon={faHome} /> Admin DashBoard
+              </a>
+              <a href='/admin/admins'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Admins
+              </a>
+              <a href='/admin/tutors'>
+                <FontAwesomeIcon icon={faUserMd} /> Tutors
+              </a>
+              <a href='/admin/students'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Students
+              </a>
+              <a href='/admin/courses'>
+                <FontAwesomeIcon icon={faBook} />Courses
+              </a>
+              <a href='/admin/topics'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Topics
+              </a>
+              <a href='/admin/lessons'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
+              </a>
+              <a href='/admin/quizzes'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
+              </a>
+              <a href='/admin/questions'>
+                <FontAwesomeIcon icon={faQuestionCircle} /> Questions
+              </a>
+              <a href='/admin/setting'>
+                <FontAwesomeIcon icon={faCog} /> Settings
+              </a>
+              <a href='/contactus'>
+                <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
+              </a>
+            </div>
+            <div className='auth'>
+              <span className='auth-signin'>
+                <button
+                  disabled={state.buttonStatus}
+                  onClick={(key) => handleLogout(key, 'admin')}
+                >
+                  Logout, {shortData(props?.authData?.user?.admin_username, 5)}
+                </button>
               </span>
-            ) : props?.page === "home" || props?.page === "signup" ? (
-              <span>
-                <span className="auth-signin">Login</span>
-                <a href="/signin/student"> Student </a>
-                <a href="/signin/tutor"> Tutor </a>
-                <a href="/signin/admin"> Admin </a>
+            </div>
+          </nav>
+        ) : props?.page === 'tutor-dashboard' ? (
+          <nav className='navbar-unique'>
+            <div className='menu'>
+              <a className='logo' href='/tutor/dashboard'>
+                MTH
+              </a>
+              <a href='/tutor/dashboard'>
+                <FontAwesomeIcon icon={faHome} /> Tutor DashBoard
+              </a>
+              <a href='/tutor/tutors'>
+                <FontAwesomeIcon icon={faUserMd} /> Tutors
+              </a>
+              <a href='/tutor/students'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Students
+              </a>
+              <a href='/tutor/topics'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Topics
+              </a>
+              <a href='/tutor/lessons'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
+              </a>
+              <a href='/tutor/quizzes'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
+              </a>
+              <a href='/tutor/questions'>
+                <FontAwesomeIcon icon={faQuestionCircle} /> Questions
+              </a>
+              <a href='/tutor/setting'>
+                <FontAwesomeIcon icon={faCog} /> Settings
+              </a>
+              <a href='/contactus'>
+                <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
+              </a>
+            </div>
+            <div className='auth'>
+              <span className='auth-signin'>
+                <button
+                  disabled={state.buttonStatus}
+                  onClick={(key) => handleLogout(key, 'tutor')}
+                >
+                  Logout, {shortData(props?.authData?.user?.tutor_username, 5)}
+                </button>
               </span>
-            ) : null}
-          </div>
-        </nav>
-      ) : props?.page === "dashboard-admin" ? (
-        <nav className="navbar-unique">
-          <div className="menu">
-            <a className="logo" href="/home">
-              MTH
-            </a>
-            <a href="/dashboard/admin">
-              <FontAwesomeIcon icon={faHome} /> {props?.user?.admin_username}Home
-            </a>
-            <a href="/courselist">
-              <FontAwesomeIcon icon={faBook} /> Courses
-            </a>
-            <a href="/topiclist">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Topics
-            </a>
-            <a href="/adminlist">
-              <FontAwesomeIcon icon={faGraduationCap} /> Admins
-            </a>
-            <a href="/studentlist">
-              <FontAwesomeIcon icon={faGraduationCap} /> Students
-            </a>
-            <a href="/tutorlist">
-              <FontAwesomeIcon icon={faUserMd} /> Tutors
-            </a>
-            <a href="/lessonlist">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
-            </a>
-            <a href="/quizlist">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
-            </a>
-            <a href="/questionlist">
-              <FontAwesomeIcon icon={faQuestionCircle} /> Questions
-            </a>
-            <a href="/setting">
-              <FontAwesomeIcon icon={faCog} /> Settings
-            </a>
-            <a href="/contactus">
-              <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
-            </a>
-          </div>
-          <div className="auth">
-            <span className="auth-signin">
-              <button
-                disabled={state.buttonStatus}
-                onClick={(key) => handleLogout(key, "admin")}
-              >
-                Logout, {shortData(props?.authData?.user?.admin_username, 5)}
-              </button>
-            </span>
-          </div>
-        </nav>
-      ) : props?.page === "dashboard-tutor" ? (
-        <nav className="navbar-unique">
-          <div className="menu">
-            <a className="logo" href="/home">
-              MTH
-            </a>
-            <a href="/dashboard/tutor">
-              <FontAwesomeIcon icon={faHome} /> {props.role}DashBoard
-            </a>
-            <a href="/tutorprofile/tutor">
-              <FontAwesomeIcon icon={faBook} /> Profile
-            </a>
-            <a href="/topics">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Topics
-            </a>
-            <a href="/students">
-              <FontAwesomeIcon icon={faGraduationCap} /> Students
-            </a>
-            <a href="/tutors">
-              <FontAwesomeIcon icon={faUserMd} /> Tutors
-            </a>
-            <a href="/lesson">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
-            </a>
-            <a href="/quizzes">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
-            </a>
-            <a href="/questions">
-              <FontAwesomeIcon icon={faQuestionCircle} /> Questions
-            </a>
-            <a href="/setting">
-              <FontAwesomeIcon icon={faCog} /> Settings
-            </a>
-            <a href="/contactus">
-              <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
-            </a>
-          </div>
-          <div className="auth">
-            <span className="auth-signin">
-              <button
-                disabled={state.buttonStatus}
-                onClick={(key) => handleLogout(key, "tutor")}
-              >
-                Logout, {shortData(props?.authData?.user?.tutor_username, 5)}
-              </button>
-            </span>
-          </div>
-        </nav>
-      ) : props?.page === "dashboard-student" ? (
-        <nav className="navbar-unique">
-          <div className="menu">
-            <a className="logo" href="/home">
-              MTH
-            </a>
-            <a href="/tutorhome">
-              <FontAwesomeIcon icon={faHome} /> Student Home
-            </a>
-            <a href="/courses">
-              <FontAwesomeIcon icon={faBook} /> MyCourses
-            </a>
-            <a href="/topics">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Profile
-            </a>
-            <a href="/students">
-              <FontAwesomeIcon icon={faGraduationCap} /> Students
-            </a>
-            <a href="/tutors">
-              <FontAwesomeIcon icon={faUserMd} /> Tutors
-            </a>
-            <a href="/lesson">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
-            </a>
-            <a href="/quizzes">
-              <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
-            </a>
-            <a href="/questions">
-              <FontAwesomeIcon icon={faQuestionCircle} /> Questions
-            </a>
-            <a href="/setting">
-              <FontAwesomeIcon icon={faCog} /> Settings
-            </a>
-            <a href="/contactus">
-              <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
-            </a>
-          </div>
-          <div className="auth">
-            <span className="auth-signin">
-              <button
-                disabled={state.buttonStatus}
-                onClick={(key) => handleLogout(key, "student")}
-              >
-                Logout, {shortData(props?.authData?.user?.student_username, 5)}
-              </button>
-            </span>
-          </div>
-        </nav>
-      ) : null}
+            </div>
+          </nav>
+        ) : props?.page === 'student-dashboard' ? (
+          <nav className='navbar-unique'>
+            <div className='menu'>
+              <a className='logo' href='/student/dashboard'>
+                MTH
+              </a>
+              <a href='/student/dashboard'>
+                <FontAwesomeIcon icon={faHome} /> Student DashBoard
+              </a>
+              <a href='/student/tutors'>
+                <FontAwesomeIcon icon={faUserMd} /> Tutors
+              </a>
+              <a href='/student/students'>
+                <FontAwesomeIcon icon={faGraduationCap} /> Students
+              </a>
+              <a href='/student/courses'>
+                <FontAwesomeIcon icon={faBook} />Courses
+              </a>
+              <a href='/student/lessons'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
+              </a>
+              <a href='/student/quizzes'>
+                <FontAwesomeIcon icon={faClipboardCheck} /> Quizzes
+              </a>
+              <a href='/student/questions'>
+                <FontAwesomeIcon icon={faQuestionCircle} /> Questions
+              </a>
+              <a href='/student/setting'>
+                <FontAwesomeIcon icon={faCog} /> Settings
+              </a>
+              <a href='/contactus'>
+                <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us
+              </a>
+            </div>
+            <div className='auth'>
+              <span className='auth-signin'>
+                <button
+                  disabled={state.buttonStatus}
+                  onClick={(key) => handleLogout(key, 'student')}
+                >
+                  Logout, {shortData(props?.authData?.user?.student_username, 5)}
+                </button>
+              </span>
+            </div>
+          </nav>
+        ) : null
+      }
     </>
   );
 };

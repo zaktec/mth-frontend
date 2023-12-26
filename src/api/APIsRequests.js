@@ -1,13 +1,10 @@
 import axios from "axios";
 import { variables } from "../helpers";
 
-export const authAPIsRequests = {
-
-getHomeMsgApi:async() =>{
-
-return await axios.get(variables.HOME_API)
-},
-
+export const APIsRequests = {
+  getHomeServerMsgApi: async () => {
+    return await axios.get(variables.HOME_SERVER_API);
+  },
 
   signinStudentTutorAdminRequest: async (role, data) => {
     if (role === "tutor")
@@ -82,7 +79,7 @@ return await axios.get(variables.HOME_API)
     }
   },
 
-  ////  Lesson Api
+  //  Lesson Api
   postLessonApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -140,7 +137,7 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-  ////  Course Api
+  //  Course Api
   postCourseApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -195,7 +192,7 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-  ////  Student Api
+  //  Student Api
   postStudentApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -271,7 +268,7 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-  ////  Admin Api
+  //  Admin Api
   postAdminApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -297,7 +294,10 @@ return await axios.get(variables.HOME_API)
 
   getAdminApi: async (token, admin_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_ALL_ADMINS_API}/${admin_id}`, configs);
+    return await axios.get(
+      `${variables.GET_ALL_ADMINS_API}/${admin_id}`,
+      configs
+    );
   },
 
   deleteAdminApi: async (token, admin_id) => {
@@ -326,7 +326,7 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-  ////  Tutor Api
+  //  Tutor Api
   postTutorApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -352,7 +352,10 @@ return await axios.get(variables.HOME_API)
 
   getTutorApi: async (token, tutor_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_ALL_TUTORS_API}/${tutor_id}`, configs);
+    return await axios.get(
+      `${variables.GET_ALL_TUTORS_API}/${tutor_id}`,
+      configs
+    );
   },
 
   deleteTutorApi: async (token, tutor_id) => {
@@ -381,7 +384,7 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-  ////  Topic Api
+  //  Topic Api
   postTopicApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
@@ -402,13 +405,15 @@ return await axios.get(variables.HOME_API)
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    console.log(config)
     return await axios.get(variables.GET_ALL_TOPICS_API, config);
   },
 
   getTopicApi: async (token, topic_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_ALL_TOPICS_API}/${topic_id}`, configs);
+    return await axios.get(
+      `${variables.GET_ALL_TOPICS_API}/${topic_id}`,
+      configs
+    );
   },
 
   deleteTopicApi: async (token, topic_id) => {
@@ -437,8 +442,8 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-   ////  Quiz Api
-   postQuizApi: async (token, body) => {
+  //  Quiz Api
+  postQuizApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
       quiz_email: body.quiz_email,
@@ -458,13 +463,15 @@ return await axios.get(variables.HOME_API)
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    console.log(config)
     return await axios.get(variables.GET_ALL_QUIZZES_API, config);
   },
 
   getQuizApi: async (token, quiz_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_ALL_QUIZZES_API}/${quiz_id}`, configs);
+    return await axios.get(
+      `${variables.GET_ALL_QUIZZES_API}/${quiz_id}`,
+      configs
+    );
   },
 
   deleteQuizApi: async (token, quiz_id) => {
@@ -493,9 +500,8 @@ return await axios.get(variables.HOME_API)
     );
   },
 
-
-   ////  Question Api
-   postQuestionApi: async (token, body) => {
+  //  Question Api
+  postQuestionApi: async (token, body) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     const data = {
       question_email: body.question_email,
@@ -515,13 +521,16 @@ return await axios.get(variables.HOME_API)
       headers: { Authorization: `BEARER ${token}` },
       params: { sort_by: sortBy },
     };
-    console.log(config)
+
     return await axios.get(variables.GET_ALL_QUESTIONS_API, config);
   },
 
   getQuestionApi: async (token, question_id) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_ALL_QUESTIONS_API}/${question_id}`, configs);
+    return await axios.get(
+      `${variables.GET_ALL_QUESTIONS_API}/${question_id}`,
+      configs
+    );
   },
 
   deleteQuestionApi: async (token, question_id) => {
@@ -548,7 +557,37 @@ return await axios.get(variables.HOME_API)
       data,
       configs
     );
+  },
 
+  //Tutor Dashboard-----------
+  getTutorStudentsApi: async (token) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
 
-  }
+    };
+    return await axios.get(variables.TUTOR_STUDENT_API, config);
+  },
+
+  getStudentQuizzes: async (token, student_id) => {
+    const config = {
+      headers: { Authorization: `BEARER ${token}` },
+    };
+    return await axios.get(`${variables.GET_STUDENT_QUIZZES_API}/${student_id}`, config);
+  },
+
+  postStudentQuiz: async (token, student_id, quiz_id) => {
+    const data = {};
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.post(`${variables.POST_STUDENT_QUIZ_API}/${student_id}/${quiz_id}`, data, config);
+  },
+
+  getQuizQuestions: async (token, studentquiz_id) => {
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.GET_QUIZ_QUESTIONS_API}/${studentquiz_id}`, config);
+  },
+
+  postStudentQuizResult: async (token, studentquiz_id, data) => {
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, data, config);
+  },
 };
