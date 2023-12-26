@@ -48,10 +48,10 @@ const TutorStudents = (props) => {
       )}
 
       {state.displayForm === true && (
-        <ul className={'Main__List'}>
+        <ul className='Main__List'>
           { state.data.map((element) => (
               <Link key={element.student_id} to={`/tutor/get-students/${element.student_id}`} >
-                <li key={element.student_id} className={'MainList__card'}>
+                <li key={element.student_id} className='MainList__card'>
                   <p>
                     <b>Student ID :</b> {element.student_id}
                   </p>

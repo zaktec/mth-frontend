@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleDown, faAngleRight, faCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,33 +11,38 @@ import { verifyAuth } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 
 const QuizQuestion = () => {
-  const { quiz_id } = useParams();
+  const { studentquiz_id } = useParams();
   const [state, setState] = useState({
     data: [],
     authData: {},
+    correction: {},
+    objectIndex: null,
 
     answer: '',
     isLoading: true,
     answerText: 'Answer',
-    buttonStatusOne: false,
-    buttonStatusTwo: false,
 
     postPage: 1,
     totalPages: 1,
     currentPage: 1,
-    
-    answerClass: '',
-    question_answer1: '',
-    question_answer2: '',
-    question_answer3: '',
-    question_answer4: '',
+    prevButtonDisabled: true,
+    nextButtonDisabled: true,
+    submitButtonDisabled: true,
+
+
+    question_class_answer1: '',
+    question_class_answer2: '',
+    question_class_answer3: '',
+    question_class_answer4: '',
+    question_class_answer5: '',
   });
 
   useEffect(() => {
     const authData = verifyAuth();
     setState((prevState) => ({ ...prevState, authData }));
-    const getQuizApi = async (token, quiz_id) => {
-      await APIsRequests.getQuizQuestions(token, quiz_id)
+
+    const getQuizApi = async (token, studentquiz_id) => {
+      await APIsRequests.getQuizQuestions(token, studentquiz_id)
         .then((response) => {
           return setState((prevState) => ({
             ...prevState,
@@ -50,9 +56,14 @@ const QuizQuestion = () => {
         });
     };
 
-    getQuizApi(authData?.token, quiz_id);
-  }, [state?.postPage, quiz_id]);
+    getQuizApi(authData?.token, studentquiz_id);
+  }, [state?.postPage, studentquiz_id]);
 
+  useEffect(() => {
+    const item = state?.data.find((_item, index) => index === state?.objectIndex);
+    if (item && 'question_choice_answer' in item && 'question_choice_class' in item)
+      setState((prevState) => ({ ...prevState, nextButtonDisabled: false }));
+  }, [state?.data, state?.objectIndex]);
 
   const getPaginatedData = () => {
     const startIndex = (state?.currentPage - 1) * state?.postPage;
@@ -60,31 +71,42 @@ const QuizQuestion = () => {
     return state?.data.slice(startIndex, endIndex);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (choiceClass) => (event) => {
     event.preventDefault();
 
     setState((prevState) => ({
-      error: null,
       ...prevState,
-      answerClass: '',
-      data: prevState.data.map((item) => item.question_id === Number(event.target.name) ? {
+      error: null,
+      question_class_answer1: '',
+      question_class_answer2: '',
+      question_class_answer3: '',
+      question_class_answer4: '',
+      question_class_answer5: '',
+      [choiceClass]: 'choice-answer',
+      objectIndex: Number(event.target.name),
+      submitButtonDisabled: state?.currentPage === state?.totalPages ? false : true,
+      data: prevState.data.map((item, index) => index === Number(event.target.name) ? {
         ...item,
+        question_choice_class: choiceClass,
         question_choice_answer: event.target.value
       } : item),
     }));
   };
 
-  const handleChoice = (event, objectId, choiceClass, choiceAnswer) => {
+  const handleChoice = (event, objectIndex, choiceClass, choiceAnswer) => {
     event.preventDefault();
 
     setState((prevState) => ({
       ...prevState,
-      question_answer1: '',
-      question_answer2: '',
-      question_answer3: '',
-      question_answer4: '',
+      objectIndex: objectIndex,
+      question_class_answer1: '',
+      question_class_answer2: '',
+      question_class_answer3: '',
+      question_class_answer4: '',
+      question_class_answer5: '',
       [choiceClass]: 'choice-answer',
-      data: prevState.data.map((item) => item.question_id === objectId ? {
+      submitButtonDisabled: state?.currentPage === state?.totalPages ? false : true,
+      data: prevState.data.map((item, index) => index === objectIndex ? {
         ...item,
         question_choice_class: choiceClass,
         question_choice_answer: choiceAnswer
@@ -92,54 +114,88 @@ const QuizQuestion = () => {
     }));
   };
 
-  const handlePrevClick = (event, objectId) => {
+  const handlePrevClick = (event, objectIndex) => {
     event.preventDefault();
-    const objData = state?.data.find(item => item.question_id === objectId);
 
+    const objData = state?.data.find((_item, index) => index === (objectIndex - 1));
     setState((prevState) => ({
       ...prevState,
-      question_answer1: '',
-      question_answer2: '',
-      question_answer3: '',
-      question_answer4: '',
-      [objData?.question_choice_class]: 'choice-answer',
+      nextButtonDisabled: false,
+      question_class_answer1: '',
+      question_class_answer2: '',
+      question_class_answer3: '',
+      question_class_answer4: '',
+      question_class_answer5: '',
       currentPage: Math.max(state?.currentPage - 1, 1),
+      [objData?.question_choice_class]: 'choice-answer',
+      prevButtonDisabled: state?.currentPage === 2 && true,
     }));
   };
 
-  const handleNextClick = (event, objectId) => {
+  const handleNextClick = (event, objectIndex) => {
     event.preventDefault();
-    const objData = state?.data.find(item => item.question_id === objectId);
 
-    setState((prevState) => ({
+    const nextObjData = state?.data.find((_item, index) => index === (objectIndex + 1));
+    if (nextObjData && 'question_choice_answer' in nextObjData && 'question_choice_class' in nextObjData) {
+      return setState((prevState) => ({
+        ...prevState,
+        nextButtonDisabled: false,
+        prevButtonDisabled: false,
+        question_class_answer1: '',
+        question_class_answer2: '',
+        question_class_answer3: '',
+        question_class_answer4: '',
+        question_class_answer5: '',
+        [nextObjData?.question_choice_class]: 'choice-answer',
+        currentPage: Math.min(state?.currentPage + 1, state?.totalPages)
+      }));
+    }
+
+    return setState((prevState) => ({
       ...prevState,
-      question_answer1: '',
-      question_answer2: '',
-      question_answer3: '',
-      question_answer4: '',
-      [objData?.question_choice_class]: 'choice-answer',
+      nextButtonDisabled: true,
+      prevButtonDisabled: false,
+      question_class_answer1: '',
+      question_class_answer2: '',
+      question_class_answer3: '',
+      question_class_answer4: '',
+      question_class_answer5: '',
+      [nextObjData?.question_choice_class]: 'choice-answer',
       currentPage: Math.min(state?.currentPage + 1, state?.totalPages)
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     setState((prevState) => ({
       ...prevState,
       error: null,
       loading: true,
-      buttonStatusOne: true,
-      buttonStatusTwo: true,
+      prevButtonDisabled: true,
+      submitButtonDisabled: true
     }));
     
-    state?.data.map((element) => console.log(element?.question_choice_answer));
+    await APIsRequests.postStudentQuizResult(state?.authData?.token, studentquiz_id, state?.data)
+    .then((response) => {
+      toast.success('Quiz resulted successfully');
+      return setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        correction: response?.data?.data?.correction,
+      }));
+    })
+    .catch((error) => {
+      console.log('--------->', error);
+      toast.error(error?.response?.data?.message || error?.response?.data?.error);
+    });
   };
 
   if (state?.isLoading) return <p>Loading....</p>;
 
   return (
     <div className='quiz-question-container'>
+      <ToastContainer />
       <Navbar authData={state?.authData} page='student-dashboard' />
 
       <div className='header-container'>
@@ -158,17 +214,21 @@ const QuizQuestion = () => {
       <section>
         {getPaginatedData().map((element) => (
           <div className='card' key={element?.question_id}>
-            <div className='question-title'> {`Question ${state?.currentPage}/${state?.totalPages}`} </div>
+            <div className='question-title'>
+              <span>{`Question ${state?.currentPage}/${state?.totalPages}`}</span>
+              { Object.keys(state?.correction).length !== 0 && <span className='question-title-right'>{state?.correction?.marks}</span>}
+            </div>
+            
             <div className='question-img'><img src={element?.question_image} alt=' question-diagram' /> </div>
             <div className='question-body'> {element?.question_body} </div>
 
             {
               element?.question_type === 'mutliple_choice' &&
               <div className='choice-answer'>
-                {element?.question_answer1 !== null && <button className={state?.question_answer1} type='submit' onClick={(event) => handleChoice(event, element?.question_id, 'question_answer1', element?.question_answer1)}> {element?.question_answer1} </button>}
-                {element?.question_answer2 !== null && <button className={state?.question_answer2} type='submit' onClick={(event) => handleChoice(event, element?.question_id, 'question_answer2', element?.question_answer2)}> {element?.question_answer2} </button>}
-                {element?.question_answer3 !== null && <button className={state?.question_answer3} type='submit' onClick={(event) => handleChoice(event, element?.question_id, 'question_answer3', element?.question_answer3)}> {element?.question_answer3} </button>}
-                {element?.question_answer4 !== null && <button className={state?.question_answer4} type='submit' onClick={(event) => handleChoice(event, element?.question_id, 'question_answer4', element?.question_answer4)}> {element?.question_answer4} </button>}
+                {element?.question_answer1 !== null && <button className={state?.question_class_answer1} type='submit' onClick={(event) => handleChoice(event, (state?.currentPage - 1), 'question_class_answer1', element?.question_answer1)}> {element?.question_answer1} </button>}
+                {element?.question_answer2 !== null && <button className={state?.question_class_answer2} type='submit' onClick={(event) => handleChoice(event, (state?.currentPage - 1), 'question_class_answer2', element?.question_answer2)}> {element?.question_answer2} </button>}
+                {element?.question_answer3 !== null && <button className={state?.question_class_answer3} type='submit' onClick={(event) => handleChoice(event, (state?.currentPage - 1), 'question_class_answer3', element?.question_answer3)}> {element?.question_answer3} </button>}
+                {element?.question_answer4 !== null && <button className={state?.question_class_answer4} type='submit' onClick={(event) => handleChoice(event, (state?.currentPage - 1), 'question_class_answer4', element?.question_answer4)}> {element?.question_answer4} </button>}
               </div>
             }
 
@@ -178,23 +238,34 @@ const QuizQuestion = () => {
                 <Input
                   type='text'
                   className='form__input'
-                  name={element?.question_id}
-                  handleChange={handleChange}
+                  name={(state?.currentPage - 1)}
                   placeholder={state?.answerText}
                   value={element?.question_choice_answer || ''}
+                  handleChange={handleChange('question_class_answer5')}
                 />
               </div>
             }
 
             <div className='button-container'>
-              <button type='submit' onClick={(event) => handlePrevClick(event, element?.question_id - 1)} disabled={state?.currentPage === 1} ><FontAwesomeIcon icon={faAngleLeft} className="paginate-angles" />  Prev </button>
-              <button type='submit' disabled={state.buttonStatusTwo} > Help <FontAwesomeIcon icon={faAngleDown} className="paginate-angles" /> </button>
-              {
-                state?.currentPage !== state?.totalPages
-                ?  <button type='submit' onClick={(event) => handleNextClick(event, element?.question_id + 1)} > Next <FontAwesomeIcon icon={faAngleRight} className="paginate-angles" /> </button>
-                : <button type='submit' disabled={state.buttonStatusOne} onClick={(event) => handleSubmit(event)} > Submit Results <FontAwesomeIcon icon={faCheck} className="paginate-angles" /> </button>
+              { state?.prevButtonDisabled === true || (state?.currentPage === 1 && state?.prevButtonDisabled === true)
+                ? <button className='disabled-button' ><FontAwesomeIcon icon={faAngleLeft} className='paginate-angles' />  Prev </button>
+                : state?.currentPage !== 1 && state?.prevButtonDisabled === false && <button type='submit' onClick={(event) => handlePrevClick(event, (state?.currentPage - 1))} ><FontAwesomeIcon icon={faAngleLeft} className='paginate-angles' />  Prev </button>
               }
-              
+
+              <button> Help <FontAwesomeIcon icon={faAngleDown} className='paginate-angles' /> </button>
+
+              {
+                state?.currentPage !== state?.totalPages && state?.nextButtonDisabled === true
+                ? <button className='disabled-button' > Next <FontAwesomeIcon icon={faAngleRight} className='paginate-angles' /> </button>
+                : state?.currentPage !== state?.totalPages && state?.nextButtonDisabled === false && <button type='submit' onClick={(event) => handleNextClick(event, (state?.currentPage - 1))} > Next <FontAwesomeIcon icon={faAngleRight} className='paginate-angles' /> </button>
+              }
+
+              {
+                state?.currentPage === state?.totalPages && state?.submitButtonDisabled === true
+                ? <button className='disabled-button' > Submit Results <FontAwesomeIcon icon={faCheck} className='paginate-angles' /> </button>
+                : state?.currentPage === state?.totalPages && state?.submitButtonDisabled === false && <button type='submit' onClick={(event) => handleSubmit(event)} > Submit Results <FontAwesomeIcon icon={faCheck} className='paginate-angles' /> </button>
+              }
+
             </div>
           </div>
         ))}

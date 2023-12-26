@@ -581,8 +581,13 @@ export const APIsRequests = {
     return await axios.post(`${variables.POST_STUDENT_QUIZ_API}/${student_id}/${quiz_id}`, data, config);
   },
 
-  getQuizQuestions: async (token, quiz_id) => {
+  getQuizQuestions: async (token, studentquiz_id) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_QUIZ_QUESTIONS_API}/${quiz_id}`, config);
+    return await axios.get(`${variables.GET_QUIZ_QUESTIONS_API}/${studentquiz_id}`, config);
+  },
+
+  postStudentQuizResult: async (token, studentquiz_id, data) => {
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, data, config);
   },
 };

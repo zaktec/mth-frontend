@@ -44,8 +44,7 @@ const Signin = () => {
       error: null,
     }));
 
-    await APIsRequests
-      .signinStudentTutorAdminRequest(role, {
+    await APIsRequests.signinStudentTutorAdminRequest(role, {
         username: state.username,
         password: state.password,
         deviceId: localStorage.getItem('deviceId'),

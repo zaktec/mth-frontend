@@ -69,3 +69,4 @@ export const TUTOR_STUDENT_API = `${SERVER_URL}/api/v1/tutors/get-tutor-students
 export const POST_STUDENT_QUIZ_API = `${SERVER_URL}/api/v1/quizzes/post-student-quizzes`;
 export const GET_STUDENT_QUIZZES_API = `${SERVER_URL}/api/v1/quizzes/get-student-quizzes`;
 export const GET_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-quiz-questions`;
+export const POST_STUDENT_QUIZ_RESULT_API = `${SERVER_URL}/api/v1/quizzes/post-student-quiz-result`;

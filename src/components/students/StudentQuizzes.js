@@ -13,6 +13,7 @@ const StudentQuizzes = (props) => {
     isLoading: true,
     displayFormOne: false,
     displayFormTwo: false,
+    displayFormThree: false,
     buttonStatusOne: false,
     buttonStatusTwo: false,
   });
@@ -65,6 +66,26 @@ const StudentQuizzes = (props) => {
       return setState((prevState) => ({ ...prevState, displayFormTwo: true }));
   };
 
+  const handleDisplayFormThree = async (event) => {
+    event.preventDefault();
+    if (state.displayFormThree === true)
+      return setState((prevState) => ({ ...prevState, displayFormThree: false }));
+    if (state.displayFormThree === false)
+      return setState((prevState) => ({ ...prevState, displayFormThree: true }));
+  };
+
+  const handleStartQuiz = async (event, studentquiz_id) => {
+    event.preventDefault();
+    setState((prevState) => ({
+      ...prevState,
+      error: null,
+      loading: true,
+      buttonStatusTwo: false,
+    }));
+
+    return window.location.replace(`/${props?.role}/quiz-questions/${studentquiz_id}`);
+  };
+
   const handleSubmit = async (event, quiz_id) => {
     event.preventDefault();
     setState((prevState) => ({
@@ -91,18 +112,6 @@ const StudentQuizzes = (props) => {
     });
   };
 
-  const handleStartQuiz = async (event, quiz_id) => {
-    event.preventDefault();
-    setState((prevState) => ({
-      ...prevState,
-      error: null,
-      loading: true,
-      buttonStatusTwo: false,
-    }));
-
-    return window.location.replace(`/${props?.role}/quiz-questions/${quiz_id}`);
-  };
-
   if (state.isLoading) return <p>Loading....</p>;
 
   return (
@@ -117,48 +126,84 @@ const StudentQuizzes = (props) => {
           )}
 
           {state.displayFormOne === true && (
-            <ul className={'Main__List'}>
+            <ul className='Main__List'>
               {state.quizzes.map((element) => (
-                <li key={element?.quiz_id} className={'MainList__card'}>
+                <li key={element?.quiz_id} className='MainList__card'>
                   <p><b>Quiz Code :</b> {element?.quiz_code}</p>
                   <p><b>Quiz Name :</b> {element?.quiz_name}</p>
                   <p><b>Quiz Desc :</b> {element?.quiz_desc}</p>
-                  <button onClick={(event) => handleSubmit(event, element?.quiz_id)} disabled={state.buttonStatusOne} type='submit' >ASSIGN QUIZ</button>
+                  <button type='submit' onClick={(event) => handleSubmit(event, element?.quiz_id)} disabled={state.buttonStatusOne} >ASSIGN QUIZ</button>
                 </li>
               ))}
             </ul>
           )}
         </div>
       }
-      
-      <div style={{ margin: '20px auto' }} className='EditMainPage'>
-        {state?.displayFormTwo === true ? (
-          <button onClick={(event) => handleDisplayFormTwo(event)}>QUIZZES</button>
-        ) : (
-          <button onClick={(event) => handleDisplayFormTwo(event)}>SEE QUIZZES</button>
-        )}
 
-        {state.displayFormTwo === true && (
-          <ul className={'Main__List'}>
-            {state.assignedQuizzes.map((element) =>
-              <li key={element.studentquiz_id} className={'MainList__card'}>
-                <p><b>Quiz Code :</b> {element.quiz_code}</p>
-                <p><b>Quiz Name :</b> {element.quiz_name}</p>
-                <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
-                <p><b>Quiz Type :</b> {element.quiz_type}</p>
-                <p><b>Quiz Calc :</b> {element.quiz_calc}</p>
-                <p><b>Quiz Result :</b> {element.studentquiz_result}</p>
-                <p><b>Quiz Percent :</b> {element.studentquiz_percent}</p>
-                <p><b>Quiz Feedback :</b> {element.studentquiz_feedback}</p>
-                <button onClick={(event) => handleStartQuiz(event, element?.studentquiz_quiz_fk_id)} disabled={state.buttonStatusTwo} type='submit' >START QUIZ</button>
-              </li>
-            )}
-          </ul>
-        )}
-      </div>
+      {
+        state.assignedQuizzes.map((element) => {
+          if(element.studentquiz_status === 'completed') {
+            return (
+              <div key={element.studentquiz_id} style={{ margin: '20px auto' }} className='EditMainPage'>
+                {state?.displayFormTwo === true ? (
+                  <button onClick={(event) => handleDisplayFormTwo(event)}>COMPLETED QUIZZES</button>
+                ) : (
+                  <button onClick={(event) => handleDisplayFormTwo(event)}>SEE COMPLETED QUIZZES</button>
+                )}
+
+                {state.displayFormTwo === true && (
+                  <ul className='Main__List'>
+                    <li key={element.studentquiz_id} className='MainList__card'>
+                      <p><b>Quiz Code :</b> {element.quiz_code}</p>
+                      <p><b>Quiz Name :</b> {element.quiz_name}</p>
+                      <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
+                      <p><b>Quiz Type :</b> {element.quiz_type}</p>
+                      <p><b>Quiz Calc :</b> {element.quiz_calc}</p>
+                      <p><b>Quiz Status :</b> {element.studentquiz_status}</p>
+                      <p><b>Quiz Result :</b> {element.studentquiz_result}</p>
+                      <p><b>Quiz Percent :</b> {element.studentquiz_percent}</p>
+                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback}</p>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )
+          }
+
+          if(element.studentquiz_status === 'pending') {
+            return (
+              <div key={element.studentquiz_id} style={{ margin: '20px auto' }} className='EditMainPage'>
+                {state?.displayFormThree === true ? (
+                  <button onClick={(event) => handleDisplayFormThree(event)}>PENDING QUIZZES</button>
+                ) : (
+                  <button onClick={(event) => handleDisplayFormThree(event)}>SEE PENDING QUIZZES</button>
+                )}
+
+                {state.displayFormThree === true && (
+                  <ul className='Main__List'>
+                    <li key={element.studentquiz_id} className='MainList__card'>
+                      <p><b>Quiz Code :</b> {element.quiz_code}</p>
+                      <p><b>Quiz Name :</b> {element.quiz_name}</p>
+                      <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
+                      <p><b>Quiz Type :</b> {element.quiz_type}</p>
+                      <p><b>Quiz Calc :</b> {element.quiz_calc}</p>
+                      <p><b>Quiz Status :</b> {element.studentquiz_status}</p>
+                      <p><b>Quiz Result :</b> {element.studentquiz_result}</p>
+                      <p><b>Quiz Percent :</b> {element.studentquiz_percent}</p>
+                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback}</p>
+                      <button type='submit' onClick={(event) => handleStartQuiz(event, element?.studentquiz_id)} disabled={state.buttonStatusTwo} >START QUIZ</button>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )
+          }
+
+          return null
+        })
+      }
     </>
   );
 };
-
 
 export default StudentQuizzes;

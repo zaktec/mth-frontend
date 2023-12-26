@@ -29,13 +29,24 @@
       border: 2px solid #e3dedc;
 
       .question-title {
+        padding: 30px;
         display: block;
         font-size: 20px;
         font-weight: 900;
         color: #4e4e4e;
-        padding: 20px 30px;
         text-decoration: underline;
         background-color: #b4b4b42a;
+
+        .question-title-right {
+          float: right;
+          padding: 15px;
+          font-size: 25px;
+          margin-top: -20px;
+          color: $greenColor;
+          border-radius: 50%;
+          border: 1px solid $greenColor;
+          background-color: $whiteColor;
+        }
       }
 
       .question-img {
@@ -156,6 +167,10 @@
           box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
             rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
             rgba(50, 151, 211, 0.3) 0 0 0 4px;
+        }
+
+        .disabled-button {
+          background-color: #9fc4fc;
         }
       }
     }

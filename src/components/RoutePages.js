@@ -33,7 +33,6 @@ const RoutePages = () => {
         <Route path='/:role/signin' element={<Signin />}></Route>
         <Route path='/:role/signup' element={<Signup />}></Route>
         <Route path='/:role/dashboard' element={<Dashboard />}></Route>
-
         
         <Route path='/:role/admins' element={<SortAdmins />}></Route>
         <Route path='/:role/tutors' element={<SortTutors />}></Route>
@@ -42,7 +41,6 @@ const RoutePages = () => {
         {/*  new routes */}
         <Route path='/:role/questions' element={<SortQuestions />}></Route> 
         <Route path='/:role/questions/:question_id' element={<SingleQuestion />}></Route>
-
 
         <Route path='/:role/lessons' element={<SortLessons />}></Route>
         <Route path='/:role/lessons/:lesson_id' element={<SingleLesson />}></Route>
@@ -58,8 +56,8 @@ const RoutePages = () => {
 
         <Route path='/:role/get-admins/:admin_id' element={<SingleAdmin />}></Route>
         <Route path='/:role/get-tutors/:tutor_id' element={<SingleTutor />}></Route>
-        <Route path='/:role/quiz-questions/:quiz_id' element={<QuizQuestion />}></Route>
         <Route path='/:role/get-students/:student_id' element={<SingleStudent />}></Route> 
+        <Route path='/:role/quiz-questions/:studentquiz_id' element={<QuizQuestion />}></Route>
       </Routes>
     </div>
   );
