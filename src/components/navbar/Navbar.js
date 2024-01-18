@@ -165,8 +165,8 @@ const Navbar = (props) => {
               <a href='/admin/questions'>
                 <FontAwesomeIcon icon={faQuestionCircle} /> Questions
               </a>
-              <a href='/admin/setting'>
-                <FontAwesomeIcon icon={faCog} /> Settings
+              <a href='/admin/endpoints'>
+                <FontAwesomeIcon icon={faCog} /> Endpoints
               </a>
               <a href='/contactus'>
                 <FontAwesomeIcon icon={faPhoneSquare} /> Contact Us

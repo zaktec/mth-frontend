@@ -6,6 +6,12 @@ export const APIsRequests = {
     return await axios.get(variables.HOME_SERVER_API);
   },
 
+ getEndpointApi: async (token) =>{
+  console.log(token)
+        const config = { headers: { Authorization: `BEARER ${token}`}}
+     return await axios.get(variables.ENDPOINTS_API, config)
+ },
+
   signinStudentTutorAdminRequest: async (role, data) => {
     if (role === "tutor")
       return await axios.post(variables.TUTOR_SIGNIN_API, data);

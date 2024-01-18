@@ -70,3 +70,6 @@ export const POST_STUDENT_QUIZ_API = `${SERVER_URL}/api/v1/quizzes/post-student-
 export const GET_STUDENT_QUIZZES_API = `${SERVER_URL}/api/v1/quizzes/get-student-quizzes`;
 export const GET_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-quiz-questions`;
 export const POST_STUDENT_QUIZ_RESULT_API = `${SERVER_URL}/api/v1/quizzes/post-student-quiz-result`;
+
+//Admin dashboard
+export const ENDPOINTS_API = `${SERVER_URL}/api/v1/admins/endpoints`;

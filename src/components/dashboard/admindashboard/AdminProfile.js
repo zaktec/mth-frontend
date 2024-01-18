@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { APIsRequests } from '../../../api/APIsRequests';
+import { APIsRequests } from "../../../api/APIsRequests";
+import EndPoints from "./EndPoints";
 
 const AdminProfile = (props) => {
   const [state, setState] = useState({
@@ -43,6 +44,10 @@ const AdminProfile = (props) => {
           alt={state?.data?.admin_firstname}
         />
       </ul>
+
+      <div>
+        <EndPoints authData={props?.authData} />
+      </div>
     </div>
   );
 };

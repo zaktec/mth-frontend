@@ -42,8 +42,7 @@ const StudentProfile = (props) => {
           <b>Student Username :</b> {state?.data.student_username}
         </p>
         <p>
-          <b>Student Firstname :</b>
-          {state?.data.student_firstname}
+          <b>Student Firstname :</b>{state?.data.student_firstname}
         </p>
         <p>
           <b>Student Lastname :</b> {state?.data.student_lastname}
