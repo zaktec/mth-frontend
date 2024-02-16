@@ -42,4 +42,21 @@ const verifyDeviceId = () => {
   localStorage.setItem('deviceId', Math.random().toString(36).substr(2, 16));
 }
 
-export { verifyAuth, verifyRole, verifyDeviceId };
+const encrypt = (data) => {
+  try {
+    return btoa(data);
+  } catch (error) {
+    window.location.replace('/');
+    return error.toString();
+  }
+};
+
+const dencrypt = (data) => {
+  try {
+    return atob(data);
+  } catch (error) {
+    window.location.replace('/');
+    return error.toString();
+  }
+};
+export { verifyAuth, verifyRole, verifyDeviceId, encrypt, dencrypt };

@@ -59,8 +59,8 @@ const RoutePages = () => {
 
 
         
-        <Route path='/:role/get-students/:student_id' element={<SingleStudent />}></Route> 
-        <Route path='/:role/quiz-questions/:studentquiz_id' element={<QuizQuestion />}></Route>
+        <Route path='/:role/quiz-questions' element={<QuizQuestion />}></Route>
+        <Route path='/:role/get-students/:student_id' element={<SingleStudent />}></Route>
       </Routes>
     </div>
   );

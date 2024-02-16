@@ -1,5 +1,5 @@
 import * as variables from './variables';
-import { validateSignup, validateSignin, shortData } from './validate';
-import { verifyAuth, verifyRole, verifyDeviceId } from './verify';
+import { verifyAuth, verifyRole, verifyDeviceId, encrypt, dencrypt } from './verify';
+import { shortData, validateSignup, validateSignin, validateStudentSignup, validateStudentSignin, validateQuizAnswers } from './validate';
 
-export { verifyAuth, variables, validateSignup, validateSignin, verifyRole, verifyDeviceId, shortData };
+export { variables, shortData, verifyAuth, validateSignup, validateSignin, validateStudentSignup, validateStudentSignin, validateQuizAnswers, verifyRole, verifyDeviceId, encrypt, dencrypt };

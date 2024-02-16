@@ -40,6 +40,7 @@ const Navbar = (props) => {
         })
         .catch((error) => {
           toast.error(error?.response?.data?.message || error?.response?.data?.error);
+          setTimeout(() => window.location.replace('/'), 1000);
           return setState((prevState) => ({
             ...prevState,
             loading: false,
@@ -57,6 +58,7 @@ const Navbar = (props) => {
         })
         .catch((error) => {
           toast.error(error?.response?.data?.message || error?.response?.data?.error);
+          setTimeout(() => window.location.replace('/'), 1000);
           return setState((prevState) => ({
             ...prevState,
             loading: false,
@@ -74,6 +76,7 @@ const Navbar = (props) => {
         })
         .catch((error) => {
           toast.error(error?.response?.data?.message || error?.response?.data?.error);
+          setTimeout(() => window.location.replace('/'), 1000);
           return setState((prevState) => ({
             ...prevState,
             loading: false,

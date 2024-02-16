@@ -5,7 +5,7 @@ import Input from '../form/input';
 import Navbar from '../navbar/Navbar';
 import Loading from '../loading/Loading';
 import { APIsRequests } from '../../api/APIsRequests';
-import { validateSignin, verifyRole, verifyDeviceId } from '../../helpers';
+import { validateSignin,validateStudentSignin,  verifyRole, verifyDeviceId } from '../../helpers';
 
 const Signin = () => {
   const { role } = useParams();
@@ -34,15 +34,13 @@ const Signin = () => {
 
   const handleSubmit = async (key) => {
     key.preventDefault();
-    const error = validateSignin(state);
+    let error = validateSignin(state);
+    if(role === 'student') error = validateStudentSignin(state);
+
+
     if (error !== null)
       return setState((prevState) => ({ ...prevState, error }));
-    setState((prevState) => ({
-      ...prevState,
-      buttonStatus: true,
-      loading: true,
-      error: null,
-    }));
+    setState((prevState) => ({ ...prevState, buttonStatus: true, loading: true, error: null }));
 
     await APIsRequests.signinStudentTutorAdminRequest(role, {
         username: state.username,

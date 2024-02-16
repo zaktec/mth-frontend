@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+
+import { encrypt } from '../../helpers';
 import { APIsRequests } from '../../api/APIsRequests';
 
 const StudentQuizzes = (props) => {
@@ -74,7 +76,7 @@ const StudentQuizzes = (props) => {
       return setState((prevState) => ({ ...prevState, displayFormThree: true }));
   };
 
-  const handleStartQuiz = async (event, studentquiz_id) => {
+  const handleQuiz = async (event, studentquiz_id) => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
@@ -83,7 +85,9 @@ const StudentQuizzes = (props) => {
       buttonStatusTwo: false,
     }));
 
-    return window.location.replace(`/${props?.role}/quiz-questions/${studentquiz_id}`);
+    const encrypt_student_id = encrypt(props?.student_id);
+    const encrypt_studentquiz_id = encrypt(studentquiz_id);
+    return window.location.replace(`/${props?.role}/quiz-questions?studentquiz_id=${encrypt_studentquiz_id}&student_id=${encrypt_student_id}`);
   };
 
   const handleSubmit = async (event, quiz_id) => {
@@ -142,34 +146,6 @@ const StudentQuizzes = (props) => {
 
       {
         state.assignedQuizzes.map((element) => {
-          if(element.studentquiz_status === 'completed') {
-            return (
-              <div key={element.studentquiz_id} style={{ margin: '20px auto' }} className='EditMainPage'>
-                {state?.displayFormTwo === true ? (
-                  <button onClick={(event) => handleDisplayFormTwo(event)}>COMPLETED QUIZZES</button>
-                ) : (
-                  <button onClick={(event) => handleDisplayFormTwo(event)}>SEE COMPLETED QUIZZES</button>
-                )}
-
-                {state.displayFormTwo === true && (
-                  <ul className='Main__List'>
-                    <li key={element.studentquiz_id} className='MainList__card'>
-                      <p><b>Quiz Code :</b> {element.quiz_code}</p>
-                      <p><b>Quiz Name :</b> {element.quiz_name}</p>
-                      <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
-                      <p><b>Quiz Type :</b> {element.quiz_type}</p>
-                      <p><b>Quiz Calc :</b> {element.quiz_calc}</p>
-                      <p><b>Quiz Status :</b> {element.studentquiz_status}</p>
-                      <p><b>Quiz Result :</b> {element.studentquiz_result}</p>
-                      <p><b>Quiz Percent :</b> {element.studentquiz_percent}</p>
-                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback}</p>
-                    </li>
-                  </ul>
-                )}
-              </div>
-            )
-          }
-
           if(element.studentquiz_status === 'pending') {
             return (
               <div key={element.studentquiz_id} style={{ margin: '20px auto' }} className='EditMainPage'>
@@ -186,12 +162,43 @@ const StudentQuizzes = (props) => {
                       <p><b>Quiz Name :</b> {element.quiz_name}</p>
                       <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
                       <p><b>Quiz Type :</b> {element.quiz_type}</p>
-                      <p><b>Quiz Calc :</b> {element.quiz_calc}</p>
                       <p><b>Quiz Status :</b> {element.studentquiz_status}</p>
-                      <p><b>Quiz Result :</b> {element.studentquiz_result}</p>
-                      <p><b>Quiz Percent :</b> {element.studentquiz_percent}</p>
-                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback}</p>
-                      <button type='submit' onClick={(event) => handleStartQuiz(event, element?.studentquiz_id)} disabled={state.buttonStatusTwo} >START QUIZ</button>
+                      <p><b>Quiz Percent :</b> {element.studentquiz_percent || 'Not found'}</p>
+                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback || 'Not found'}</p>
+                      {props?.role === 'student' && <button type='submit' onClick={(event) => handleQuiz(event, element?.studentquiz_id)} disabled={state.buttonStatusTwo} >START QUIZ</button>}
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )
+          }
+
+          return null
+        })
+      }
+
+      {
+        state.assignedQuizzes.map((element) => {
+          if(element.studentquiz_status === 'completed') {
+            return (
+              <div key={element.studentquiz_id} style={{ margin: '20px auto' }} className='EditMainPage'>
+                {state?.displayFormTwo === true ? (
+                  <button onClick={(event) => handleDisplayFormTwo(event)}>COMPLETED QUIZZES</button>
+                ) : (
+                  <button onClick={(event) => handleDisplayFormTwo(event)}>SEE COMPLETED QUIZZES</button>
+                )}
+
+                {state.displayFormTwo === true && (
+                  <ul className='Main__List'>
+                    <li key={element.studentquiz_id} className='MainList__card'>
+                      <p><b>Quiz Code :</b> {element.quiz_code}</p>
+                      <p><b>Quiz Name :</b> {element.quiz_name}</p>
+                      <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
+                      <p><b>Quiz Type :</b> {element.quiz_type}</p>
+                      <p><b>Quiz Status :</b> {element.studentquiz_status}</p>
+                      <p><b>Quiz Percent :</b> {element.studentquiz_percent || 'Not found'}</p>
+                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback || 'Not found'}</p>
+                      <button type='submit' onClick={(event) => handleQuiz(event, element?.studentquiz_id)} disabled={state.buttonStatusTwo} >REVIEW QUIZ</button>
                     </li>
                   </ul>
                 )}
