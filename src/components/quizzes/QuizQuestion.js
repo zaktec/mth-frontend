@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useParams, useSearchParams } from 'react-router-dom';
 import React, { useState, useEffect, useRef  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faCheck, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faCheck, faClose, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
@@ -35,6 +35,7 @@ const QuizQuestion = () => {
     layoutName: "default",
 
     answer: '',
+    feedback: '',
     correction: '',
     answerText: 'Answer',
 
@@ -46,6 +47,7 @@ const QuizQuestion = () => {
     displayKeyboard: false,
     prevButtonDisabled: true,
     nextButtonDisabled: true,
+    feedbackIsLoading: false,
     submitButtonDisabled: true,
 
 
@@ -75,7 +77,8 @@ const QuizQuestion = () => {
             question_class_answer4: '',
             question_class_answer5: '',
             data: response?.data?.data?.quizResults,
-            correction: response?.data?.data?.correction || '',
+            feedback: response?.data?.data?.quizFeedback || '',
+            correction: response?.data?.data?.quizCorrection || '',
             [response?.data?.data?.quizResults[0].question_choice_class]: 'choice-answer',
             totalPages: Math.ceil(response?.data?.data.quizResults.length / state?.postPage),
           }));
@@ -244,6 +247,19 @@ const QuizQuestion = () => {
       }));
   };
 
+  const handleChangeFeedback = (event) => {
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, feedback: event.target.value }));
+  }
+
+  const handleSubmitFeedBack = async (event) => {
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, feedbackIsLoading: true }));
+    
+    toast.success('Feedback shared successfully');
+    setTimeout(() => { window.location.reload(); }, 4500);
+  };
+
   const handlePrevClick = (event, objectIndex) => {
     event.preventDefault();
 
@@ -300,7 +316,6 @@ const QuizQuestion = () => {
     setState((prevState) => ({
       ...prevState,
       error: null,
-      loading: true,
       submitted: true,
       submitButtonDisabled: true
     }));
@@ -341,9 +356,9 @@ const QuizQuestion = () => {
         { state.correction !== '' && <span className='question-title-right' >{ state.correction}</span> }
       </div>
 
-      <section>
-        {getPaginatedData().map((element) => (
-          <div className='card' key={element?.question_id}>
+      {getPaginatedData().map((element) => (
+        <div className='quiz-sections' key={element?.question_id}>
+          <section className='quiz-questions-section'>
             <div className='question-title'>
               <span className='question-pages'>{`Question ${state?.currentPage}/${state?.totalPages}`}</span>
               
@@ -362,18 +377,7 @@ const QuizQuestion = () => {
                 ? <span className='question-cal-ok-right'> <img src={CalculatorOk} alt='profile' /> </span>
                 : <span className='question-cal-cancel-right'> <img src={CalculatorCancel} alt='profile' /> </span>
               }
-            </div>
-
-              {
-                state?.correction !== ''
-                && <div className='correct-answers'>
-                    <span className='correct-answers-title'>CORRECT ANSWERS: </span>
-                    {element?.question_response1 !== null && <span> A. <button type='submit'> {element?.question_response1} </button></span>}
-                    {element?.question_response2 !== null && <span> B. <button type='submit'> {element?.question_response2} </button></span>}
-                    {element?.question_response3 !== null && <span> C. <button type='submit'> {element?.question_response3} </button></span>}
-                  </div>
-              }
-            
+            </div>            
             
             <div className='question-img'><img src={element?.question_image} alt=' question-diagram' /> </div>
             <div className='question-body'> {element?.question_body} </div>
@@ -445,9 +449,44 @@ const QuizQuestion = () => {
               }
 
             </div>
-          </div>
-        ))}
-      </section>
+          </section>
+
+          {
+            state?.correction !== ''
+            && <section className='quiz-correction-section'>
+                <div className='correction-header'>
+                  <span>POSSIBLE CORRECT ANSWERS</span>
+                </div>
+                <div className='correction-body'>
+                    {element?.question_response1 !== null && <span> A. <button type='submit'> {element?.question_response1} </button></span>}
+                    {element?.question_response2 !== null && <span> B. <button type='submit'> {element?.question_response2} </button></span>}
+                    {element?.question_response3 !== null && <span> C. <button type='submit'> {element?.question_response3} </button></span>}
+                </div>
+                <div className='correction-feedback'>
+                  <span>Tutor's Feedback</span>
+                  { role === 'student' && state?.feedback !=='' ? <div> { state?.feedback } </div> : role === 'student' && <div> There is no feedback yet </div> }
+
+                  {
+                    role === 'tutor'
+                    &&
+                    <>
+                      <textarea
+                        value={state?.feedback}
+                        onChange={handleChangeFeedback}
+                        placeholder='Share feedback'
+                      />
+                      {
+                        state?.feedbackIsLoading === true
+                        ? <button className='disabled-button' > Share Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
+                        : <button type='submit' onClick={(event) => handleSubmitFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
+                      }
+                    </>
+                  }
+                </div>
+              </section>
+          }
+        </div>
+      ))}
     </div>
   );
 };
