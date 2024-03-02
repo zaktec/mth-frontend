@@ -62,14 +62,15 @@ export const POST_QUESTION_API = `${SERVER_URL}/api/v1/questions/post-questions`
 export const EDIT_QUESTION_API = `${SERVER_URL}/api/v1/questions/update-questions`;
 export const GET_ALL_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-questions`;
 export const DELETE_QUESTION_API = `${SERVER_URL}/api/v1/questions/delete-questions`;
+export const GET_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-quiz-questions`;
 
 
 //Tutor dashboard
 export const TUTOR_STUDENT_API = `${SERVER_URL}/api/v1/tutors/get-tutor-students`;
 export const POST_STUDENT_QUIZ_API = `${SERVER_URL}/api/v1/quizzes/post-student-quizzes`;
 export const GET_STUDENT_QUIZZES_API = `${SERVER_URL}/api/v1/quizzes/get-student-quizzes`;
-export const GET_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-quiz-questions`;
 export const POST_STUDENT_QUIZ_RESULT_API = `${SERVER_URL}/api/v1/quizzes/post-student-quiz-result`;
+export const POST_STUDENT_QUIZ_RESULT_FEEDBACK_API = `${SERVER_URL}/api/v1/quizzes/post-student-quiz-result-feedback`;
 
 //Admin dashboard
 export const ENDPOINTS_API = `${SERVER_URL}/api/v1/admins/endpoints`;

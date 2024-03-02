@@ -37,7 +37,9 @@ const QuizQuestion = () => {
     answer: '',
     feedback: '',
     correction: '',
-    answerText: 'Answer',
+    showStatus: '',
+    hideStatus: '',
+    answerText: '',
 
     postPage: 1,
     totalPages: 1,
@@ -65,6 +67,24 @@ const QuizQuestion = () => {
     const getQuizApi = async (token) => {
       await APIsRequests.getQuizQuestions(token, student_id || null, studentquiz_id)
         .then((response) => {
+          if (response?.data?.data?.quizToggle === 'hide') {
+            setState((prevState) => ({
+              ...prevState,
+              showStatus: '',
+              hideStatus: 'hide'
+            }));
+          }
+
+          if (response?.data?.data?.quizToggle === 'show') {
+            setState((prevState) => ({
+              ...prevState,
+              hideStatus: '',
+              showStatus: 'show',
+            }));
+          }
+
+          
+
           setState((prevState) => ({
             ...prevState,
             objectIndex: 0,
@@ -255,9 +275,20 @@ const QuizQuestion = () => {
   const handleSubmitFeedBack = async (event) => {
     event.preventDefault();
     setState((prevState) => ({ ...prevState, feedbackIsLoading: true }));
-    
-    toast.success('Feedback shared successfully');
-    setTimeout(() => { window.location.reload(); }, 4500);
+
+    await APIsRequests.postStundentQuizFeedback(state?.authData?.token, studentquiz_id, state?.feedback)
+    .then((response) => {
+      toast.success('Feedback shared successfully');
+      setState((prevState) => ({
+        ...prevState,
+        feedbackIsLoading: false,
+        feedback: response?.data?.data?.studentquiz_feedback
+      }));
+    })
+    .catch((error) => {
+      console.log('--------->', error);
+      toast.error(error?.response?.data?.message || error?.response?.data?.error);
+    });
   };
 
   const handlePrevClick = (event, objectIndex) => {
@@ -311,6 +342,16 @@ const QuizQuestion = () => {
     }));
   };
 
+  const handleHideStatus = (event) => {
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, hideStatus: 'hide', showStatus: '' }));
+  };
+
+  const handleShowStatus = (event) => {
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, showStatus: 'show', hideStatus: '' }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setState((prevState) => ({
@@ -353,7 +394,8 @@ const QuizQuestion = () => {
           </svg>
         </div>
         <h1>Quiz Questions</h1>
-        { state.correction !== '' && <span className='question-title-right' >{ state.correction}</span> }
+        { role === 'student' && state?.correction !== '' && state?.showStatus === 'show' && <span className='question-title-right' >{ state.correction}</span> }
+        { role === 'tutor' && state?.correction !== '' && <span className='question-title-right' >{ state.correction}</span> }
       </div>
 
       {getPaginatedData().map((element) => (
@@ -362,15 +404,28 @@ const QuizQuestion = () => {
             <div className='question-title'>
               <span className='question-pages'>{`Question ${state?.currentPage}/${state?.totalPages}`}</span>
               
-              { element?.question_choice_answer_correct === false
-                && state.correction !== ''
-                && <span className='question-choice-answer-wrong'>Wrong <FontAwesomeIcon icon={faClose} className='paginate-angles' /> </span>
-              }
+              { role === 'student' && state.correction !== '' && state?.showStatus === 'show' && (
+                <>
+                  { element?.question_choice_answer_correct === false && (
+                    <span className='question-choice-answer-wrong'>Wrong <FontAwesomeIcon icon={faClose} className='paginate-angles' /> </span>
+                  )}
+                  { element?.question_choice_answer_correct === true && (
+                    <span className='question-choice-answer-correct'>Correct <FontAwesomeIcon icon={faCheck} className='paginate-angles' /></span>
+                  )}
+                </>
+              )}
 
-              { element?.question_choice_answer_correct === true
-                && state.correction !== ''
-                && <span className='question-choice-answer-correct'>Correct <FontAwesomeIcon icon={faCheck} className='paginate-angles' /></span>
-              }
+              { role === 'tutor' && state.correction !== '' && (
+                <>
+                  { element?.question_choice_answer_correct === false && (
+                    <span className='question-choice-answer-wrong'>Wrong <FontAwesomeIcon icon={faClose} className='paginate-angles' /> </span>
+                  )}
+                  { element?.question_choice_answer_correct === true && (
+                    <span className='question-choice-answer-correct'>Correct <FontAwesomeIcon icon={faCheck} className='paginate-angles' /></span>
+                  )}
+                </>
+              )}
+
 
               { 
                 element?.question_calc === true
@@ -452,35 +507,86 @@ const QuizQuestion = () => {
           </section>
 
           {
-            state?.correction !== ''
+            role === 'tutor' && state?.correction !== ''
             && <section className='quiz-correction-section'>
                 <div className='correction-header'>
-                  <span>POSSIBLE CORRECT ANSWERS</span>
+                  <span className='correction-header-title'>POSSIBLE CORRECT ANSWERS</span>
+                  {
+                    role === 'tutor' &&
+                    <span className='correction-header-status'>
+                      <span className={state?.hideStatus} onClick={(event) => handleHideStatus(event)}>HIDE</span>
+                      <span className={state?.showStatus} onClick={(event) => handleShowStatus(event)}>SHOW</span>
+                    </span>
+                  }
                 </div>
+
                 <div className='correction-body'>
                     {element?.question_response1 !== null && <span> A. <button type='submit'> {element?.question_response1} </button></span>}
                     {element?.question_response2 !== null && <span> B. <button type='submit'> {element?.question_response2} </button></span>}
                     {element?.question_response3 !== null && <span> C. <button type='submit'> {element?.question_response3} </button></span>}
                 </div>
+
                 <div className='correction-feedback'>
                   <span>Tutor's Feedback</span>
-                  { role === 'student' && state?.feedback !=='' ? <div> { state?.feedback } </div> : role === 'student' && <div> There is no feedback yet </div> }
+                  { role === 'student' && state?.feedback !=='' ?
+                    <div> { state?.feedback } </div>
+                    : role === 'student' && 
+                    <div> There is no feedback yet </div>
+                  }
 
                   {
-                    role === 'tutor'
-                    &&
-                    <>
-                      <textarea
-                        value={state?.feedback}
-                        onChange={handleChangeFeedback}
-                        placeholder='Share feedback'
-                      />
+                    role === 'tutor' &&
+                    <div>
+                      <textarea value={state?.feedback} onChange={handleChangeFeedback} placeholder='Share feedback' />
                       {
                         state?.feedbackIsLoading === true
                         ? <button className='disabled-button' > Share Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
-                        : <button type='submit' onClick={(event) => handleSubmitFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
+                        : <button type='submit' onClick={(event) => handleSubmitFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles'/> </button>
                       }
-                    </>
+                    </div>
+                  }
+                </div>
+              </section>
+          }
+
+          {
+            role === 'student' && state?.correction !== '' && state?.showStatus === 'show'
+            && <section className='quiz-correction-section'>
+                <div className='correction-header'>
+                  <span className='correction-header-title'>POSSIBLE CORRECT ANSWERS</span>
+                  {
+                    role === 'tutor' &&
+                    <span className='correction-header-status'>
+                      <span className={state?.hideStatus} onClick={(event) => handleHideStatus(event)}>HIDE</span>
+                      <span className={state?.showStatus} onClick={(event) => handleShowStatus(event)}>SHOW</span>
+                    </span>
+                  }
+                </div>
+
+                <div className='correction-body'>
+                    {element?.question_response1 !== null && <span> A. <button type='submit'> {element?.question_response1} </button></span>}
+                    {element?.question_response2 !== null && <span> B. <button type='submit'> {element?.question_response2} </button></span>}
+                    {element?.question_response3 !== null && <span> C. <button type='submit'> {element?.question_response3} </button></span>}
+                </div>
+
+                <div className='correction-feedback'>
+                  <span>Tutor's Feedback</span>
+                  { role === 'student' && state?.feedback !=='' ?
+                    <div> { state?.feedback } </div>
+                    : role === 'student' && 
+                    <div> There is no feedback yet </div>
+                  }
+
+                  {
+                    role === 'tutor' &&
+                    <div>
+                      <textarea value={state?.feedback} onChange={handleChangeFeedback} placeholder='Share feedback' />
+                      {
+                        state?.feedbackIsLoading === true
+                        ? <button className='disabled-button' > Share Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
+                        : <button type='submit' onClick={(event) => handleSubmitFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles'/> </button>
+                      }
+                    </div>
                   }
                 </div>
               </section>

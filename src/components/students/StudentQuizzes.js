@@ -196,8 +196,21 @@ const StudentQuizzes = (props) => {
                       <p><b>Quiz Desc :</b> {element.quiz_desc}</p>
                       <p><b>Quiz Type :</b> {element.quiz_type}</p>
                       <p><b>Quiz Status :</b> {element.studentquiz_status}</p>
-                      <p><b>Quiz Percent :</b> {element.studentquiz_percent || 'Not found'}</p>
-                      <p><b>Quiz Feedback :</b> {element.studentquiz_feedback || 'Not found'}</p>
+
+                      { props?.role === 'student' && element?.studentquiz_toggle === 'show'
+                        ? <p><b>Quiz Percent :</b> {element.studentquiz_percent || 'Not found'}</p> 
+                        : props?.role === 'student' && element?.studentquiz_toggle === 'hide' ? <p><b>Quiz Percent :</b> Not found</p>
+                        : null
+                      }
+
+                      { props?.role === 'student' && element?.studentquiz_toggle === 'show'
+                        ? <p><b>Quiz Feedback :</b> {element.studentquiz_feedback || 'Not found'}</p>
+                        : props?.role === 'student' && element?.studentquiz_toggle === 'hide' ? <p><b>Quiz Percent :</b> Not found</p>
+                        : null
+                      }
+
+                      { props?.role === 'tutor' && <p><b>Quiz Percent :</b> {element.studentquiz_percent || 'Not found'}</p> }
+                      { props?.role === 'tutor' && <p><b>Quiz Feedback :</b> {element.studentquiz_feedback || 'Not found'}</p> }
                       <button type='submit' onClick={(event) => handleQuiz(event, element?.studentquiz_id)} disabled={state.buttonStatusTwo} >REVIEW QUIZ</button>
                     </li>
                   </ul>

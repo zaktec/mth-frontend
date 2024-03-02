@@ -464,9 +464,35 @@
         text-align: center;
         background-color: $blueColor;
 
-        span {
+        .correction-header-title {
           color: $whiteColor;
           text-decoration: underline;
+        }
+
+        .correction-header-status {
+          font-size: 15px;
+          margin-left: 10px;
+          color: $whiteColor;
+          padding: 06px 01px;
+          border-radius: 50px;
+          background-color: $grayColor; 
+
+          span {
+            cursor: pointer;
+            padding: 05px 10px;
+            border-radius: 50px;
+            background-color: $grayColor;
+          }
+
+          .hide {
+            background-color: $redColor;
+            border: 1px solid $whiteColor;
+          }
+
+          .show {
+            background-color: $greenColor;
+            border: 1px solid $whiteColor;
+          }
         }
       }
 
@@ -482,11 +508,11 @@
 
           button {
             outline: 0;
+            cursor: auto;
             font-size: 15px;
-            cursor: pointer;
-            min-height: 40px;
             min-width: 60px;
             font-weight: 500;
+            min-height: 40px;
             color: $whiteColor;
             border-radius: 4px;
             text-align: center;
@@ -555,6 +581,10 @@
             Ubuntu, "Helvetica Neue", sans-serif;
           box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
           rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+        }
+
+        .disabled-button {
+          background-color: #9fc4fc;
         }
       }
     }

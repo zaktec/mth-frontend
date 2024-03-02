@@ -383,11 +383,8 @@ export const APIsRequests = {
       tutor_active: body.tutor_active,
       tutor_image: JSON.stringify(body.tutor_image),
     };
-    return await axios.patch(
-      `${variables.EDIT_TUTOR_API}/${tutor_id}`,
-      data,
-      configs
-    );
+
+    return await axios.patch(`${variables.EDIT_TUTOR_API}/${tutor_id}`, data, configs);
   },
 
   //  Topic Api
@@ -595,5 +592,11 @@ export const APIsRequests = {
   postStudentQuizResult: async (token, studentquiz_id, quizResults) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, quizResults, config);
+  },
+
+  postStundentQuizFeedback: async (token, studentquiz_id, feedback) => {
+    const data = { studentquiz_feedback: feedback }
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_FEEDBACK_API}/${studentquiz_id}`, data, configs);
   },
 };
