@@ -143,11 +143,7 @@ const EditTutor = (props) => {
             <div className='sections-container'>
               <section className='section-one'>
                 <div className='profile-picture'>
-                  {" "}
-                  <img
-                    src={profilePicturePreview || Avatar}
-                    alt="profile"
-                  />{" "}
+                  <img src={profilePicturePreview || Avatar} alt="profile" />
                 </div>
                 <ImageUploader
                   fileContainerStyle={{
