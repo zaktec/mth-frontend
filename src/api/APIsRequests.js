@@ -594,15 +594,8 @@ export const APIsRequests = {
     return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, quizResults, config);
   },
 
-  postStundentQuizResultFeedback: async (token, studentquiz_id, feedback) => {
-    const data = { studentquiz_feedback: feedback }
+  postTutorFeedback: async (token, studentquiz_id, data) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_FEEDBACK_API}/${studentquiz_id}`, data, configs);
-  },
-
-  postStundentQuizResultToggle: async (token, studentquiz_id, toggleStatus) => {
-    const data = { studentQuiz_toggle: toggleStatus }
-    const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_TOGGLE_API}/${studentquiz_id}`, data, configs);
+    return await axios.post(`${variables.POST_TUTOR_FEEDBACK_API}/${studentquiz_id}`, data, configs);
   },
 };

@@ -34,7 +34,7 @@
           img {
             transform:translate(-0%, -50%);
             position: absolute;
-            color: $defaultColor;
+            color: $blackColor;
             font-weight: 900;
             font-size: 15px;
             max-width: 100%;
@@ -71,10 +71,6 @@
           background-color: transparent;
           border-bottom: 1px dashed gray;
         }
-  
-        input:-webkit-autofill{
-          -webkit-text-fill-color: $blueColor !important;
-        }
       }
     }
 
@@ -93,6 +89,11 @@
     }
   }
 
+  .header {
+    padding: 1px;
+    background: $grayColor;
+  }
+
   .general-container {
     font-size: 30px;
     font-weight: 900;
@@ -103,13 +104,12 @@
       margin: 20px;
     }
 
-    span {
-      text-decoration: underline;
-    }
-
     section {
       color: $blueColor;
       margin: 50px auto 50px auto;
+      span {
+        text-decoration: underline;
+      }
     }
 
     .terms-policy {
@@ -117,6 +117,10 @@
       color: $greenColor;
       text-decoration: none;
     }
+  }
+  
+  input:-webkit-autofill {
+    -webkit-text-fill-color: $blueColor !important;
   }
 }
 
@@ -153,22 +157,21 @@
     width: 90%;
     display: flex;
     margin: 50px auto;
-    padding: 12vw 00vw 00vw 0vw;
-    
     justify-content: center;
+    padding: 12vw 00vw 00vw 0vw;
 
     .quiz-questions-section {
       min-width: 70%;
       display: block;
       border-radius: 20px;
-      border: 2px solid #e3dedc;
+      border: 3px solid $grayColor;
 
       .question-title {
         padding: 30px;
         display: flex;
         font-size: 20px;
         font-weight: 900;
-        background-color: #b4b4b42a;
+        background-color: $grayColor;
         justify-content: space-between;
 
         .question-pages {
@@ -255,7 +258,7 @@
       }
 
       .question-img {
-        padding: 10px 30px;
+        padding: 30px;
         display: block;
 
         img {
@@ -403,7 +406,7 @@
       width: 28%;
       margin-left: 50px;
       border-radius: 20px;
-      border: 2px solid #e3dedc;
+      border: 3px solid #e3dedc;
       
       .correction-header {
         padding: 30px;
@@ -536,15 +539,11 @@
         }
       }
     }
-  }
-}
 
-.quiz-question-container {
-  @media (min-width: 768px) {
-    .question-answer-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
+  }
+
+  input:-webkit-autofill {
+    -webkit-text-fill-color: $whiteColor !important;
   }
 }
 
@@ -717,4 +716,124 @@
 
 .check-box-label-checked {
   color: $greenColor;
+}
+
+.feedback-container {
+  width: 70%;
+  margin: 05% auto;
+  align-items: center;
+
+  .title-container {
+    font-size: 30px;
+    font-weight: 900;
+    text-align: center;
+    color: $blackColor;
+    section {
+      color: $blueColor;
+      margin: 50px auto 50px auto;
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .feedback-rates-title {
+    display: grid;
+    font-size: 25px;
+    font-weight: 900;
+    color: $blackColor;
+    grid-template-columns: 1fr 1fr;
+
+    .levels {
+      display: grid;
+      text-align: center;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+  }
+
+  .feedback-rates-body {
+    display: grid;
+    font-size: 20px;
+    font-weight: 900;
+    margin: 50px auto;
+    color: $blackColor;
+    grid-template-columns: 1fr 1fr;
+
+    .levels {
+      display: grid;
+      text-align: center;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      
+      .checkbox-wrapper-19 .check-box {
+        cursor: pointer;
+        margin-top: 00px;
+        margin-left: 00px;
+      }
+      
+      .checkbox-wrapper-19 .check-box::before,
+      .checkbox-wrapper-19 .check-box::after {
+        background-color: $blackColor;
+      }
+
+      .checkbox-wrapper-19 input[type=checkbox]:checked + .check-box,
+      .checkbox-wrapper-19 .check-box.checked {
+        border-color: $blackColor;
+      }
+      
+      .check-box-label-checked {
+        color: $blackColor;
+      }
+    }
+  }
+
+  .feedback-area {
+    margin: 30px auto;
+    color: $blackColor;
+    
+    div {
+      font-size: 20px;
+      font-weight: 900;
+      margin: 15px auto;
+    }
+
+    textarea {
+      width: 100%;
+      outline: none;
+      font-size: 15px;
+      min-height: 200px;
+      border-radius: 05px;
+      border: 3px solid $grayColor;
+    }
+  }
+
+  .feedback-button {
+    .error {
+      font-size: 20px;
+      font-weight: 700;
+      color: $redColor;
+      margin: 30px auto;
+    }
+
+    button {
+      outline: 0;
+      font-size: 20px;
+      cursor: pointer;
+      min-height: 40px;
+      min-width: 60px;
+      font-weight: 900;
+      color: $whiteColor;
+      border-radius: 4px;
+      text-align: center;
+      margin-right: 10px;
+      padding:  1rem 2rem;
+      display: inline-block;
+      border: 1px solid #babfc3;
+      background-color: $blueColor;
+      box-shadow: rgba(0, 0, 0, 0.39) 0px 1px 0px 0px;
+    }
+
+    .disabled-button {
+      background-color: #9fc4fc;
+    }
+  }
 }

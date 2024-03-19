@@ -37,11 +37,17 @@ const QuizQuestion = () => {
     layoutName: 'default',
 
     answer: '',
-    feedback: '',
     correction: '',
-    showStatus: '',
-    hideStatus: '',
     answerText: '',
+    tutorFeedback: '',
+    studentFeedback: '',
+    showTutorFeedback: '',
+    hideTutorFeedback: '',
+    showStudentFeedback: '',
+    hideStudentFeedback: '',
+    studentFeedbackError: '',
+    tutorFeedbackIsLoading: false,
+    studentFeedbackIsLoading: false,
 
     lastname: '',
     firstname: '',
@@ -58,7 +64,6 @@ const QuizQuestion = () => {
     displayKeyboard: false,
     prevButtonDisabled: true,
     nextButtonDisabled: true,
-    feedbackIsLoading: false,
     submitButtonDisabled: true,
 
 
@@ -67,6 +72,27 @@ const QuizQuestion = () => {
     question_class_answer3: '',
     question_class_answer4: '',
     question_class_answer5: '',
+
+    quizOrganized: '',
+    organizedVeryPoor: false,
+    organizedPoor: false,
+    organizedFair: false,
+    organizedGood: false,
+    organizedVeryGood: false,
+
+    questionClearness: '',
+    clearnessVeryPoor: false,
+    clearnessPoor: false,
+    clearnessFair: false,
+    clearnessGood: false,
+    clearnessVeryGood: false,
+    
+    quizSatisfied: '',
+    satisfiedVeryPoor: false,
+    satisfiedPoor: false,
+    satisfiedFair: false,
+    satisfiedGood: false,
+    satisfiedVeryGood: false,
   });
 
   useEffect(() => {
@@ -76,19 +102,35 @@ const QuizQuestion = () => {
     const getQuizApi = async (token) => {
       await APIsRequests.getQuizQuestions(token, student_id || null, studentquiz_id)
         .then((response) => {
-          if (response?.data?.data?.quizToggle === 'hide') {
+          if (response?.data?.data?.quizTutorToggle === 'hide') {
             setState((prevState) => ({
               ...prevState,
-              showStatus: '',
-              hideStatus: 'hide'
+              showTutorFeedback: '',
+              hideTutorFeedback: 'hide'
             }));
           }
 
-          if (response?.data?.data?.quizToggle === 'show') {
+          if (response?.data?.data?.quizTutorToggle === 'show') {
             setState((prevState) => ({
               ...prevState,
-              hideStatus: '',
-              showStatus: 'show',
+              hideTutorFeedback: '',
+              showTutorFeedback: 'show',
+            }));
+          }
+
+          if (response?.data?.data?.quizStudentToggle === 'hide') {
+            setState((prevState) => ({
+              ...prevState,
+              showStudentFeedback: '',
+              hideStudentFeedback: 'hide'
+            }));
+          }
+
+          if (response?.data?.data?.quizStudentToggle === 'show') {
+            setState((prevState) => ({
+              ...prevState,
+              hideStudentFeedback: '',
+              showStudentFeedback: 'show',
             }));
           }
           
@@ -112,8 +154,8 @@ const QuizQuestion = () => {
             question_class_answer5: '',
             data: response?.data?.data?.quizResults,
             quizDetails: response?.data?.data?.quizDetails,
-            feedback: response?.data?.data?.quizFeedback || '',
             correction: response?.data?.data?.quizCorrection || '',
+            tutorFeedback: response?.data?.data?.quizTutorFeedback || '',
             [response?.data?.data?.quizResults[0].question_choice_class]: 'choice-answer',
             totalPages: Math.ceil(response?.data?.data.quizResults.length / state?.postPage),
           }));
@@ -185,6 +227,7 @@ const QuizQuestion = () => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
+      studentFeedbackError: '',
       [event.target.name]: event.target.value,
     }));
   };
@@ -301,7 +344,7 @@ const QuizQuestion = () => {
           ...prevState,
           startQuiz: true
         }));
-      }, 2000);
+      }, 1500);
     }
 
     if (state?.termsPolicy === true) {
@@ -314,32 +357,8 @@ const QuizQuestion = () => {
           ...prevState,
           startQuiz: false
         }));
-      }, 2000);
+      }, 1500);
     }
-  };
-
-  const handleChangeFeedback = (event) => {
-    event.preventDefault();
-    setState((prevState) => ({ ...prevState, feedback: event.target.value }));
-  }
-
-  const handleSubmitFeedBack = async (event) => {
-    event.preventDefault();
-    setState((prevState) => ({ ...prevState, feedbackIsLoading: true }));
-
-    await APIsRequests.postStundentQuizResultFeedback(state?.authData?.token, studentquiz_id, state?.feedback)
-    .then((response) => {
-      toast.success('Feedback shared successfully');
-      setState((prevState) => ({
-        ...prevState,
-        feedbackIsLoading: false,
-        feedback: response?.data?.data?.studentquiz_feedback
-      }));
-    })
-    .catch((error) => {
-      console.log('--------->', error);
-      toast.error(error?.response?.data?.message || error?.response?.data?.error);
-    });
   };
 
   const handlePrevClick = (event, objectIndex) => {
@@ -393,14 +412,15 @@ const QuizQuestion = () => {
     }));
   };
 
-  const handleHideStatus = async (event) => {
+  const handleHideTutorFeedback = async (event) => {
     event.preventDefault();
+    const data = { studentquiz_tutor_feedback_toggle: 'hide' }
 
-    if (state?.hideStatus !== 'hide')
-      await APIsRequests.postStundentQuizResultToggle(state?.authData?.token, studentquiz_id, 'hide')
+    if (state?.hideTutorFeedback !== 'hide')
+      await APIsRequests.postTutorFeedback(state?.authData?.token, studentquiz_id, data)
       .then(() => {
         toast.success('Quiz result hide successfully');
-        setState((prevState) => ({ ...prevState, hideStatus: 'hide', showStatus: '' }));
+        setState((prevState) => ({ ...prevState, hideTutorFeedback: 'hide', showTutorFeedback: '' }));
         })
       .catch((error) => {
         console.log('--------->', error);
@@ -408,19 +428,77 @@ const QuizQuestion = () => {
       });
   };
 
-  const handleShowStatus = async (event) => {
+  const handleShowTutorFeedback = async (event) => {
     event.preventDefault();
+    const data = { studentquiz_tutor_feedback_toggle: 'show' }
 
-    if (state?.showStatus !== 'show')
-      await APIsRequests.postStundentQuizResultToggle(state?.authData?.token, studentquiz_id, 'show')
+    if (state?.showTutorFeedback !== 'show')
+      await APIsRequests.postTutorFeedback(state?.authData?.token, studentquiz_id, data)
       .then(() => {
         toast.success('Quiz result show successfully');
-        setState((prevState) => ({ ...prevState, showStatus: 'show', hideStatus: '' }));
+        setState((prevState) => ({ ...prevState, showTutorFeedback: 'show', hideTutorFeedback: '' }));
         })
       .catch((error) => {
         console.log('--------->', error);
         toast.error(error?.response?.data?.message || error?.response?.data?.error);
       });
+  };
+
+  const handleOrganized = (event) => {
+    const { id, checked } = event.target;
+    setState((prevState) => ({
+      ...prevState,
+      organizedVeryPoor: false,
+      organizedPoor: false,
+      organizedFair: false,
+      organizedGood: false,
+      organizedVeryGood: false,
+      studentFeedbackError: ''
+    }));
+
+    setState((prevState) => ({
+      ...prevState,
+      [id]: checked,
+      quizOrganized: id
+    }));
+  };
+
+  const handleClearness = (event) => {
+    const { id, checked } = event.target;
+    setState((prevState) => ({
+      ...prevState,
+     clearnessVeryPoor: false,
+     clearnessPoor: false,
+     clearnessFair: false,
+     clearnessGood: false,
+     clearnessVeryGood: false,
+     studentFeedbackError: ''  
+    }));
+
+    setState((prevState) => ({
+      ...prevState,
+      [id]: checked,
+      questionClearness: id
+    }));
+  };
+
+  const handleSatisfied = (event) => {
+    const { id, checked } = event.target;
+    setState((prevState) => ({
+      ...prevState,
+     satisfiedVeryPoor: false,
+     satisfiedPoor: false,
+     satisfiedFair: false,
+     satisfiedGood: false,
+     satisfiedVeryGood: false,
+     studentFeedbackError: ''
+    }));
+
+    setState((prevState) => ({
+      ...prevState,
+      [id]: checked,
+      quizSatisfied: id
+    }));
   };
 
   const handleOnDrop = (picture) => {
@@ -430,13 +508,44 @@ const QuizQuestion = () => {
     }));
   };
 
+  const handleSubmitStudentFeedback = async (event) => {
+    event.preventDefault();
+
+    if (state.quizOrganized === '' || state.questionClearness === '' || state.quizSatisfied === '' || state.studentFeedback === '')
+      return setState((prevState) => ({ ...prevState, studentFeedbackError: 'All fields are required' }));
+    
+    setState((prevState) => ({ ...prevState, studentFeedbackIsLoading: true }));
+    setTimeout(() => { toast.success('Feedback submitted successfully') }, 2000);
+    setTimeout(() => { window.location.reload(); }, 2000);
+  };
+
+  const handleSubmitTutorFeedBack = async (event) => {
+    event.preventDefault();
+    const data = { studentQuiz_tutor_feedback: state?.tutorFeedback }
+    setState((prevState) => ({ ...prevState, tutorFeedbackIsLoading: true }));
+
+    await APIsRequests.postTutorFeedback(state?.authData?.token, studentquiz_id, data)
+    .then((response) => {
+      toast.success('Feedback shared successfully');
+      setState((prevState) => ({
+        ...prevState,
+        tutorFeedbackIsLoading: false,
+        tutorFeedback: response?.data?.data?.studentquiz_tutor_feedback
+      }));
+    })
+    .catch((error) => {
+      console.log('--------->', error);
+      toast.error(error?.response?.data?.message || error?.response?.data?.error);
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
       error: null,
       submitted: true,
-      submitButtonDisabled: true
+      submitButtonDisabled: true,
     }));
 
     const { correction } = await validateQuizAnswers(state?.data);
@@ -445,7 +554,12 @@ const QuizQuestion = () => {
     await APIsRequests.postStudentQuizResult(state?.authData?.token, studentquiz_id, quizResults)
     .then(() => {
       toast.success('Quiz resulted successfully');
-      setTimeout(() => { window.location.reload(); }, 4500);
+      setTimeout(() => {
+        setState((prevState) => ({
+          ...prevState,
+          showStudentFeedback: 'show'
+        }));
+      }, 2000);
       
     })
     .catch((error) => {
@@ -453,7 +567,6 @@ const QuizQuestion = () => {
       toast.error(error?.response?.data?.message || error?.response?.data?.error);
     });
   };
-
 
   let profilePicturePreview = null;
   if (state?.profilePicture) {
@@ -483,7 +596,120 @@ const QuizQuestion = () => {
       <Navbar authData={state?.authData} page={`${role}-dashboard`} />
       
       {
-        state?.startQuiz === true
+        state?.showStudentFeedback === 'show'
+        ? <div className='feedback-container'>
+            <div className='title-container'>
+              <section> <span>SHARE WITH US FEEDBACK</span> </section>
+            </div>
+
+            <div className='feedback-rates-title'>
+              <div> Grade Level</div>
+              <div className='levels'>
+                <div>Very Poor</div>
+                <div>Poor</div>
+                <div>Fair</div>
+                <div>Good</div>
+                <div>Very Good</div>
+              </div>
+            </div>
+
+            <div className='feedback-rates-body'>
+              <div className='title'> Quiz Organized </div>
+              
+              <div className='levels'>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='organizedVeryPoor' checked={state?.organizedVeryPoor} onChange={handleOrganized}/>
+                  <label htmlFor='organizedVeryPoor' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='organizedPoor' checked={state?.organizedPoor} onChange={handleOrganized}/>
+                  <label htmlFor='organizedPoor' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='organizedFair' checked={state?.organizedFair} onChange={handleOrganized}/>
+                  <label htmlFor='organizedFair' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='organizedGood' checked={state?.organizedGood} onChange={handleOrganized}/>
+                  <label htmlFor='organizedGood' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='organizedVeryGood' checked={state?.organizedVeryGood} onChange={handleOrganized}/>
+                  <label htmlFor='organizedVeryGood' className='check-box' />
+                </div>
+              </div>
+            </div>
+
+            <div className='feedback-rates-body'>
+              <div className='title'> Question Clearness </div>
+              
+              <div className='levels'>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='clearnessVeryPoor' checked={state?.clearnessVeryPoor} onChange={handleClearness}/>
+                  <label htmlFor='clearnessVeryPoor' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='clearnessPoor' checked={state?.clearnessPoor} onChange={handleClearness}/>
+                  <label htmlFor='clearnessPoor' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='clearnessFair' checked={state?.clearnessFair} onChange={handleClearness}/>
+                  <label htmlFor='clearnessFair' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='clearnessGood' checked={state?.clearnessGood} onChange={handleClearness}/>
+                  <label htmlFor='clearnessGood' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='clearnessVeryGood' checked={state?.clearnessVeryGood} onChange={handleClearness}/>
+                  <label htmlFor='clearnessVeryGood' className='check-box' />
+                </div>
+              </div>
+            </div>
+
+            <div className='feedback-rates-body'>
+              <div className='title'> Quiz satisfaction </div>
+              
+              <div className='levels'>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='satisfiedVeryPoor' checked={state?.satisfiedVeryPoor} onChange={handleSatisfied}/>
+                  <label htmlFor='satisfiedVeryPoor' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='satisfiedPoor' checked={state?.satisfiedPoor} onChange={handleSatisfied}/>
+                  <label htmlFor='satisfiedPoor' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='satisfiedFair' checked={state?.satisfiedFair} onChange={handleSatisfied}/>
+                  <label htmlFor='satisfiedFair' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='satisfiedGood' checked={state?.satisfiedGood} onChange={handleSatisfied}/>
+                  <label htmlFor='satisfiedGood' className='check-box' />
+                </div>
+                <div className='checkbox-wrapper-19'>
+                  <input type='checkbox' id='satisfiedVeryGood' checked={state?.satisfiedVeryGood} onChange={handleSatisfied}/>
+                  <label htmlFor='satisfiedVeryGood' className='check-box' />
+                </div>
+              </div>
+            </div>
+
+            <div className="feedback-area">
+              <div> Any comment ? Please share with us below </div>
+              <textarea required type="text" placeholder="Enter your comment" name="studentFeedback" value={state.studentFeedback} onChange={handleOnChange} />
+            </div>
+
+            <div className="feedback-button">
+              <div className="error">{ state.studentFeedbackError }</div>
+              {
+                state?.studentFeedbackIsLoading === true
+                ? <button type="submit" className='disabled-button'>Share Feedback</button>
+                : <button type="submit" onClick={handleSubmitStudentFeedback}>Share Feedback</button>
+              }
+              
+            </div>
+          </div>
+        : state?.startQuiz === true
         ? <div className='quiz-question-container'>
             <div className='header-container'>
               <div className='svg-container'>
@@ -496,7 +722,7 @@ const QuizQuestion = () => {
                 </svg>
               </div>
               <h1>Quiz Questions</h1>
-              { role === 'student' && state?.correction !== '' && state?.showStatus === 'show' && <span className='question-title-right' >{ state.correction}</span> }
+              { role === 'student' && state?.correction !== '' && state?.showTutorFeedback === 'show' && <span className='question-title-right' >{ state.correction}</span> }
               { role === 'tutor' && state?.correction !== '' && <span className='question-title-right' >{ state.correction}</span> }
             </div>
 
@@ -506,7 +732,7 @@ const QuizQuestion = () => {
                   <div className='question-title'>
                     <span className='question-pages'>{`Question ${state?.currentPage}/${state?.totalPages}`}</span>
                     
-                    { role === 'student' && state.correction !== '' && state?.showStatus === 'show' && (
+                    { role === 'student' && state.correction !== '' && state?.showTutorFeedback === 'show' && (
                       <>
                         { element?.question_choice_answer_correct === false && (
                           <span className='question-choice-answer-wrong'>Wrong <FontAwesomeIcon icon={faClose} className='paginate-angles' /> </span>
@@ -607,7 +833,6 @@ const QuizQuestion = () => {
 
                   </div>
                 </section>
-
                 {
                   role === 'tutor' && state?.correction !== ''
                   && <section className='quiz-correction-section'>
@@ -616,8 +841,8 @@ const QuizQuestion = () => {
                         {
                           role === 'tutor' &&
                           <span className='correction-header-status'>
-                            <span className={state?.hideStatus} onClick={(event) => handleHideStatus(event)}>HIDE</span>
-                            <span className={state?.showStatus} onClick={(event) => handleShowStatus(event)}>SHOW</span>
+                            <span className={state?.hideTutorFeedback} onClick={(event) => handleHideTutorFeedback(event)}>HIDE</span>
+                            <span className={state?.showTutorFeedback} onClick={(event) => handleShowTutorFeedback(event)}>SHOW</span>
                           </span>
                         }
                       </div>
@@ -630,8 +855,8 @@ const QuizQuestion = () => {
 
                       <div className='correction-feedback'>
                         <span>Tutor's Feedback</span>
-                        { role === 'student' && state?.feedback !=='' ?
-                          <div> { state?.feedback } </div>
+                        { role === 'student' && state?.tutorFeedback !=='' ?
+                          <div> { state?.tutorFeedback } </div>
                           : role === 'student' && 
                           <div> There is no feedback yet </div>
                         }
@@ -639,28 +864,27 @@ const QuizQuestion = () => {
                         {
                           role === 'tutor' &&
                           <div>
-                            <textarea value={state?.feedback} onChange={handleChangeFeedback} placeholder='Share feedback' />
+                            <textarea required type="text" placeholder='Enter your feedback' name="tutorFeedback" value={state?.tutorFeedback} onChange={handleOnChange} />
                             {
-                              state?.feedbackIsLoading === true
+                              state?.tutorFeedbackIsLoading === true
                               ? <button className='disabled-button' > Share Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
-                              : <button type='submit' onClick={(event) => handleSubmitFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles'/> </button>
+                              : <button type='submit' onClick={(event) => handleSubmitTutorFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles'/> </button>
                             }
                           </div>
                         }
                       </div>
                     </section>
                 }
-
                 {
-                  role === 'student' && state?.correction !== '' && state?.showStatus === 'show'
+                  role === 'student' && state?.correction !== '' && state?.showTutorFeedback === 'show'
                   && <section className='quiz-correction-section'>
                       <div className='correction-header'>
                         <span className='correction-header-title'>POSSIBLE CORRECT ANSWERS</span>
                         {
                           role === 'tutor' &&
                           <span className='correction-header-status'>
-                            <span className={state?.hideStatus} onClick={(event) => handleHideStatus(event)}>HIDE</span>
-                            <span className={state?.showStatus} onClick={(event) => handleShowStatus(event)}>SHOW</span>
+                            <span className={state?.hideTutorFeedback} onClick={(event) => handleHideTutorFeedback(event)}>HIDE</span>
+                            <span className={state?.showTutorFeedback} onClick={(event) => handleShowTutorFeedback(event)}>SHOW</span>
                           </span>
                         }
                       </div>
@@ -673,8 +897,8 @@ const QuizQuestion = () => {
 
                       <div className='correction-feedback'>
                         <span>Tutor's Feedback</span>
-                        { role === 'student' && state?.feedback !=='' ?
-                          <div> { state?.feedback } </div>
+                        { role === 'student' && state?.tutorFeedback !=='' ?
+                          <div> { state?.tutorFeedback } </div>
                           : role === 'student' && 
                           <div> There is no feedback yet </div>
                         }
@@ -682,11 +906,11 @@ const QuizQuestion = () => {
                         {
                           role === 'tutor' &&
                           <div>
-                            <textarea value={state?.feedback} onChange={handleChangeFeedback} placeholder='Share feedback' />
+                            <textarea required type="text" placeholder='Enter your feedback' name="tutorFeedback" value={state?.tutorFeedback} onChange={handleOnChange} />
                             {
-                              state?.feedbackIsLoading === true
+                              state?.tutorFeedbackIsLoading === true
                               ? <button className='disabled-button' > Share Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles' /> </button>
-                              : <button type='submit' onClick={(event) => handleSubmitFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles'/> </button>
+                              : <button type='submit' onClick={(event) => handleSubmitTutorFeedBack(event)} > Submit Feedback <FontAwesomeIcon icon={faEnvelope} className='paginate-angles'/> </button>
                             }
                           </div>
                         }
@@ -697,7 +921,7 @@ const QuizQuestion = () => {
             ))}
           </div>
         :  <div className='instructions-container'>
-            <div className='general-container'>
+            <div className='general-container header'>
               <section> <span>GENERAL INSTRUCTIONS</span> </section>
             </div>
 
@@ -750,11 +974,10 @@ const QuizQuestion = () => {
                 state?.profilePicture !== '' && state?.firstname !== '' && state?.lastname &&
                 <div className='checkbox-wrapper-19'>
                   <input type='checkbox' id='cbtest-19' checked={state?.termsPolicy} onChange={handleTermsPolicy}/>
-                  <label htmlFor='cbtest-19' className='check-box' /><span className='terms-policy'> Agreed Terms and Policy </span>
+                  <label htmlFor='cbtest-19' className='check-box' /><span className='terms-policy'> Agreed terms and policy to continue</span>
                 </div>
               }
             </div>
-
           </div>
       }
     </div>

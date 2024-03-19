@@ -8,6 +8,7 @@
 body {
   margin: 0;
   padding: 0;
+  background: $blueActiveColor;
   font-family: 'Nunito', sans-serif;
 
   zoom: 0.8;
@@ -18,7 +19,7 @@ body {
   input:-webkit-autofill:hover, 
   input:-webkit-autofill:focus, 
   input:-webkit-autofill:active{
-      -webkit-box-shadow: 0 0 0 30px white inset !important;
+      -webkit-box-shadow: 0 0 0 30px $blueActiveColor inset !important;
   }
 }
 

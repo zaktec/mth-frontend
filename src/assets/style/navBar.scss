@@ -6,8 +6,8 @@
   display: flex;
   margin-bottom: 50px;
   align-items: center;
+  background-color: $blackColor;
   justify-content: space-between;
-  background-color: $defaultColor;
 
   .menu {
     margin-left: 30px;
@@ -16,7 +16,7 @@
       font-weight: 900;
       margin-right: 30px;
       padding: 10px 30px;
-      border: 2px solid $grayColor;
+      border: 3px solid $grayColor;
       border-radius: 1px 80px 1px 80px;
     }
   }
@@ -41,9 +41,9 @@
       font-weight: 600;
       padding: 10px 5px;
       border-radius: 5px;
-      color: $defaultColor;
+      color: $blackColor;
       background: $whiteColor;
-      border: 2px solid $grayColor;
+      border: 3px solid $grayColor;
 
       button {
         cursor: pointer;
@@ -72,7 +72,7 @@
         max-width: 100%;
         font-weight: 900;
         position: absolute;
-        color: $defaultColor;
+        color: $blackColor;
         transform:translate(-50%, -50%);
       }
     }

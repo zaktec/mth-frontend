@@ -100,12 +100,12 @@
       margin: 20px auto;
       border-radius: 5px;
       background: $whiteColor;
-      border: 2px solid $grayColor;
+      border: 3px solid $grayColor;
       transition: border-color 0.5s;
   }
 
   .form__input:focus {
-      border-color: $defaultColor;
+      border-color: $blackColor;
   }
 
   .form__input::placeholder {
@@ -121,7 +121,7 @@
   .form-response {
       font-weight: 600;
       text-align: center;
-      color: $defaultColor;
+      color: $blackColor;
   }
 
   .form__button {
@@ -133,7 +133,7 @@
       font-weight: bold;
       border-radius: 5px;
       color: $whiteColor;
-      background: $defaultColor;
+      background: $blackColor;
   }
 
   .form__button:active {
@@ -155,7 +155,7 @@
 .form-container {
   padding: 00px 10px 10px 10px;
   background: $whiteColor;
-  color: $defaultColor;
+  color: $blackColor;
   margin: 50px auto;
   min-height: 200px;
   width: 80%;
@@ -196,7 +196,7 @@
               img {
                   transform:translate(-0%, -50%);
                   position: absolute;
-                  color: $defaultColor;
+                  color: $blackColor;
                   font-weight: 900;
                   font-size: 15px;
                   max-width: 100%;
@@ -227,7 +227,7 @@
                     font-size: 1em;
                     border-radius: 5px;
                     background: $grayColor;
-                    border: 2px solid $grayColor;
+                    border: 3px solid $grayColor;
                     transition: border-color 0.5s;
                   }
 
@@ -241,7 +241,7 @@
                       font-weight: 900;
                       margin: 20px auto;
                       color: $whiteColor;
-                      background: $defaultColor;
+                      background: $blackColor;
                   }
 
                   .result-container {
