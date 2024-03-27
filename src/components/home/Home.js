@@ -1,31 +1,21 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import Navbar from '../navbar/Navbar';
+import { useEffect } from 'react';
 import { APIsRequests } from '../../api/APIsRequests';
 
 
-const Home = () => {
-  const [msg, setMsg] = useState('');
+const Home = () => {  
   useEffect(() => {
     const getHomeApi = async () =>{
       await APIsRequests.getHomeServerMsgApi()
       .then((res) => {
-        return setMsg(res.data.message);
+        return window.location.replace('/student/signin')
       })
       .catch((error) => {
-        console.log(error);
+        return console.log(error);
       }); 
     }
     
     getHomeApi()
   },[]);
-
-  return (
-    <div className='home-unique'> 
-      <Navbar page='home' />
-      <p>{msg} </p>
-    </div>
-  );
 }
 
 export default Home;

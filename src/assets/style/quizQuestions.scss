@@ -151,6 +151,25 @@
       border: 3px solid $greenColor;
       background-color: $whiteColor;
     }
+
+    .quiz-reset {
+      float: right;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 900;
+      margin-top: -60px;
+      margin-right: 10vw;
+      color: $whiteColor;
+      border-radius: 50%;
+      text-align: center;
+      padding: 20px 15px;
+      background-color: $redColor;
+      border: 3px dotted $whiteColor;
+    }
+
+    .disabled {
+      background-color: #fdb6b6;      
+    }
   }
 
   .quiz-sections {

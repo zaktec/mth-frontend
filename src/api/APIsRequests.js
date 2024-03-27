@@ -598,4 +598,14 @@ export const APIsRequests = {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.post(`${variables.POST_TUTOR_FEEDBACK_API}/${studentquiz_id}`, data, configs);
   },
+
+  postStudentFeedback: async (token, studentquiz_id, data) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.post(`${variables.POST_STUDENT_FEEDBACK_API}/${studentquiz_id}`, data, configs);
+  },
+
+  postResetQuiz: async (token, studentquiz_id, data) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.post(`${variables.POST_RESET_QUIZ_API}/${studentquiz_id}`, data, configs);
+  },
 };

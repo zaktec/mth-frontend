@@ -61,6 +61,7 @@ const QuizQuestion = () => {
     currentPage: 1,
     isLoading: true,
     submitted: false,
+    resetIsLoading: false,
     displayKeyboard: false,
     prevButtonDisabled: true,
     nextButtonDisabled: true,
@@ -115,22 +116,6 @@ const QuizQuestion = () => {
               ...prevState,
               hideTutorFeedback: '',
               showTutorFeedback: 'show',
-            }));
-          }
-
-          if (response?.data?.data?.quizStudentToggle === 'hide') {
-            setState((prevState) => ({
-              ...prevState,
-              showStudentFeedback: '',
-              hideStudentFeedback: 'hide'
-            }));
-          }
-
-          if (response?.data?.data?.quizStudentToggle === 'show') {
-            setState((prevState) => ({
-              ...prevState,
-              hideStudentFeedback: '',
-              showStudentFeedback: 'show',
             }));
           }
           
@@ -423,7 +408,7 @@ const QuizQuestion = () => {
         setState((prevState) => ({ ...prevState, hideTutorFeedback: 'hide', showTutorFeedback: '' }));
         })
       .catch((error) => {
-        console.log('--------->', error);
+
         toast.error(error?.response?.data?.message || error?.response?.data?.error);
       });
   };
@@ -439,7 +424,7 @@ const QuizQuestion = () => {
         setState((prevState) => ({ ...prevState, showTutorFeedback: 'show', hideTutorFeedback: '' }));
         })
       .catch((error) => {
-        console.log('--------->', error);
+
         toast.error(error?.response?.data?.message || error?.response?.data?.error);
       });
   };
@@ -514,9 +499,25 @@ const QuizQuestion = () => {
     if (state.quizOrganized === '' || state.questionClearness === '' || state.quizSatisfied === '' || state.studentFeedback === '')
       return setState((prevState) => ({ ...prevState, studentFeedbackError: 'All fields are required' }));
     
+    const body = {
+      quizOrganized: state.quizOrganized,
+      questionClearness: state.questionClearness,
+      quizSatisfied: state.quizSatisfied,
+      studentFeedback: state.studentFeedback,
+    }
+    
+    const studentquiz_student_feedback = JSON.stringify(body);
+    const data = { studentquiz_student_feedback, studentquiz_student_feedback_toggle: 'show' };
     setState((prevState) => ({ ...prevState, studentFeedbackIsLoading: true }));
-    setTimeout(() => { toast.success('Feedback submitted successfully') }, 2000);
-    setTimeout(() => { window.location.reload(); }, 2000);
+
+    await APIsRequests.postStudentFeedback(state?.authData?.token, studentquiz_id, data)
+    .then(() => {
+      toast.success('Feedback submitted successfully')
+      setTimeout(() => { window.location.reload(); }, 4500);
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.message || error?.response?.data?.error);
+    });
   };
 
   const handleSubmitTutorFeedBack = async (event) => {
@@ -526,7 +527,7 @@ const QuizQuestion = () => {
 
     await APIsRequests.postTutorFeedback(state?.authData?.token, studentquiz_id, data)
     .then((response) => {
-      toast.success('Feedback shared successfully');
+      toast.success('Feedback submitted successfully');
       setState((prevState) => ({
         ...prevState,
         tutorFeedbackIsLoading: false,
@@ -534,7 +535,31 @@ const QuizQuestion = () => {
       }));
     })
     .catch((error) => {
-      console.log('--------->', error);
+      toast.error(error?.response?.data?.message || error?.response?.data?.error);
+    });
+  };
+
+  const handleResetQuiz = async (event) => {
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, resetIsLoading: true }));
+  
+    const data = {
+      studentQuiz_status: 'pending',
+    	studentQuiz_result: null,
+    	studentQuiz_percent: null,
+    	studentQuiz_tutor_feedback: null,
+    	studentQuiz_student_feedback: null,
+    	studentQuiz_tutor_feedback_toggle: 'hide',
+    	studentQuiz_student_feedback_toggle: 'hide'
+  	};
+
+    await APIsRequests.postResetQuiz(state?.authData?.token, studentquiz_id, data)
+    .then(() => {
+      toast.success('Quiz reset successfully')
+      setState((prevState) => ({ ...prevState, resetIsLoading: false }));
+      setTimeout(() => { window.location.replace(`/tutor/get-students/${student_id}`); }, 4500);
+    })
+    .catch((error) => {
       toast.error(error?.response?.data?.message || error?.response?.data?.error);
     });
   };
@@ -563,7 +588,6 @@ const QuizQuestion = () => {
       
     })
     .catch((error) => {
-      console.log('--------->', error);
       toast.error(error?.response?.data?.message || error?.response?.data?.error);
     });
   };
@@ -712,6 +736,7 @@ const QuizQuestion = () => {
         : state?.startQuiz === true
         ? <div className='quiz-question-container'>
             <div className='header-container'>
+
               <div className='svg-container'>
                 <svg viewBox='0 0 800 200' className='svg'>
                   <path
@@ -721,9 +746,18 @@ const QuizQuestion = () => {
                   ></path>
                 </svg>
               </div>
+
               <h1>Quiz Questions</h1>
-              { role === 'student' && state?.correction !== '' && state?.showTutorFeedback === 'show' && <span className='question-title-right' >{ state.correction}</span> }
+              { role === 'tutor' && state?.correction !== '' &&
+                state?.resetIsLoading === false
+                ? <div className='quiz-reset' onClick={handleResetQuiz}><div>QUIZ</div> <div>RESET</div></div>
+                : role === 'tutor'
+                ? <div className='quiz-reset disabled'><div>QUIZ</div> <div>RESET</div></div>
+                : null
+               }
               { role === 'tutor' && state?.correction !== '' && <span className='question-title-right' >{ state.correction}</span> }
+              { role === 'student' && state?.correction !== '' && state?.showTutorFeedback === 'show' && <span className='question-title-right' >{ state.correction}</span> }
+
             </div>
 
             {getPaginatedData().map((element) => (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -16,6 +17,7 @@ import {
 import { APIsRequests } from '../../api/APIsRequests';
 
 const Navbar = (props) => {
+  const { role } = useParams();
   const [state, setState] = useState({
     error: null,
     loading: false,
@@ -87,6 +89,7 @@ const Navbar = (props) => {
     }
   };
 
+  console.log(role);
   return (
     <>
       <ToastContainer />
@@ -119,17 +122,35 @@ const Navbar = (props) => {
                 <div className='profile-picture'> <img src='https://avatars.githubusercontent.com/u/38179232?v=4' alt='profile' /> </div>
               ) : props?.page === 'home' || props?.page === 'signin' ? (
                 <span>
-                  <span className='auth-signin'>Login</span>
-                  <a href='/student/signin'> Student </a>
-                  <a href='/tutor/signin'> Tutor </a>
-                  <a href='/admin/signin'> Admin </a>
+                  <span className='auth-button'>Login</span>
+                  <a href='/student/signin'>
+                    Student
+                    <span class={role === 'student' ? 'custom-span' : 'custom-span hidden'} />
+                  </a>
+                  <a href='/tutor/signin'>
+                    Tutor
+                    <span class={role === 'tutor' ? 'custom-span' : 'custom-span hidden'} />
+                  </a>
+                  <a href='/admin/signin'>
+                    Admin
+                    <span class={role === 'admin' ? 'custom-span' : 'custom-span hidden'} />
+                  </a>
                 </span>
               ) : props?.page === 'signup' ? (
                 <span>
-                  <span className='auth-signin'>SignUp</span>
-                  <a href='/student/signup'> Student </a>
-                  <a href='/tutor/signup'> Tutor </a>
-                  <a href='/admin/signup'> Admin </a>
+                  <span className='auth-button'>SignUp</span>
+                  <a href='/student/signup'>
+                    Student
+                    <span class={role === 'student' ? 'custom-span' : 'custom-span hidden'} />
+                  </a>
+                  <a href='/tutor/signup'>
+                    Tutor
+                    <span class={role === 'tutor' ? 'custom-span' : 'custom-span hidden'} />
+                  </a>
+                  <a href='/admin/signup'>
+                    Admin
+                    <span class={role === 'admin' ? 'custom-span' : 'custom-span hidden'} />
+                  </a>
                 </span>
               )
               : null}
@@ -154,7 +175,7 @@ const Navbar = (props) => {
                 <FontAwesomeIcon icon={faGraduationCap} /> Students
               </a>
               <a href='/admin/courses'>
-                <FontAwesomeIcon icon={faBook} />Courses
+                <FontAwesomeIcon icon={faBook} /> Courses
               </a>
               <a href='/admin/topics'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Topics
@@ -176,7 +197,7 @@ const Navbar = (props) => {
               </a>
             </div>
             <div className='auth'>
-              <span className='auth-signin'>
+              <span className='auth-button'>
                 <button
                   disabled={state.buttonStatus}
                   onClick={(key) => handleLogout(key, 'admin')}
@@ -221,7 +242,7 @@ const Navbar = (props) => {
               </a>
             </div>
             <div className='auth'>
-              <span className='auth-signin'>
+              <span className='auth-button'>
                 <button
                   disabled={state.buttonStatus}
                   onClick={(key) => handleLogout(key, 'tutor')}
@@ -247,7 +268,7 @@ const Navbar = (props) => {
                 <FontAwesomeIcon icon={faGraduationCap} /> Students
               </a>
               <a href='/student/courses'>
-                <FontAwesomeIcon icon={faBook} />Courses
+                <FontAwesomeIcon icon={faBook} /> Courses
               </a>
               <a href='/student/lessons'>
                 <FontAwesomeIcon icon={faClipboardCheck} /> Lessons
@@ -266,7 +287,7 @@ const Navbar = (props) => {
               </a>
             </div>
             <div className='auth'>
-              <span className='auth-signin'>
+              <span className='auth-button'>
                 <button
                   disabled={state.buttonStatus}
                   onClick={(key) => handleLogout(key, 'student')}
