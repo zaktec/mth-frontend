@@ -73,6 +73,7 @@ export const GET_STUDENT_QUIZZES_API = `${SERVER_URL}/api/v1/quizzes/get-student
 export const POST_TUTOR_FEEDBACK_API = `${SERVER_URL}/api/v1/quizzes/post-tutor-feedback`;
 export const POST_STUDENT_FEEDBACK_API = `${SERVER_URL}/api/v1/quizzes/post-student-feedback`;
 export const POST_STUDENT_QUIZ_RESULT_API = `${SERVER_URL}/api/v1/quizzes/post-student-quiz-result`;
+export const POST_STUDENT_SHAREABLE_LINK_API = `${SERVER_URL}/api/v1/quizzes/post_student-shareable-link`;
 
 //Admin dashboard
 export const ENDPOINTS_API = `${SERVER_URL}/api/v1/admins/endpoints`;

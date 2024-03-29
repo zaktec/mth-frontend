@@ -6,11 +6,10 @@ export const APIsRequests = {
     return await axios.get(variables.HOME_SERVER_API);
   },
 
- getEndpointApi: async (token) =>{
-  console.log(token)
-        const config = { headers: { Authorization: `BEARER ${token}`}}
-     return await axios.get(variables.ENDPOINTS_API, config)
- },
+  getEndpointApi: async (token) => {
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(variables.ENDPOINTS_API, config);
+  },
 
   signinStudentTutorAdminRequest: async (role, data) => {
     if (role === "tutor")
@@ -384,7 +383,11 @@ export const APIsRequests = {
       tutor_image: JSON.stringify(body.tutor_image),
     };
 
-    return await axios.patch(`${variables.EDIT_TUTOR_API}/${tutor_id}`, data, configs);
+    return await axios.patch(
+      `${variables.EDIT_TUTOR_API}/${tutor_id}`,
+      data,
+      configs
+    );
   },
 
   //  Topic Api
@@ -566,7 +569,6 @@ export const APIsRequests = {
   getTutorStudentsApi: async (token) => {
     const config = {
       headers: { Authorization: `BEARER ${token}` },
-
     };
     return await axios.get(variables.TUTOR_STUDENT_API, config);
   },
@@ -575,37 +577,74 @@ export const APIsRequests = {
     const config = {
       headers: { Authorization: `BEARER ${token}` },
     };
-    return await axios.get(`${variables.GET_STUDENT_QUIZZES_API}/${student_id}`, config);
+    return await axios.get(
+      `${variables.GET_STUDENT_QUIZZES_API}/${student_id}`,
+      config
+    );
   },
 
   postStudentQuiz: async (token, student_id, quiz_id) => {
     const data = {};
     const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_STUDENT_QUIZ_API}/${student_id}/${quiz_id}`, data, config);
+    return await axios.post(
+      `${variables.POST_STUDENT_QUIZ_API}/${student_id}/${quiz_id}`,
+      data,
+      config
+    );
   },
 
   getQuizQuestions: async (token, student_id, studentquiz_id) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(`${variables.GET_QUIZ_QUESTIONS_API}/${student_id}/${studentquiz_id}`, config);
+    return await axios.get(
+      `${variables.GET_QUIZ_QUESTIONS_API}/${student_id}/${studentquiz_id}`,
+      config
+    );
   },
 
   postStudentQuizResult: async (token, studentquiz_id, quizResults) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, quizResults, config);
+    return await axios.post(
+      `${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`,
+      quizResults,
+      config
+    );
   },
 
   postTutorFeedback: async (token, studentquiz_id, data) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_TUTOR_FEEDBACK_API}/${studentquiz_id}`, data, configs);
+    return await axios.post(
+      `${variables.POST_TUTOR_FEEDBACK_API}/${studentquiz_id}`,
+      data,
+      configs
+    );
   },
 
   postStudentFeedback: async (token, studentquiz_id, data) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_STUDENT_FEEDBACK_API}/${studentquiz_id}`, data, configs);
+    return await axios.post(
+      `${variables.POST_STUDENT_FEEDBACK_API}/${studentquiz_id}`,
+      data,
+      configs
+    );
+  },
+
+  postShareableLink: async (token, studentquiz_id, shareableLink) => {
+    const configs = { headers: { Authorization: `BEARER ${token}` } };
+    const body = { studentQuiz_shareable_link: shareableLink };
+
+    return await axios.post(
+      `${variables.POST_STUDENT_SHAREABLE_LINK_API}/${studentquiz_id}`,
+      body,
+      configs
+    );
   },
 
   postResetQuiz: async (token, studentquiz_id, data) => {
     const configs = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_RESET_QUIZ_API}/${studentquiz_id}`, data, configs);
+    return await axios.post(
+      `${variables.POST_RESET_QUIZ_API}/${studentquiz_id}`,
+      data,
+      configs
+    );
   },
 };

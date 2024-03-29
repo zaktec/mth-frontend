@@ -89,7 +89,6 @@ const Navbar = (props) => {
     }
   };
 
-  console.log(role);
   return (
     <>
       <ToastContainer />
@@ -125,15 +124,15 @@ const Navbar = (props) => {
                   <span className='auth-button'>Login</span>
                   <a href='/student/signin'>
                     Student
-                    <span class={role === 'student' ? 'custom-span' : 'custom-span hidden'} />
+                    <span className={role === 'student' ? 'custom-span' : 'custom-span hidden'} />
                   </a>
                   <a href='/tutor/signin'>
                     Tutor
-                    <span class={role === 'tutor' ? 'custom-span' : 'custom-span hidden'} />
+                    <span className={role === 'tutor' ? 'custom-span' : 'custom-span hidden'} />
                   </a>
                   <a href='/admin/signin'>
                     Admin
-                    <span class={role === 'admin' ? 'custom-span' : 'custom-span hidden'} />
+                    <span className={role === 'admin' ? 'custom-span' : 'custom-span hidden'} />
                   </a>
                 </span>
               ) : props?.page === 'signup' ? (
@@ -141,15 +140,15 @@ const Navbar = (props) => {
                   <span className='auth-button'>SignUp</span>
                   <a href='/student/signup'>
                     Student
-                    <span class={role === 'student' ? 'custom-span' : 'custom-span hidden'} />
+                    <span className={role === 'student' ? 'custom-span' : 'custom-span hidden'} />
                   </a>
                   <a href='/tutor/signup'>
                     Tutor
-                    <span class={role === 'tutor' ? 'custom-span' : 'custom-span hidden'} />
+                    <span className={role === 'tutor' ? 'custom-span' : 'custom-span hidden'} />
                   </a>
                   <a href='/admin/signup'>
                     Admin
-                    <span class={role === 'admin' ? 'custom-span' : 'custom-span hidden'} />
+                    <span className={role === 'admin' ? 'custom-span' : 'custom-span hidden'} />
                   </a>
                 </span>
               )
