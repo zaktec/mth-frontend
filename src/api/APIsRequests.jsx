@@ -601,6 +601,14 @@ export const APIsRequests = {
     );
   },
 
+  viewQuizQuestions: async (token, student_id, studentquiz_id) => {
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(
+      `${variables.VIEW_QUIZ_QUESTIONS_API}/${student_id}/${studentquiz_id}`,
+      config
+    );
+  },
+
   postStudentQuizResult: async (token, studentquiz_id, quizResults) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.post(

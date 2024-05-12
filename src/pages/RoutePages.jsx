@@ -2,7 +2,11 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import '../App.scss';
-import QuizInstruction from './instruction/QuizInstruction.jsx';
+
+import QuizQuestion from './quizzes/QuizQuestion.jsx';
+import QuizQuestions from './quizzes/QuizQuestions.jsx';
+import QuizQuestionss from './quizzes/QuizQuestionss.jsx';
+import QuizInstruction from './quizzes/QuizInstruction.jsx';
 
 import HomePage from './home/Home.jsx';
 import Signin from './auth/Signin.jsx';
@@ -21,7 +25,6 @@ import SortCourses from './courses/SortCourses.jsx';
 import SingleCourse from './courses/SingleCourse.jsx';
 import SingleLesson from './lessons/SingleLesson.jsx';
 import SortStudents from './students/SortStudents.jsx';
-import QuizQuestion from './quizzes/QuizQuestion.jsx';
 import VerifyShareable from './auth/VerifyShareable.jsx';
 import SingleStudent from './students/SingleStudent.jsx';
 import SortQuestions from './questions/SortQuestions.jsx';
@@ -61,12 +64,13 @@ const RoutePages = () => {
         <Route path='/:role/get-tutors/:tutor_id' element={<SingleTutor />}></Route>
 
 
-        
-        <Route path='/:role/quiz-questions' element={<QuizQuestion />}></Route>
+        <Route path='/:role/quiz-questionss' element={<QuizQuestionss />}></Route>
         <Route path='/:role/get-students/:student_id' element={<SingleStudent />}></Route>
         <Route path='/:role/verify-shareable-link/:session' element={<VerifyShareable />}></Route>
 
-        
+
+        <Route path='/:role/quiz-question' element={<QuizQuestion />}></Route>
+        <Route path='/:role/quiz-questions' element={<QuizQuestions />}></Route>
         <Route path='/:role/quiz-instruction' element={<QuizInstruction />}></Route>
       </Routes>
     </div>

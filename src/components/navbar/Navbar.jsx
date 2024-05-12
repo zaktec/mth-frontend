@@ -36,9 +36,9 @@ const Navbar = (props) => {
     if (role === 'admin') {
       await APIsRequests.singoutAdminRequest(props?.authData?.token)
         .then(() => {
-          toast.success('Logged out successfully');
           localStorage.removeItem('data');
           localStorage.removeItem('shareableData');
+          toast.success('Logged out successfully');
           setTimeout(() => window.location.replace('/'), 1000);
         })
         .catch((error) => {
@@ -55,9 +55,9 @@ const Navbar = (props) => {
     if (role === 'tutor') {
       await APIsRequests.singoutTutorRequest(props?.authData?.token)
         .then(() => {
-          toast.success('Logged out successfully');
           localStorage.removeItem('data');
           localStorage.removeItem('shareableData');
+          toast.success('Logged out successfully');
           setTimeout(() => window.location.replace('/'), 1000);
         })
         .catch((error) => {
@@ -74,9 +74,9 @@ const Navbar = (props) => {
     if (role === 'student') {
       await APIsRequests.singoutStudentRequest(props?.authData?.token)
         .then(() => {
-          toast.success('Logged out successfully');
           localStorage.removeItem('data');
           localStorage.removeItem('shareableData');
+          toast.success('Logged out successfully');
           setTimeout(() => window.location.replace('/'), 1000);
         })
         .catch((error) => {

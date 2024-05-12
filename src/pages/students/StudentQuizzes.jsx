@@ -146,10 +146,11 @@ const StudentQuizzes = (props) => {
     }));
 
     localStorage.removeItem('shareableData');
-    const encrypt_student_id = encrypt(props?.student_id);
-    const encrypt_studentquiz_id = encrypt(studentquiz_id);
+    const encrypted_student_id = encrypt(props?.student_id);
+    const encrypted_studentquiz_id = encrypt(studentquiz_id);
+
     return window.location.replace(
-      `/${props?.role}/quiz-questions?studentquiz_id=${encrypt_studentquiz_id}&student_id=${encrypt_student_id}`
+      `/${props?.role}/quiz-instruction?studentquiz_id=${encrypted_studentquiz_id}&student_id=${encrypted_student_id}`
     );
   };
 

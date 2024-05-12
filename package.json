@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -18,7 +19,7 @@
     "react-images-uploading": "^3.1.7",
     "react-loader-spinner": "^5.4.5",
     "react-math-keyboard": "^1.5.14",
-    "react-router-dom": "^6.3.0",
+    "react-router-dom": "^6.23.0",
     "react-scripts": "^5.0.1",
     "react-simple-keyboard": "^3.7.80",
     "react-toastify": "^9.1.3",

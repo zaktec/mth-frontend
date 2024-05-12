@@ -64,6 +64,7 @@ export const EDIT_QUESTION_API = `${SERVER_URL}/api/v1/questions/update-question
 export const GET_ALL_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-questions`;
 export const DELETE_QUESTION_API = `${SERVER_URL}/api/v1/questions/delete-questions`;
 export const GET_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/get-quiz-questions`;
+export const VIEW_QUIZ_QUESTIONS_API = `${SERVER_URL}/api/v1/questions/view-quiz-questions`;
 
 
 //Tutor dashboard
