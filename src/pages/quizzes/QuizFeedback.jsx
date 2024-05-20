@@ -4,10 +4,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import { verifyAuth, dencrypt } from "../../helpers";
 import TrInput from "../../components/tables/TrInput";
-import CheckBox from "../../components/form/CheckBox";
 import { APIsRequests } from "../../api/APIsRequests";
 
-const QuizInstruction = () => {
+const QuizFeedback = () => {
   const { role } = useParams();
   const [searchParams] = useSearchParams();
   const encrypted_student_id = searchParams.get("student_id");
@@ -52,6 +51,10 @@ const QuizInstruction = () => {
     getQuizQuestions(authData?.token);
   }, [role, studentId, studentQuizId]);
 
+  const handleViewQuestions = () => {
+    window.location.replace(`/${role}/quiz-questions?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`);
+  }
+
   const handleOnChange = (event) => {
     event.preventDefault();
     setState((prevState) => ({
@@ -60,39 +63,31 @@ const QuizInstruction = () => {
     }));
   };
 
-  const handleTermsPolicy = () => {
-    if (state?.termsPolicy === false) {
-      setState((prevState) => ({
-        ...prevState,
-        termsPolicy: true,
-        viewQuizQuestions: true,
-      }));
-
-      setTimeout(() => {
-        window.location.replace(
-          `/${role}/quiz-questions?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`
-        );
-      }, 1000);
-    }
-
-    if (state?.termsPolicy === true) {
-      setState((prevState) => ({
-        ...prevState,
-        termsPolicy: false,
-        viewQuizQuestions: false,
-      }));
-    }
-  };
-
   return (
-    <section className="quiz-instruction-container">
+    <section className="quiz-feedback-container">
       <Navbar authData={state?.authData} page={`${role}-dashboard`} />
       <div className="header-columns-container">
-        <h2 className="header"> Test Information </h2>
-        <h2 className="header"> Instructions to Learner </h2>
+        <h2 className="header"> Test Learner Feedback </h2>
+        <h2 className="header"> Test Tutor Feedback </h2>
       </div>
 
       <div className="content-columns-container">
+        <div className="content">
+          <div className="content-div">
+            <p>Please submit the test and we tutor will give you feedback in due time</p>
+            <div className="buttons">
+                <button  type="button" className="question-list" onClick={() => handleViewQuestions()}>Question List</button>
+                <button type="button" className="submit-test">Submit Test</button>
+            </div>
+          </div>
+          
+          <textarea
+            type="text"
+            placeholder="Please give us feedback on the test"
+            value={state?.question?.question_student_optional || ''}
+            />
+        </div>
+
         <div className="content">
           <table>
             <tbody>
@@ -110,19 +105,7 @@ const QuizInstruction = () => {
                 labelClassName="td-label"
                 labelValueClassName="td-value"
                 labelValue={state?.data?.quiz?.quiz_name}
-              />
-              <TrInput
-                label="Quiz Code"
-                labelClassName="td-label"
-                labelValueClassName="td-value"
-                labelValue={state?.data?.quiz?.quiz_code}
-              />
-              <TrInput
-                label="Quiz Type"
-                labelClassName="td-label"
-                labelValueClassName="td-value"
-                labelValue={state?.data?.quiz?.quiz_type}
-              />
+              />            
               <TrInput
                 label="Quiz Questions"
                 labelClassName="td-label"
@@ -130,12 +113,13 @@ const QuizInstruction = () => {
                 labelValue={state?.data?.questions && state?.data.questions.length}
               />
               <TrInput
-                label="Calculator"
+                type="name"
+                name="name"
+                required={true}
+                value={state?.name}
+                label="Quiz Results"
                 labelClassName="td-label"
-                labelValueClassName="td-value"
-                labelValue={
-                  state?.data?.quiz?.quiz_calc ? "Allowed" : "Not Allowed"
-                }
+                onChange={handleOnChange}
               />
               <TrInput
                 label="Total Marks"
@@ -143,44 +127,30 @@ const QuizInstruction = () => {
                 labelValueClassName="td-value"
                 labelValue={state?.totalMarks}
               />
+              <TrInput
+                type="text"
+                name="name"
+                required={true}
+                value={state?.name}
+                label="Tutor Feedback"
+                labelClassName="td-label"
+                onChange={handleOnChange}
+              />
+              <TrInput
+                type="text"
+                name="name"
+                required={true}
+                value={state?.name}
+                label="Link To Learning Plan"
+                labelClassName="td-label"
+                onChange={handleOnChange}
+              />
             </tbody>
           </table>
         </div>
-
-        <div className="content">
-          <div>
-            <p>
-              - Have any materials you'll need during the exam ready, such as
-              paper, pens, calculators (if allowed).
-            </p>
-            <p>
-              - If you encounter any technical issues during the exam, contact
-              technical support immediately for assistance. Provide details of
-              the issue you're experiencing so they can help resolve it quickly.
-            </p>
-            <p>
-              - Find a quiet, well-lit space where you can focus without
-              distractions. Make sure you have a comfortable chair and
-              desk/table to sit at during the exam.
-            </p>
-            <p>
-              - Use next to submit questions and if questions you do not know
-              click the skip questions.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="terms-policy">
-        <CheckBox
-          checked={state?.termsPolicy}
-          onChange={handleTermsPolicy}
-          disabled={state?.name === "" ? true : false}
-          fieldname="Agreed terms and policy to continue"
-        />
       </div>
     </section>
   );
 };
 
-export default QuizInstruction;
+export default QuizFeedback;

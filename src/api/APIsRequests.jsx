@@ -593,14 +593,6 @@ export const APIsRequests = {
     );
   },
 
-  getQuizQuestions: async (token, student_id, studentquiz_id) => {
-    const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.get(
-      `${variables.GET_QUIZ_QUESTIONS_API}/${student_id}/${studentquiz_id}`,
-      config
-    );
-  },
-
   viewQuizQuestions: async (token, student_id, studentquiz_id) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
     return await axios.get(
@@ -609,13 +601,14 @@ export const APIsRequests = {
     );
   },
 
+  getQuizQuestions: async (token, student_id, studentquiz_id) => {
+    const config = { headers: { Authorization: `BEARER ${token}` } };
+    return await axios.get(`${variables.GET_QUIZ_QUESTIONS_API}/${student_id}/${studentquiz_id}`, config);
+  },
+
   postStudentQuizResult: async (token, studentquiz_id, quizResults) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(
-      `${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`,
-      quizResults,
-      config
-    );
+    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, quizResults, config);
   },
 
   postTutorFeedback: async (token, studentquiz_id, data) => {

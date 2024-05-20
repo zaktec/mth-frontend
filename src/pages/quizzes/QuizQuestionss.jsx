@@ -107,8 +107,8 @@ const QuizQuestionss = () => {
       firstname: data?.authUser?.user?.student_firstname || '',
     }));
 
-    const getQuizApi = async (token) => {
-      await APIsRequests.getQuizQuestions(
+    const viewQuizQuestions = async (token) => {
+      await APIsRequests.viewQuizQuestions(
         token,
         student_id || null,
         studentquiz_id
@@ -180,7 +180,7 @@ const QuizQuestionss = () => {
         });
     };
 
-    getQuizApi(authData?.token);
+    viewQuizQuestions(authData?.token);
   }, [state?.postPage, state?.correction, student_id, studentquiz_id]);
 
   useEffect(() => {

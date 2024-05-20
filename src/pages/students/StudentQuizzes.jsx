@@ -149,9 +149,7 @@ const StudentQuizzes = (props) => {
     const encrypted_student_id = encrypt(props?.student_id);
     const encrypted_studentquiz_id = encrypt(studentquiz_id);
 
-    return window.location.replace(
-      `/${props?.role}/quiz-instruction?studentquiz_id=${encrypted_studentquiz_id}&student_id=${encrypted_student_id}`
-    );
+    return window.location.replace(`/${props?.role}/quiz-instruction?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`);
   };
 
   const handleSubmit = async (event, quiz_id) => {

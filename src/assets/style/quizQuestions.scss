@@ -24,7 +24,7 @@
     .content {
         display: grid;
         margin-bottom: 10px;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 
         .question {
             display: grid;
@@ -43,7 +43,7 @@
                 text-align: center;
 
                 div {
-                  width: 80%;
+                  font-size: 15px;
                   cursor: pointer;
                   padding: 10px 0px;
                   color: $whiteColor;

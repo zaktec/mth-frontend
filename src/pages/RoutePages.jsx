@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import '../App.scss';
 
+import QuizFeedback from './quizzes/QuizFeedback.jsx';
 import QuizQuestion from './quizzes/QuizQuestion.jsx';
 import QuizQuestions from './quizzes/QuizQuestions.jsx';
 import QuizQuestionss from './quizzes/QuizQuestionss.jsx';
@@ -69,6 +70,7 @@ const RoutePages = () => {
         <Route path='/:role/verify-shareable-link/:session' element={<VerifyShareable />}></Route>
 
 
+        <Route path='/:role/quiz-feedback' element={<QuizFeedback />}></Route>
         <Route path='/:role/quiz-question' element={<QuizQuestion />}></Route>
         <Route path='/:role/quiz-questions' element={<QuizQuestions />}></Route>
         <Route path='/:role/quiz-instruction' element={<QuizInstruction />}></Route>

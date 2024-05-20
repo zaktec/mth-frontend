@@ -27,8 +27,8 @@ const QuizQuestions = () => {
     const authData = verifyAuth();
     setState((prevState) => ({ ...prevState, authData }));
 
-    const viewQuizApi = async (token) => {
-      await APIsRequests.viewQuizQuestions(token, studentId, studentQuizId)
+    const getQuizQuestions = async (token) => {
+      await APIsRequests.getQuizQuestions(token, studentId, studentQuizId)
         .then((response) => {
           setState((prevState) => ({
             ...prevState,
@@ -41,7 +41,7 @@ const QuizQuestions = () => {
         });
     };
 
-    viewQuizApi(authData?.token);
+    getQuizQuestions(authData?.token);
   }, [role, studentId, studentQuizId]);
 
   const handleQuizQuestion = async (question_number) => {
@@ -67,7 +67,7 @@ const QuizQuestions = () => {
               <div key={element?.question_id} className="question">
                 <div>Q{element?.question_number}.</div>
                 <div className="view">
-                  <div onClick={() => handleQuizQuestion(element?.question_number)} > <FontAwesomeIcon size="lg" icon={faEye} style={{ marginRight: "20px" }} /> Review </div>
+                  <div onClick={() => handleQuizQuestion(element?.question_number)} > <FontAwesomeIcon size="lg" icon={faEye} /> Review </div>
                 </div>
               </div>
             ))}
