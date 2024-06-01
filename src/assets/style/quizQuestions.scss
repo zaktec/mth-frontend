@@ -1,187 +1,81 @@
-@import "./size.scss";
 @import "./colors.scss";
 
-.quiz-question-container {
+.quiz-questions-container {
+  margin-bottom: 100PX;
+  
   .header-container {
-    .svg-container {
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: -1;
-      position: absolute;
+    margin: auto 40px;
+
+    .header {
+      display: flex;
+      font-size: 30px;
+      padding: 30px 40px;
+      color: $whiteColor;
+      font-weight: bolder;
+      align-items: center;
+      text-transform: uppercase;
+      background-color: $blackColor;
+      justify-content: space-between;
     }
 
-    h1 {
-      color: #fff;
-      font-size: 70px;
-      padding: 0vw 00vw 00vw 10vw;
+    h2 {
+      margin: 0;
     }
-  }
 
-  section {
-    width: 70%;
-    margin: auto;
-    display: block;
-    padding: 5vw 00vw 00vw 0vw;
-
-    .card {
-      margin: 50px auto;
-      border: 2px solid #e3dedc;
-
-      .question-title {
-        padding: 30px;
-        display: block;
-        font-size: 20px;
-        font-weight: 900;
-        color: #4e4e4e;
-        text-decoration: underline;
-        background-color: #b4b4b42a;
-
-        .question-title-right {
-          float: right;
-          padding: 15px;
-          font-size: 25px;
-          margin-top: -20px;
-          color: $greenColor;
-          border-radius: 50%;
-          border: 1px solid $greenColor;
-          background-color: $whiteColor;
-        }
-      }
-
-      .question-img {
-        padding: 10px 30px;
-        display: block;
-
-        img {
-          width: 400px;
-          height: 240px;
-        }
-      }
-
-      .question-body {
-        display: block;
-        font-size: 20px;
-        padding: 10px 30px;
-      }
-
-      .input-answer {
-        max-height: 50px;
-        min-height: 50px;
-        padding: 10px 30px;
-
-        .form__input {
-          width: 60%;
-          border: none;
-          color: #333;
-          display: block;
-          font-size: 1.2rem;
-          padding: 1rem 2rem;
-          transition: all 0.3s;
-          border-radius: 0.2rem;
-          border-bottom: 1px solid #adacac;
-          background-color: rgb(255, 255, 255);
-          box-shadow: 0 14px 2px -2px rgba(0, 0, 0, 0.08); 
-        }
-
-        .form__input:focus{
-          outline: none;
-        }
-      }
-
-      .choice-answer {
-        display: flex;
-        max-height: 50px;
-        min-height: 50px;
-        padding: 10px 30px;
-
-        button {
-          outline: 0;
-          font-size: 15px;
-          cursor: pointer;
-          min-height: 40px;
-          min-width: 60px;
-          font-weight: 500;
-          color: #202223;
-          border-radius: 4px;
-          text-align: center;
-          margin-right: 10px;
-          padding:  1rem 2rem;
-          display: inline-block;
-          background: #ffffff;
-          border: 1px solid #babfc3;
-          box-shadow: rgba(0, 0, 0, 0.39) 0px 1px 0px 0px;
-          :hover {
-            background: #f6f6f7;
-            outline: 1px solid transparent;
-          }
-        }
-
-        .choice-answer {
-          color: $whiteColor;
-          background-color: $greenColor;
-        }
-      }
-
-      .button-container {
-        padding: 30px;
-        display: flex;
-        justify-content: space-between; 
-
-        button {
-          width: 30%;
-          height: 60px;
-          outline: none;
-          color: #fff;
-          border-width: 0;
-          cursor: pointer;
-          font-size: 18px;
-          font-weight: 600;
-          overflow: hidden;
-          margin: 12px 0 0;
-          line-height: 1.15;
-          user-select: none;
-          padding: 16px 21px;
-          position: relative;
-          text-align: center;
-          border-radius: 6px;
-          text-transform: none;
-          box-sizing: border-box;
-          transform: translateZ(0);
-          -webkit-user-select: none;
-          touch-action: manipulation;
-          backface-visibility: hidden;
-          background-color: $blueColor;
-          transition: all 0.2s, box-shadow 0.08s ease-in;
-          font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto,
-            Ubuntu, "Helvetica Neue", sans-serif;
-          box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-          rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
-        }
-
-        button:disabled {
-          cursor: default;
-        }
-
-        button:focus {
-          box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
-            rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
-            rgba(50, 151, 211, 0.3) 0 0 0 4px;
-        }
-
-        .disabled-button {
-          background-color: #9fc4fc;
-        }
-      }
+    .next {
+      padding: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      color: $greenColor;
+      font-weight: bolder;
+      background: $blackColor;
+      border: 1px solid $greenColor;
     }
   }
-}
 
-.quiz-question-container {
-  @media (min-width: 768px) {
-    .question-answer-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+  .content-columns-container {
+    border: 3px solid $blackColor;
+    margin: -18px 40px auto 40px;
+    border-top: none;
+    padding: 30px;
+
+    .content {
+        display: grid;
+        margin-bottom: 10px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+        .question {
+            padding: 30px;
+            display: grid;
+            font-size: 20px;
+            font-weight: 900;
+            color: $whiteColor;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid $whiteColor;
+            background-color: $blackColor;
+
+            .ative-text {
+              color: $greenColor;
+            }
+
+            .view {
+              text-align: center;
+
+              button {
+                font-size: 18px;
+                cursor: pointer;
+                padding: 10px 10px;
+                color: $whiteColor;
+                background-color: transparent;
+                border: 1px solid $whiteColor;
+              }
+
+              .ative-view {
+                color: $greenColor;
+                border: 1px solid $greenColor;
+              }
+            }
+        }
     }
   }
 }

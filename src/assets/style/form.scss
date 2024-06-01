@@ -1,0 +1,76 @@
+.medium-button {
+  border: 0;
+  width: auto;
+  display: flex;
+  font-size: 16px;
+  cursor: pointer;
+  color: #ffffff;
+  user-select: none;
+  border-radius: 0.5rem;
+  padding: 1rem 1.75rem;
+  text-decoration: none;
+  box-sizing: border-box;
+  justify-content: center;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background-image: linear-gradient(-180deg, #37aee2 0%, #1e96c8 100%);
+}
+
+.medium-button:hover {
+  background-image: linear-gradient(-180deg, #1d95c9 0%, #17759c 100%);
+}
+
+@media (min-width: 768px) {
+  .medium-button {
+    padding: 1rem 2rem;
+  }
+}
+
+.large-button {
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+  user-select: none;
+  padding: 16px 21px;
+  position: relative;
+  text-align: center;
+  color: $whiteColor;
+  border-radius: 56px;
+  transition: all 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background-color: $blueColor;
+  font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu,
+    "Helvetica Neue", sans-serif;
+}
+
+.large-button:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 125px;
+  content: "";
+  height: 50%;
+  left: 4%;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  width: 92%;
+}
+
+.large-button:hover {
+  box-shadow: rgba(255, 255, 255, 0.2) 0 3px 15px inset,
+    rgba(0, 0, 0, 0.1) 0 3px 5px, rgba(0, 0, 0, 0.1) 0 10px 13px;
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .large-button {
+    padding: 16px 48px;
+  }
+}

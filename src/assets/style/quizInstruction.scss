@@ -1,0 +1,85 @@
+@import "./colors.scss";
+
+.quiz-instruction-container {
+  .header-columns-container {
+    display: grid;
+    grid-gap: 05px;
+    margin: auto 40px;
+    grid-template-columns: 1fr 1fr;
+
+    .header {
+      padding: 30px;
+      font-weight: 900;
+      color: $whiteColor;
+      text-align: center;
+      text-transform: uppercase;
+      background-color: $blackColor;
+    }
+  }
+
+  .content-columns-container {
+    display: grid;
+    grid-gap: 0px;
+    margin: -18px 40px auto 40px;
+    grid-template-columns: 1fr 1fr;
+
+    .content {
+      border: 1px solid $blackColor;
+      color: $blackColor;
+      border-top: none;
+      padding: 30px;
+
+      table {
+        width: 100%;
+        margin: 20px auto;
+        color: $blackColor;
+        border-collapse: collapse;
+
+        tr {
+          .td-label {
+            padding: 30px;
+            text-transform: uppercase;
+          }
+
+          .td-value {
+            padding: 30px;
+            text-transform: capitalize;
+          }
+
+          td {
+            font-size: 25px;
+            font-weight: 700;
+            text-align: left;
+            border: 5px solid $blackColor;
+
+            input {
+              width: 100%;
+              border: none;
+              outline: none;
+              padding: 30px;
+              font-size: 25px;
+              font-weight: 700;
+              color: $blackColor;
+              background: transparent;
+            }
+
+            input:-webkit-autofill {
+              -webkit-text-fill-color: $blackColor !important;
+            }
+          }
+        }
+      }
+
+      div {
+        width: 93%;
+        padding: 1% 3%;
+        font-size: 25px;
+        font-weight: 700;
+        margin: 20px auto;
+        color: $blackColor;
+        border: 5px solid $blackColor;
+      }
+    }
+  }
+}
+

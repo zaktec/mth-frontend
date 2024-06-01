@@ -1,13 +1,13 @@
-@import './size.scss';
-@import './colors.scss';
+@import "./size.scss";
+@import "./colors.scss";
 
 .navbar-unique {
   height: 70px;
   display: flex;
   margin-bottom: 50px;
   align-items: center;
+  background-color: $blackColor;
   justify-content: space-between;
-  background-color: $defaultColor;
 
   .menu {
     margin-left: 30px;
@@ -16,20 +16,36 @@
       font-weight: 900;
       margin-right: 30px;
       padding: 10px 30px;
-      border: 2px solid $grayColor;
+      border: 3px solid $grayColor;
       border-radius: 1px 80px 1px 80px;
     }
   }
 
   a {
-    margin: 2px;
-    font-size: 14px;
+    margin: 10px;
+    font-size: 18px;
     padding: 2px 4px;
     color: $grayColor;
+    position: relative;
     text-decoration: none;
+    display: inline-block;
+
+    .custom-span {
+      left: 0;
+      bottom: 0;
+      width: 60%;
+      height: 50%;
+      margin-left: 05px;
+      position: absolute;
+      border-bottom: 2px solid $grayColor;
+    }
+
+    .custom-span.hidden {
+      display: none;
+    }
   }
 
-  a:hover{
+  a:hover {
     color: $whiteColor;
   }
 
@@ -37,13 +53,14 @@
     color: $grayColor;
     margin-right: 30px;
 
-    .auth-signin {
+    .auth-button {
+      padding: 10px;
       font-weight: 600;
-      padding: 10px 5px;
+      margin-right: 20px;
       border-radius: 5px;
-      color: $defaultColor;
+      color: $blackColor;
       background: $whiteColor;
-      border: 2px solid $grayColor;
+      border: 3px solid $grayColor;
 
       button {
         cursor: pointer;
@@ -63,7 +80,7 @@
       border-radius: 50%;
       background: $whiteColor;
       box-shadow: 00px 00px 10px 00px $grayColor;
-  
+
       img {
         top: 50%;
         width: auto;
@@ -72,10 +89,9 @@
         max-width: 100%;
         font-weight: 900;
         position: absolute;
-        color: $defaultColor;
-        transform:translate(-50%, -50%);
+        color: $blackColor;
+        transform: translate(-50%, -50%);
       }
     }
   }
 }
-

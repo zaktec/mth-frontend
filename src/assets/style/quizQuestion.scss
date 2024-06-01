@@ -1,0 +1,201 @@
+@import "./colors.scss";
+
+.quiz-question-container {
+  margin-bottom: 100px;
+  .header-container {
+    display: flex;
+    margin: auto 40px;
+
+    .left-header {
+      width: 70%;
+      display: flex;
+      font-weight: 900;
+      color: $whiteColor;
+      text-transform: uppercase;
+      background-color: $blackColor;
+
+      .title {
+        width: 20%;
+        padding: 30px;
+        border-right: 1px solid $whiteColor;
+      }
+
+      .instruction {
+        width: 80%;
+        padding: 30px;
+        border-right: 1px solid $whiteColor;
+      }
+    }
+
+    .right-header {
+      width: 30%;
+      display: flex;
+      font-weight: 900;
+      color: $whiteColor;
+      background-color: $blackColor;
+
+      .title {
+        padding: 30px;
+      }
+
+      .instruction {
+        padding: 30px;
+        margin-left: auto;
+
+        button {
+          cursor: pointer;
+          font-size: 30px;
+          padding: 10px 20px;
+          color: $whiteColor;
+          background-color: $blackColor;
+          border: 3px solid $whiteColor;
+        }
+
+        
+        button:disabled {
+          background: #383838;
+        }
+      }
+    }
+  }
+
+  .content-columns-container {
+    display: flex;
+    margin: -18px 40px auto 40px;
+
+    .left-column {
+      border: 3px solid $blackColor;
+      border-top: none;
+      width: 70%;
+
+      .question-img {
+        height: 85vh;
+        padding: 30px;
+
+        img {
+          width: 100%;
+          height: 85vh;
+          object-fit: contain;
+          box-shadow: 0 0 10px rgba(122, 122, 122, 0.075);
+        }
+      }
+    }
+
+    .right-column {
+      border: 3px solid $blackColor;
+      position: relative;
+      border-top: none;
+      width: 30%;
+
+      .input-container {
+        display: flex;
+        font-size: 30px;
+        margin: 100px auto;
+        background: $whiteColor;
+
+        .first-symbol {
+          width: 20%;
+          padding: 20px;
+          text-align: center;
+          border: 1px solid $blackColor;
+          border-left: none;
+        }
+
+        input {
+          width: 60%;
+          padding: 20px;
+          outline: none;
+          font-size: 30px;
+        }
+
+        .second-symbol {
+          width: 20%;
+          padding: 20px;
+          text-align: center;
+          border: 1px solid $blackColor;
+          border-right: none;
+        }
+      }
+
+      .bottom-container {
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+
+        textarea {
+          width: 94%;
+          padding: 1% 3%;
+          outline: none;
+          font-size: 30px;
+          min-height: 350px;
+          border: 3px solid $blackColor;
+          border-left: none;
+          border-right: none;
+        }
+
+        .display {
+          display: flex;
+          text-align: center;
+          border-bottom: 1px solid $whiteColor;
+
+          .keyboard {
+            width: 40%;
+            padding: 30px;
+            cursor: pointer;
+            font-size: 30px;
+            color: $whiteColor;
+            background: $blackColor;
+            border-right: 1px solid $whiteColor;
+          }
+
+          .question-list {
+            width: 60%;
+            padding: 30px;
+            cursor: pointer;
+            font-size: 30px;
+            color: $whiteColor;
+            background: $blackColor;
+          }
+
+          .keyboard:active, .question-list:active{
+            background: $grayColor;
+            transition: background-color 0.1s ease;
+          }
+        }
+
+        .buttons {
+          display: grid;
+          text-align: center;
+          grid-template-columns: 1fr 1fr;
+          border-bottom: 1px solid $whiteColor;
+
+          .prev {
+            padding: 30px;
+            cursor: pointer;
+            font-size: 30px;
+            color: $whiteColor;
+            background: $blackColor;
+            border-right: 1px solid $whiteColor;
+          }
+
+          .next {
+            padding: 30px;
+            font-size: 30px;
+            cursor: pointer;
+            color: $whiteColor;
+            background: $blackColor;
+          }
+
+          .prev:active, .next:active{
+            background: $grayColor;
+            transition: background-color 0.1s ease;
+          }
+
+          .next:disabled, .prev:disabled {
+            background: #383838;
+          }
+        }
+      }
+    }
+  }
+}
