@@ -2,16 +2,34 @@
 
 .quiz-questions-container {
   margin-bottom: 100PX;
+  
   .header-container {
     margin: auto 40px;
 
     .header {
-      padding: 30px;
-      font-weight: 900;
-      text-align: left;
+      display: flex;
+      font-size: 30px;
+      padding: 30px 40px;
       color: $whiteColor;
+      font-weight: bolder;
+      align-items: center;
       text-transform: uppercase;
       background-color: $blackColor;
+      justify-content: space-between;
+    }
+
+    h2 {
+      margin: 0;
+    }
+
+    .next {
+      padding: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      color: $greenColor;
+      font-weight: bolder;
+      background: $blackColor;
+      border: 1px solid $greenColor;
     }
   }
 
@@ -27,6 +45,7 @@
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 
         .question {
+            padding: 30px;
             display: grid;
             font-size: 20px;
             font-weight: 900;
@@ -35,20 +54,26 @@
             border: 1px solid $whiteColor;
             background-color: $blackColor;
 
-            div {
-                padding: 30px;
+            .ative-text {
+              color: $greenColor;
             }
 
             .view {
-                text-align: center;
+              text-align: center;
 
-                div {
-                  font-size: 15px;
-                  cursor: pointer;
-                  padding: 10px 0px;
-                  color: $whiteColor;
-                  border: 1px solid $whiteColor;
-                }
+              button {
+                font-size: 18px;
+                cursor: pointer;
+                padding: 10px 10px;
+                color: $whiteColor;
+                background-color: transparent;
+                border: 1px solid $whiteColor;
+              }
+
+              .ative-view {
+                color: $greenColor;
+                border: 1px solid $greenColor;
+              }
             }
         }
     }

@@ -1,3 +1,4 @@
+import { ToastContainer, toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
@@ -15,11 +16,12 @@ const QuizFeedback = () => {
   const studentId = dencrypt(encrypted_student_id);
   const studentQuizId = dencrypt(encrypted_studentquiz_id);
   const [state, setState] = useState({
-    name: "",
+    name: '',
+    studentquiz_student_feedback: '',
+
     data: {},
     authData: {},
     totalMarks: 0,
-    termsPolicy: false,
     viewQuizQuestions: false,
   });
 
@@ -41,6 +43,8 @@ const QuizFeedback = () => {
             ...prevState,
             totalMarks: totalMarks,
             data: response?.data?.data,
+            name: response?.data.data?.studentQuiz?.studentquiz_leaner || localStorage.getItem('learner'),
+            studentquiz_student_feedback: response?.data.data?.studentQuiz?.studentquiz_student_feedback || ''
           }));
         })
         .catch((error) => {
@@ -59,12 +63,31 @@ const QuizFeedback = () => {
     event.preventDefault();
     setState((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
+      studentquiz_student_feedback: event.target.value,
     }));
+  };
+
+  const handleSubmitClick = async (event) => {
+    event.preventDefault();
+    setState((prevState) => ({ ...prevState, buttonLoading: true }));
+
+    const data = {
+      studentquiz_student_feedback_toggle: "show",
+      studentquiz_student_feedback: state?.studentquiz_student_feedback
+    };
+    
+    await APIsRequests.postStudentFeedback(state?.authData?.token, studentId, data)
+      .then(() => {
+        toast.success("Feedback submitted successfully");
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message || error?.response?.data?.error);
+      });
   };
 
   return (
     <section className="quiz-feedback-container">
+      <ToastContainer />
       <Navbar authData={state?.authData} page={`${role}-dashboard`} />
       <div className="header-columns-container">
         <h2 className="header"> Test Learner Feedback </h2>
@@ -77,28 +100,26 @@ const QuizFeedback = () => {
             <p>Please submit the test and we tutor will give you feedback in due time</p>
             <div className="buttons">
                 <button  type="button" className="question-list" onClick={() => handleViewQuestions()}>Question List</button>
-                <button type="button" className="submit-test">Submit Test</button>
+                <button type="button" className="submit-test" onClick={(event) => handleSubmitClick(event)}>Submit Feedback</button>
             </div>
           </div>
           
           <textarea
             type="text"
+            value={state?.studentquiz_student_feedback}
+            onChange={(event) => handleOnChange(event)}
             placeholder="Please give us feedback on the test"
-            value={state?.question?.question_student_optional || ''}
-            />
+          />
         </div>
 
         <div className="content">
           <table>
             <tbody>
               <TrInput
-                type="name"
-                name="name"
-                required={true}
-                value={state?.name}
                 label="Learner Name"
                 labelClassName="td-label"
-                onChange={handleOnChange}
+                labelValueClassName="td-value"
+                labelValue={state?.name}
               />
               <TrInput
                 label="Quiz Name"
@@ -116,7 +137,7 @@ const QuizFeedback = () => {
                 type="name"
                 name="name"
                 required={true}
-                value={state?.name}
+                value='Pending'
                 label="Quiz Results"
                 labelClassName="td-label"
                 onChange={handleOnChange}
@@ -131,7 +152,7 @@ const QuizFeedback = () => {
                 type="text"
                 name="name"
                 required={true}
-                value={state?.name}
+                value=''
                 label="Tutor Feedback"
                 labelClassName="td-label"
                 onChange={handleOnChange}
@@ -140,7 +161,7 @@ const QuizFeedback = () => {
                 type="text"
                 name="name"
                 required={true}
-                value={state?.name}
+                value=''
                 label="Link To Learning Plan"
                 labelClassName="td-label"
                 onChange={handleOnChange}

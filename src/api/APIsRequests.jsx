@@ -608,7 +608,12 @@ export const APIsRequests = {
 
   postStudentQuizResult: async (token, studentquiz_id, quizResults) => {
     const config = { headers: { Authorization: `BEARER ${token}` } };
-    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, quizResults, config);
+    const body = {
+      studentQuiz_learner: quizResults?.learner,
+      studentQuiz_result: quizResults?.questions,
+      studentQuiz_percent: quizResults?.quizMarks,
+    }
+    return await axios.post(`${variables.POST_STUDENT_QUIZ_RESULT_API}/${studentquiz_id}`, body, config);
   },
 
   postTutorFeedback: async (token, studentquiz_id, data) => {

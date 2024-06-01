@@ -61,6 +61,7 @@ const QuizInstruction = () => {
   };
 
   const handleTermsPolicy = () => {
+    localStorage.setItem('learner', state?.name);
     if (state?.termsPolicy === false) {
       setState((prevState) => ({
         ...prevState,

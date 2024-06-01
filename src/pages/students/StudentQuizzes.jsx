@@ -148,8 +148,12 @@ const StudentQuizzes = (props) => {
     localStorage.removeItem('shareableData');
     const encrypted_student_id = encrypt(props?.student_id);
     const encrypted_studentquiz_id = encrypt(studentquiz_id);
-
-    return window.location.replace(`/${props?.role}/quiz-instruction?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`);
+    
+    state?.assignedQuizzes.map((element) => (
+      element?.studentquiz_status === 'completed' ?
+        window.location.replace(`/${props?.role}/quiz-questions?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`)
+      : window.location.replace(`/${props?.role}/quiz-instruction?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`)
+    ));
   };
 
   const handleSubmit = async (event, quiz_id) => {
@@ -251,8 +255,7 @@ const StudentQuizzes = (props) => {
                 <b>Quiz Status :</b> {element.studentquiz_status}
               </p>
               <p>
-                <b>Quiz Percent :</b>
-                {element.studentquiz_percent || "Not found"}
+                <b>Quiz Percent :</b>{element.studentquiz_percent || "Not found"}
               </p>
               <p>
                 <b>Quiz Feedback :</b>

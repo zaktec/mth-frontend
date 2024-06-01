@@ -6,7 +6,6 @@ import '../App.scss';
 import QuizFeedback from './quizzes/QuizFeedback.jsx';
 import QuizQuestion from './quizzes/QuizQuestion.jsx';
 import QuizQuestions from './quizzes/QuizQuestions.jsx';
-import QuizQuestionss from './quizzes/QuizQuestionss.jsx';
 import QuizInstruction from './quizzes/QuizInstruction.jsx';
 
 import HomePage from './home/Home.jsx';
@@ -64,8 +63,6 @@ const RoutePages = () => {
         <Route path='/:role/get-admins/:admin_id' element={<SingleAdmin />}></Route>
         <Route path='/:role/get-tutors/:tutor_id' element={<SingleTutor />}></Route>
 
-
-        <Route path='/:role/quiz-questionss' element={<QuizQuestionss />}></Route>
         <Route path='/:role/get-students/:student_id' element={<SingleStudent />}></Route>
         <Route path='/:role/verify-shareable-link/:session' element={<VerifyShareable />}></Route>
 

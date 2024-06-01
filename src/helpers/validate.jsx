@@ -188,24 +188,36 @@ const validateStudentSignin = (state) => {
 
 const validateCorrectSolution = (question)  => {
   return (
-    question.question_choice_answer === question.question_response1 ||
-    question.question_choice_answer === question.question_response2 ||
-    question.question_choice_answer === question.question_response3
+    question.question_student_answer === question.question_response1 ||
+    question.question_student_answer === question.question_response2 ||
+    question.question_student_answer === question.question_response3
   );
 };
 
-const validateQuizAnswers = (data) => {
-  let correction = 0;
+const totalMarks = (questions) => {
+  return questions.reduce(
+  (sum, question) => {
+    return sum + question.question_mark;
+  }, 0 );
+}
 
-  data.forEach((question) => {
+const validateQuizAnswers = (questions) => {
+  let quizMarks = 0;
+
+  questions.forEach((question) => {
     const result = validateCorrectSolution(question);
     if (result) {
-      correction++;
-      question.question_choice_answer_correct = true
+      quizMarks++;
+      question.question_student_answer_correct = true
+    }
+
+    if (!result) {
+      question.question_student_answer_correct = false
     }
   });
 
-  return { data, correction: `${correction}/${data.length}` };
+  const totalMark = totalMarks(questions);
+  return { questions, quizMarks: `${quizMarks}/${totalMark}` };
 }
 
 export { shortData, validateSignup, validateSignin, validateStudentSignup, validateStudentSignin, validateQuizAnswers };

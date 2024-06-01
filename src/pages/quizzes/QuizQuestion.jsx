@@ -1,10 +1,11 @@
+import { ToastContainer, toast } from "react-toastify";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/navbar/Navbar";
 import { APIsRequests } from "../../api/APIsRequests";
 import Loading from "../../components/loading/Loading";
-import { verifyAuth, dencrypt, encrypt } from "../../helpers";
+import { verifyAuth, dencrypt, encrypt, validateQuizAnswers } from "../../helpers";
 import QuestionDisplay from "../../components/quizQuestion/QuestionDisplay";
 
 const QuizQuestion = () => {
@@ -45,11 +46,11 @@ const QuizQuestion = () => {
     const getQuizQuestions = async (token) => {
       await APIsRequests.getQuizQuestions(token, studentId, studentQuizId)
         .then( async (response) => {
-          const lsQuestions = localStorage.getItem('questions');
-
+          const lsQuestions = response?.data?.data?.studentQuiz?.studentquiz_status === 'completed' ? JSON.stringify(response?.data?.data?.questions) : localStorage.getItem('questions');
           const lsQuestion = JSON.parse(lsQuestions).find(obj => obj.question_number === questionNumber);
           const question =  response?.data?.data?.questions.find(obj => obj.question_number === questionNumber);
           const questions = JSON.parse(lsQuestions).length === 0 ? response?.data?.data?.questions : JSON.parse(lsQuestions);
+
           question.question_student_answer = lsQuestion && lsQuestion?.question_student_answer ? lsQuestion?.question_student_answer : '';
           question.question_student_optional = lsQuestion && lsQuestion?.question_student_optional ? lsQuestion?.question_student_optional : '';
 
@@ -129,33 +130,36 @@ const QuizQuestion = () => {
   const handleSubmitClick = async (event) => {
     event.preventDefault();
     setState((prevState) => ({ ...prevState, buttonLoading: true }));
-    setTimeout(() => {
-      window.location.replace(`/${role}/quiz-feedback?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`);
-    }, 2500);
 
-    // await APIsRequests.postStudentQuizResult(state?.authData?.token, studentQuizId, state?.questions)
-    //   .then((response) => {
-    //     setTimeout(() => {
-    //       setState((prevState) => ({
-    //         ...prevState,
-    //         buttonLoading: false,
-    //         studentQuiz: response?.data?.data,
-    //       }));
+    const { questions, quizMarks } = await validateQuizAnswers(state?.questions);
+    const quizResults = { learner: localStorage.getItem('learner'), questions, quizMarks  };
+
+    await APIsRequests.postStudentQuizResult(state?.authData?.token, studentQuizId, quizResults)
+      .then((response) => {
+        localStorage.removeItem('questions');
+        toast.success("Quiz submitted successfully");
+        
+        setTimeout(() => {
+          setState((prevState) => ({
+            ...prevState,
+            buttonLoading: false,
+            studentQuiz: response?.data?.data,
+          }));
           
-    //       setTimeout(() => {
-    //         window.location.replace(`/${role}/quiz-questions?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`);
-    //       }, 1000);
-    //     }, 2500);
-    //   })
-    //   .catch((error) => {
-    //     console.log('Error', error?.response?.data?.message || error?.response?.data?.error);
-    //   });
+          window.location.replace(`/${role}/quiz-feedback?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`);
+        }, 2500);
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.message || error?.response?.data?.error)
+        console.log('Error', error?.response?.data?.message || error?.response?.data?.error);
+      });
   };
 
   if (state?.pageLoading === true) return <Loading pageLoading={true} />
 
   return (
     <section className="quiz-question-container">
+      <ToastContainer />
       <Navbar authData={state?.authData} page={`${role}-dashboard`} />
       <div className="header-container">
         <h2 className="left-header">
@@ -184,6 +188,7 @@ const QuizQuestion = () => {
                     placeholder="Insert Answer"
                     onChange={(event) => handleInputChange(event)}
                     value={state?.question?.question_student_answer || ''}
+                    disabled={state?.studentQuiz?.studentquiz_status === 'completed'}
                 />
                 <div className="second-symbol">{state?.question?.question_ans_sym_a}</div>
             </div>
@@ -194,6 +199,7 @@ const QuizQuestion = () => {
                     placeholder="Optional Working Out"
                     onChange={(event) => handleTextAreaChange(event)}
                     value={state?.question?.question_student_optional || ''}
+                    disabled={state?.studentQuiz?.studentquiz_status === 'completed'}
                 />
 
                 <div className="display">
@@ -204,8 +210,10 @@ const QuizQuestion = () => {
                 <div className="buttons">
                     <button  type="button" className="prev" disabled={questionNumber <= 1} onClick={(event) => handlePrevClick(event)}>Prev</button>
                     {
-                      state?.questions[state?.questions.length - 1]?.question_number === questionNumber
-                      ? <button type="button" className="next" disabled={state?.studentQuiz?.studentquiz_status === 'completed'} onClick={(event) => handleSubmitClick(event)}> { state?.buttonLoading ? <Loading buttonLoading={true} /> : 'Proceed Submit' } </button>
+                      state?.questions[state?.questions.length - 1]?.question_number === questionNumber && state?.studentQuiz?.studentquiz_status === 'pending' ?
+                      <button type="button" className="next" onClick={(event) => handleSubmitClick(event)}> { state?.buttonLoading ? <Loading buttonLoading={true} /> : 'Submit Quiz' } </button>
+                      : state?.questions[state?.questions.length - 1]?.question_number === questionNumber && state?.studentQuiz?.studentquiz_status === 'completed' ?
+                      <button type="button" className="next" onClick={() => window.location.replace(`/${role}/quiz-feedback?student_id=${encrypted_student_id}&studentquiz_id=${encrypted_studentquiz_id}`)}> View Result </button>
                       : <button type="button" className="next" disabled={!state.question.question_student_answer} onClick={(event) => handleNextSkipClick(event)}>Next</button>
                     }
                 </div>

@@ -59,4 +59,5 @@ const dencrypt = (data) => {
     return error.toString();
   }
 };
+
 export { verifyAuth, verifyRole, verifyDeviceId, encrypt, dencrypt };
